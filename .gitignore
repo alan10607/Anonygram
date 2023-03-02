@@ -22,7 +22,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-### My setting ###
+### my setting ###
 log/
 *.log
 out/
