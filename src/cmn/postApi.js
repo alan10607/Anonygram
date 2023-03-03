@@ -1,3 +1,4 @@
+
 import axios from 'axios';
 
 const protocol = window.location.protocol;
@@ -10,17 +11,27 @@ const baseRequest = axios.create({
   rejectUnauthorized: false //for test disable ssl
 });
 
-export default function postApi(url, data, afterFunc, errorFunc){
+export const postAndDispatch = (url, data, dispatch, afterFunc, errorFunc) => {
   if(!afterFunc) afterFunc = () => {};
   if(!errorFunc) errorFunc = () => {};
-
   return new Promise((resolve, reject) => {
     baseRequest.post(url, data)
       .then((res) => {
-        afterFunc(res.data.result)
+        dispatch(afterFunc(res.data.result));
       }).catch((e) => {
         console.log(e);
-        errorFunc(e);
+        dispatch(errorFunc(e));
       });
+  });
+};
+
+export const post = (url, data) => {
+  return new Promise((resolve, reject) => {
+    baseRequest.post(url, data).then((res) => {
+      resolve(res.data.result);
+    }).catch((e) => {
+      console.log(e.response.data.result);
+      reject(e.response.data.result);
+    });
   });
 };

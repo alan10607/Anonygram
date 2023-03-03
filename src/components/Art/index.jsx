@@ -1,37 +1,47 @@
-import React, {Component} from 'react';
-import ReactDOM from 'react-dom/client';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Bar from './Bar'
-import Cmn from '../../cmn';
-import postApi from '../../postApi';
-import './index.css';
+import { findIdSet } from '../../redux/actions/idSet';
+import { findPost } from '../../redux/actions/post';
 
-export default class App extends Component{
-  state = {
-    idList : []
-  };
+class Art extends Component{
 
-  findIdSetAfter = (returnList) => {
-    this.setState({idList : returnList})
-    console.log("idList size=" + returnList.length);
+  go = () => {
+    const {idSet} = this.props;
+
+      const data = {
+        idSet : idSet.slice(0, 0 + 10)
+      };
+      this.props.findPost(data);
+    
   }
   
-  findIdSetError(e){
-    Cmn.showConsoleBox("看起來泡麵打翻機台了, 請稍後再進來試試");
-  }
 
-  componentDidMount() {
-    postApi("findIdSet", {}, this.findIdSetAfter, this.findIdSetError);
+  componentDidMount(){
+    this.props.findIdSet();
   }
-
+  
   render(){
+    const {idSet} = this.props;
     return (
       <div>
-          <Bar/>
-          {/* <ContMain/>
-          <Cont/>
-          <Move/>
-          <Reply/> */}
+        {idSet.map(x => <div key={x}>{x}</div>)}
+        <Bar/>
+        <button onClick={this.go}>gogo</button>
+        {/* <ContMain/>
+        <Cont/>
+        <Move/>
+        <Reply/> */}
       </div>
     );
   }
 }
+
+export default connect(
+  state => ({
+    idSet : state.idSet
+  }), {
+    findIdSet,
+    findPost
+  }
+)(Art);
