@@ -1,0 +1,19 @@
+.bar{
+  display: flex;
+  align-items: center;
+  padding: 2px 0px 4px 0px;
+}
+
+.bar-head{
+  flex: 0 1 auto;
+  width: 26px;
+  height: 26px;
+  margin-right: 8px;
+}
+
+.author{
+  flex: 1 1 auto;
+  font-size: 14px;
+  margin: 0;
+  font-weight: 600;
+}

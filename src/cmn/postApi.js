@@ -11,19 +11,19 @@ const baseRequest = axios.create({
   rejectUnauthorized: false //for test disable ssl
 });
 
-export const postAndDispatch = (url, data, dispatch, afterFunc, errorFunc) => {
-  if(!afterFunc) afterFunc = () => {};
-  if(!errorFunc) errorFunc = () => {};
-  return new Promise((resolve, reject) => {
-    baseRequest.post(url, data)
-      .then((res) => {
-        dispatch(afterFunc(res.data.result));
-      }).catch((e) => {
-        console.log(e);
-        dispatch(errorFunc(e));
-      });
-  });
-};
+// export const postAndDispatch = (url, data, dispatch, afterFunc, errorFunc) => {
+//   if(!afterFunc) afterFunc = () => {};
+//   if(!errorFunc) errorFunc = () => {};
+//   return new Promise((resolve, reject) => {
+//     baseRequest.post(url, data)
+//       .then((res) => {
+//         dispatch(afterFunc(res.data.result));
+//       }).catch((e) => {
+//         console.log(e);
+//         dispatch(errorFunc(e));
+//       });
+//   });
+// };
 
 export const post = (url, data) => {
   return new Promise((resolve, reject) => {

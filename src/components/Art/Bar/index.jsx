@@ -1,30 +1,15 @@
-import React, {Component} from 'react';
-import ReactDOM from 'react-dom/client';
-import { post } from '../../../cmn/postApi';
+import React, { Component } from 'react'
+import { ICON_USER } from '../../../constant';
+import './index.css';
 
-export default class Bar extends Component{
-  state = {w : "NO"};
-  
-  test = () => {
-    let a = (e) => this.setState({w : JSON.stringify(e)});
-    post("findIdSet", {}, a, a);
-    post("findPost", {
-
-      "idList": [
-    "2aca4b14-8986-41f9-94b0-2779118ed145","bc3d06cf-6119-49fe-9471-04d8136bb8f3"
-      ]
-    }, a, a);
-  }
-
-  render(){
-    const {w} = this.state;
+export default class Bar extends Component {
+  render() {
+    const {authorName} = this.props;
     return (
-      // post();
-      <div>
-          <h5 onClick={this.test}>{w}</h5>
-
-          Bar
+      <div className="bar">
+        <img className="bar-head" src={ICON_USER}/>
+        <span className="author">{authorName}</span>
       </div>
-    );
+    )
   }
 }
