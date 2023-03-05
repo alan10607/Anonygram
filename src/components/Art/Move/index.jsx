@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './index.css';
 
-export default class Cont extends Component {
+export default class Move extends Component {
   render() {
     const {openStr, findTopCont} = this.props;
     return (

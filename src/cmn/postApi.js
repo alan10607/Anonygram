@@ -30,8 +30,9 @@ export const post = (url, data) => {
     baseRequest.post(url, data).then((res) => {
       resolve(res.data.result);
     }).catch((e) => {
-      console.log(e.response.data.result);
-      reject(e.response.data.result);
+      console.log(e);
+      if(e.response && e.data && e.data.result)
+        reject(e.response.data.result);
     });
   });
 };

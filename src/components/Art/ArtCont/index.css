@@ -1,3 +1,16 @@
+.cont{
+    padding: 0 3px;
+}
+
+.cont + .cont:before, .cont-box:before{
+    display: block;
+    width: 100%;
+    height: 8px;
+    margin-bottom: 7px;
+    content: "";
+    border-bottom: 0.5px solid #8e8e8e;
+}
+
 .title {
   font-size: 20px;
   font-weight: 600;
@@ -5,56 +18,11 @@
   word-break: break-word;
 }
 
-.word{
-  font-size: 16px;
-  line-height: 24px;
-  margin: 15px 0;
-  font-family: Microsoft JhengHei;
-}
-
-.word pre, .word a, .word span{
-  font-size: 16px;
-  line-height: 28px;
-  font-family: Microsoft JhengHei;
-  white-space: pre-wrap;
-  word-break: break-word;
-  display: inline;
-}
-
-.word a{
-  text-decoration: underline;
-  color: #0f00ee;
-}
-
-.word .bx{
-  text-decoration: underline;
-  color: #0f00ee;
-}
-
-.word-img{
-  max-width: 100%;
-}
-
-
 .info{
   font-size: 13px;
   display: flex;
   align-items: center;
   color: #8e8e8e;
-}
-
-.likes{
-}
-
-.likes-out{
-}
-
-.likes-in{
-  flex: 0 1 auto;
-  font-size: 13px;
-  color: #8e8e8e;
-  min-width: 8px;
-  text-align: right;
 }
 
 .likes-icon{
@@ -64,14 +32,6 @@
   filter: invert(61%) sepia(2%) saturate(184%) hue-rotate(19deg) brightness(93%) contrast(77%);
 }
 
-.del{
-  flex: 0 1 auto;
-  font-size: 13px;
-  color: #545454;
-  padding-left: 10px;
-  font-weight: normal;
-}
-
-.cont[is-user-like = "true"] .likes-icon{
+.likes-icon-yes{
   filter: invert(15%) sepia(55%) saturate(6826%) hue-rotate(0deg) brightness(103%) contrast(95%);
 }

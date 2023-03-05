@@ -1,3 +1,83 @@
-.App {
+body {
+  font-family: Microsoft JhengHei;
+  background-color: #e0e0e0;
+  max-width: 430px;
+  margin: 0 auto;
+  color: #262626;
+}
+
+p {
+  margin: 5px 0;
+}
+
+a {
+  text-decoration: initial;
+  color: inherit;
+  font-size: inherit;
+}
+
+body textarea {
+  font-size: 18px;
+  line-height: 28px;
+  background-color: #fafafa;
+  border: 0;
+  padding: 4px 5px 3px 5px;
+  font-family: Microsoft JhengHei;
+  outline-width: 0px;
+}
+
+body button {
+  font-size: 18px;
+  line-height: 28px;
+  padding: 4px 10px 4px 10px;
+  border: 0.5px solid #d1d1d1;
+  background-color: #fafafa;
+  cursor: pointer;
+  transition: 0.1s;
+}
+
+body button:hover {
+  box-shadow: #38373759 0px 0px 7px 0px;
+  transition: 0.1s;
+}
+
+input {
+  font-size: 18px;
+  line-height: 28px;
+  font-family: Microsoft JhengHei;
+  background-color: #fafafa;
+  border: 0.5px solid #d1d1d1;
+  outline-width: 0px;
+  padding: 4px 10px 4px 10px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+table td {
+  border: 1px solid black;
+  padding: 3px 5px;
+}
+
+.full-screan {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.center {
+  display: table;
+}
+
+.center > div {
+  display: table-cell;
+  vertical-align: middle;
   text-align: center;
 }

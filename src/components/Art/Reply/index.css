@@ -1,0 +1,57 @@
+.reply-box{
+  padding: 9px 0 3px 0;
+  transition-timing-function: cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  transition-duration: 0.5s;
+  display: flex;
+  flex-direction: column;
+  border-top: 0.5px solid #8e8e8e;
+}
+
+.reply-open{
+  bottom: 60vh;
+}
+
+.reply-textarea{
+  margin: 9px 0;
+  display: block;
+  flex: 1 1 auto;
+  height: 250px;
+  line-height: 28px;
+  font-family: Microsoft JhengHei;
+  border: 0.5px solid #d1d1d1;
+  outline-width: 0px;
+  padding: 4px 10px 4px 10px;
+  overflow-x: auto;
+}
+
+.reply-textarea img{
+  max-width: 100%;
+}
+
+.reply-img{
+  flex: 0 1 auto;
+}
+
+.reply-img img{
+  width: 24px;
+  height: 24px;
+}
+
+.reply-img input{
+  display: none;
+}
+
+.reply-summit{
+  flex: 0 0 auto;
+  font-size: 14px;
+  color: #262626;
+}
+
+.reply-info{
+  font-size: 13px;
+  color: #262626;
+}
+
+.flex-empty{
+    flex: 1 1 auto;
+}

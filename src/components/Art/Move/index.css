@@ -1,0 +1,15 @@
+.move{
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #8e8e8e;
+    padding: 7px 4px 7px 4px;
+}
+
+.open{
+    flex: 1 1 auto;
+}
+
+.reply{
+    flex: 0 1 auto;
+}
