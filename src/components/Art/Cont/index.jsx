@@ -1,37 +1,38 @@
-import React, { Component } from 'react'
-import { ICON_USER, ICON_LIKE } from '../../../constant';
+import React from 'react'
+import { useSelector, useDispatch } from 'react-redux';
+import Word from '../Word';
 import './index.css';
+import { ICON_USER, ICON_LIKE } from '../../../constant';
+import getTimeFromStr from '../../../utli/getTImeFromStr';
+import { likeContent, unlikeContent } from '../../../redux/actions/post';
 
-export class Cont extends Component {
-  render() {
-    const {authorName, likes, word, no, time} = this.props;
-    return (
-      <div>
-        <div className="bar-in">
-          <img className="bar-in-head" src={ICON_USER}/>
-          <div className="author">{authorName}</div>
-          <img className="likes-icon" src={ICON_LIKE} onclick="toggleLike(this);"/>
-          <div className="likes likes-in">{likes}</div>
-        </div>
-        <div className="word">{word}</div>
-        <div className="info">B{no}, {time}</div>
-      </div>
-    )
-  }
-}
+export default function Cont ({id, no}) {
+  const dispatch = useDispatch();
+  const {cont : {authorName, isUserLike, likes, word, createDate}} = useSelector(state => ({
+    cont : state.post.get(id).contList[no]
+  }));
 
-export class ContDelete extends Component {
-  render() {
-    const {no} = this.props;
-    return (
-      <div>
-        <div className="bar-in">
-          <img className="bar-in-head" src={ICON_USER}/>
-          <div className="author">這則留言已被本人刪除</div>
-        </div>
-        <div className="word">已經刪除的內容就像青春一樣回不去了</div>
-        <div className="info">B{no}, 已刪除</div>
-      </div>
-    )
+  const toggleLike = (id, no, isUserLike) => {
+    return () => {
+      const data = {id, no};
+      if(isUserLike){
+        dispatch(unlikeContent(data));
+      }else{
+        dispatch(likeContent(data));
+      }
+    }
   }
+
+  return (
+    <div id={`${id}-${no}`} className="cont">
+      <div className="bar">
+        <img className="bar-head" src={ICON_USER}/>
+        <div className="author">{authorName}</div>
+        <img className={"likes-icon " + (isUserLike ? "likes-icon-yes" : "")} src={ICON_LIKE} onClick={toggleLike(id, no, isUserLike)}/>
+        <div className="likes-num">{likes}</div>
+      </div>
+      <Word id={id} word={word}/>
+      <div className="info">B{no}, {getTimeFromStr(createDate)}</div>
+    </div>
+  )
 }

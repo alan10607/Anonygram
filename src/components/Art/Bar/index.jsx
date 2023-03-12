@@ -1,15 +1,17 @@
-import React, { Component } from 'react'
-import { ICON_USER } from '../../../constant';
+import React from 'react';
 import './index.css';
+import { ICON_USER } from '../../../constant';
+import { useSelector } from 'react-redux';
 
-export default class Bar extends Component {
-  render() {
-    const {authorName} = this.props;
-    return (
-      <div className="bar">
-        <img className="bar-head" src={ICON_USER}/>
-        <span className="author">{authorName}</span>
-      </div>
-    )
-  }
+export default function Bar ({id}) {
+  const {authorName} = useSelector(state => ({
+    authorName : state.post.get(id).contList[0].authorName
+  }));
+  
+  return (
+    <div className="bar">
+      <img className="bar-head" src={ICON_USER}/>
+      <div className="author">{authorName}</div>
+    </div>
+  )
 }

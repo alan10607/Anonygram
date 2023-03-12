@@ -1,37 +1,28 @@
-.cont{
-    padding: 0 3px;
-}
-
-.cont + .cont:before, .cont-box:before{
-    display: block;
-    width: 100%;
-    height: 8px;
-    margin-bottom: 7px;
-    content: "";
-    border-bottom: 0.5px solid #8e8e8e;
+.art-cont{
+  padding: 0 3px;
 }
 
 .title {
-  font-size: 20px;
-  font-weight: 600;
-  white-space: pre-wrap;
-  word-break: break-word;
+font-size: 20px;
+font-weight: 600;
+white-space: pre-wrap;
+word-break: break-word;
 }
 
 .info{
-  font-size: 13px;
-  display: flex;
-  align-items: center;
-  color: #8e8e8e;
+font-size: 13px;
+display: flex;
+align-items: center;
+color: #8e8e8e;
 }
 
 .likes-icon{
-  width: 12px;
-  height: 12px;
-  padding: 5px 6px 4px 0px;
-  filter: invert(61%) sepia(2%) saturate(184%) hue-rotate(19deg) brightness(93%) contrast(77%);
+width: 12px;
+height: 12px;
+padding: 5px 6px 4px 0px;
+filter: invert(61%) sepia(2%) saturate(184%) hue-rotate(19deg) brightness(93%) contrast(77%);
 }
 
 .likes-icon-yes{
-  filter: invert(15%) sepia(55%) saturate(6826%) hue-rotate(0deg) brightness(103%) contrast(95%);
+filter: invert(15%) sepia(55%) saturate(6826%) hue-rotate(0deg) brightness(103%) contrast(95%);
 }

@@ -1,34 +1,32 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { closeConsole } from '../../redux/actions/console';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import './index.css';
 
-class Console extends Component {
+export default function Console() {
+  const [isClose, setIsClose] = useState(true);
+  const dispatch = useDispatch();
+  const {consoleStr} = useSelector(state => ({
+    consoleStr : state.console.consoleStr
+  }));
 
-  componentDidUpdate() {
-    const {str, needReload} = this.props;
+  useEffect(() => {
+    if(consoleStr === "") return;
 
-    if(needReload) {
-      window.location.reload(true);//監測有無需要跳轉
+    setIsClose(false);
+    const closeTimeout = setTimeout(() => setIsClose(true), 3000);
+    return () => {
+      clearTimeout(closeTimeout);
     }
-    if(str) {
-      setTimeout(() => this.props.closeConsole(), 3000);
-    }
-  }
-
-  render() {
-    const {str} = this.props;
+  }, [consoleStr])
     
-    return (
-      <div>{str}</div>
-    )
-  }
-}
+  //     if(needReload) {
+//       window.location.reload(true);//監測有無需要跳轉
+//     }
 
-export default connect(
-  state => ({
-    str : state.console.str,
-    needReload : state.console.needReload,
-  }), {
-    closeConsole
-  }
-)(Console);
+  return (
+    <div id="console" className={isClose ? "console-close" : "console-open"}>
+      {consoleStr}
+    </div>
+  )
+  
+}

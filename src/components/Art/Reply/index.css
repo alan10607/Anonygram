@@ -1,5 +1,5 @@
-.reply-box{
-  padding: 9px 0 3px 0;
+.reply{
+  padding: 7px 0 3px 0;
   transition-timing-function: cubic-bezier(0.18, 0.89, 0.32, 1.28);
   transition-duration: 0.5s;
   display: flex;
@@ -7,11 +7,11 @@
   border-top: 0.5px solid #8e8e8e;
 }
 
-.reply-open{
+.replying{
   bottom: 60vh;
 }
 
-.reply-textarea{
+.reply-input{
   margin: 9px 0;
   display: block;
   flex: 1 1 auto;
@@ -24,7 +24,7 @@
   overflow-x: auto;
 }
 
-.reply-textarea img{
+.reply-input img{
   max-width: 100%;
 }
 

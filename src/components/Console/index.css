@@ -1,0 +1,20 @@
+#console {
+  position: fixed;
+  left: 0;
+  right: 0;
+  background-color: #8e8e8e;
+  transition-timing-function: ease-in-out;
+  transition-duration: 0.2s;
+  padding: 30px;
+  text-align: center;
+}
+
+.console-open{
+  top: 10vh;
+}
+
+.console-close {
+  top: -50vh;
+  visibility: hidden;
+  overflow: hidden;
+}
