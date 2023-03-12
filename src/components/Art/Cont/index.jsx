@@ -24,7 +24,7 @@ export default function Cont ({id, no}) {
   }
 
   return (
-    <div id={`${id}-${no}`} className="cont">
+    <div key={`${id}-${no}`} id={`${id}-${no}`} className="cont">
       <div className="bar">
         <img className="bar-head" src={ICON_USER}/>
         <div className="author">{authorName}</div>

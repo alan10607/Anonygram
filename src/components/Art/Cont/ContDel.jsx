@@ -4,7 +4,7 @@ import { ICON_USER } from '../../../constant';
 
 export default function ContDel ({id, no}) {
   return (
-    <div id={`${id}-${no}`} className="cont">
+    <div key={`${id}-${no}`} id={`${id}-${no}`} className="cont">
       <div className="bar">
         <img className="bar-head" src={ICON_USER}/>
         <div className="author">這則留言已被本人刪除</div>
