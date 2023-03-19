@@ -5,15 +5,27 @@
   margin: 15px 0;
 }
 
+.word div:first-child:not(img){
+  padding-left: 15px;
+}
+
+.word div:last-child:not(img){
+  padding-right: 15px;
+}
+
 .word span, .word a{
   white-space: pre-wrap;
   word-break: break-word;
   display: inline;
 }
 
-.word a, .word .bx{
+.word a{
   text-decoration: underline;
-  color: #0f00ee;
+  color: #0008ff;
+}
+
+.word .bx{
+  color: #0008ff;
 }
 
 .word img{

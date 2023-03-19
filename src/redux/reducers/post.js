@@ -3,9 +3,7 @@ import {
   FIND_POST, CREATE_POST,
   FIND_TOP_CONT, REPLY_POST,
   LIKE_CONTENT, UNLIKE_CONTENT,
-  UPLOAD_IMG,
-  SHOW_CONSOLE, NEED_RELOAD
-} from "../type";
+} from "../actions/post";
   
 const initState = new Map();
 
@@ -35,9 +33,6 @@ export default function postReducer(preState = initState, action) {
       newState.get(data.id).contList[data.no].isUserLike = false;
       newState.get(data.id).contList[data.no].likes--;
       return newState;
-
-    case UPLOAD_IMG:
-      return newState.get(data.id).imgUrl = data.imgUrl;
 
     default:
       return preState;

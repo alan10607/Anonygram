@@ -1,17 +1,17 @@
-.bar{
+.bar-art{
   display: flex;
   align-items: center;
-  padding: 2px 0px 4px 0px;
+  padding: 2px 12px 4px 12px;
 }
 
-.bar-head{
+.bar-art .bar-head{
   flex: 0 1 auto;
   width: 26px;
   height: 26px;
   margin-right: 8px;
 }
 
-.author{
+.bar-art .author{
   flex: 1 1 auto;
   font-size: 14px;
   margin: 0;

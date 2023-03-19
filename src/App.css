@@ -85,3 +85,7 @@ table td {
 .disable{
   display: none;
 }
+
+.flex-empty{
+  flex: 1 1 auto;
+}

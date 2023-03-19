@@ -1,19 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import { axiosInstance } from './api';
 import { PROTOCOL, LOCALHOST, METHOD_POST } from '../constant';
 
-const test = () => {
-  console.log("reolad?");
-  return axios.create({
-    baseURL: `${PROTOCOL}//${LOCALHOST}/${METHOD_POST}/`,
-    headers: {"Content-Type" : "application/json"},
-    rejectUnauthorized: false //for test disable ssl
-  });
-}
-
-const axiosInstance = test();
-
-export default function useAxios  (url)  {
+export default function useAxios (url) {
   const [res, setRes] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);

@@ -1,5 +1,5 @@
 .cont{
-  padding: 0 3px 0 15px;
+  padding: 0;
 }
 
 .cont:after, .art-cont:after{
@@ -11,38 +11,38 @@
   border-bottom: 0.5px solid #8e8e8e;
 }
 
-.bar{
+.cont .bar{
   display: flex;
   align-items: center;
   padding: 1px 0px;
 }
 
-.bar-head {
+.cont .bar-head {
   flex: 0 1 auto;
   width: 20px;
   height: 20px;
   padding: 2px 6px 2px 0px;
 }
 
-.author{
+.cont .author{
   flex: 1 1 auto;
   font-size: 14px;
   margin: 0;
   font-weight: 600;
 }
 
-.likes-icon{
+.cont .likes-icon{
   width: 12px;
   height: 12px;
   padding: 5px 6px 4px 0px;
   filter: invert(61%) sepia(2%) saturate(184%) hue-rotate(19deg) brightness(93%) contrast(77%);
 }
 
-.likes-icon-yes{
+.cont .likes-icon-yes{
   filter: invert(15%) sepia(55%) saturate(6826%) hue-rotate(0deg) brightness(103%) contrast(95%);
 }
 
-.likes-num{
+.cont .likes-num{
   flex: 0 1 auto;
   font-size: 13px;
   color: #8e8e8e;
@@ -50,14 +50,14 @@
   text-align: right;
 }
 
-.info{
+.cont .info{
   font-size: 13px;
   display: flex;
   align-items: center;
   color: #8e8e8e;
 }
 
-.word-del{
+.cont .word-del{
   font-size: 16px;
   line-height: 28px;
   font-family: Microsoft JhengHei;

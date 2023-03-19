@@ -3,13 +3,13 @@
   align-items: center;
   font-size: 14px;
   color: #8e8e8e;
-  padding: 7px 4px 14px 4px;
+  padding: 7px 16px 14px 16px;
 }
 
-.open{
+.move .open{
   flex: 1 1 auto;
 }
 
-.reply-btn{
+.move .reply-btn{
   flex: 0 1 auto;
 }

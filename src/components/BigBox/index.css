@@ -1,0 +1,23 @@
+#big-box{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #ffffff;
+  transition-timing-function: ease-in-out;
+  transition-duration: 0.2s;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  color: #262626;
+}
+
+#big-box .big-box-open{
+  bottom: 0;
+}
+
+#big-box .big-box-close{
+  bottom: 100vh;
+  visibility: hidden;
+  overflow: hidden;
+}

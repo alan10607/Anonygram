@@ -1,0 +1,15 @@
+#setting .list{
+  display: flex;
+  flex-direction: column;
+  padding: 5px 9px;
+}
+
+#setting .list div{
+  padding: 15px 10px;
+  flex: 0 1 auto;
+  background-color: #ececec;
+}
+
+#setting .list div + #setting .list div{
+  border-top: 0.5px solid #8e8e8e;
+}

@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import post from './post';
-import console from './console';
+import common from './common';
 
 export default combineReducers({
   post,
-  console
+  common
 });
