@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import useShowConsole from './useShowConsole';
 import { uploadImg } from '../redux/actions/post';
 
-export default function useUploadImg({ ref }) {
+export default function useUploadImg(id, inputRef) {
   const imgQuality = 0.97, imgMaxWidth = 450, plainHtml = "<div><br></div>";
   const [html, setHtml] = useState(plainHtml);
   const showConsole = useShowConsole();
@@ -14,15 +14,26 @@ export default function useUploadImg({ ref }) {
 
   /* --- 將上傳圖片傳回畫面--- */
   useEffect(() => {
-    if (uploadImgUrl !== "") {
-      const html = ref.current.innerHTML;
+    if (imgUrl !== "") {
+      const html = inputRef.current.innerHTML;
       setHtml(`${html}<img src="${imgUrl}" alt="${imgUrl}"/>${plainHtml}`);
     }
   }, [imgUrl])
 
   /* --- 影像壓鎖與預覽 --- */
   const startUpload = (event) => {
-    if(!checkFile(event.target.files)) return;
+    const files = event.target.files;
+    if (files == null || files.length == 0 || files[0] == null) {
+      showConsole("選擇圖片為空");
+      return;
+    }
+
+    const file = files[0];
+    const fileTypeExp = /image\/\w+/g;//必須為MIME image type
+    if (!fileTypeExp.test(file.type)) {
+      showConsole("圖片格式錯誤");
+      return;
+    }
     
     convertToBase64(file).then(base64 => {
       return buildImg(base64);
@@ -34,21 +45,6 @@ export default function useUploadImg({ ref }) {
       console.log("Image read failed", e);
       showConsole("圖片上傳失敗");
     });
-  }
-
-  const checkFile = (files) => {
-    if (files == null || files.length == 0 || files[0] == null) {
-      showConsole("選擇圖片為空");
-      return false;
-    }
-
-    const file = e.target.files[0];
-    const fileTypeExp = /image\/\w+/g;//必須為MIME image type
-    if (!fileTypeExp.test(file.type)) {
-      showConsole("圖片格式錯誤");
-      return false;
-    }
-    return true;
   }
 
   /* --- 影像讀取與壓鎖 --- */

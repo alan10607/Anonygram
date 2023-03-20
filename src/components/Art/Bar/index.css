@@ -1,13 +1,13 @@
 .bar-art{
   display: flex;
   align-items: center;
-  padding: 2px 12px 4px 12px;
+  padding: 14px 15px 12px 15px;
 }
 
 .bar-art .bar-head{
   flex: 0 1 auto;
-  width: 26px;
-  height: 26px;
+  width: 24px;
+  height: 24px;
   margin-right: 8px;
 }
 

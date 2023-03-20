@@ -3,6 +3,7 @@
 }
 
 .art-cont .title {
+  padding: 0 15px;
   font-size: 20px;
   font-weight: 600;
   white-space: pre-wrap;
@@ -10,6 +11,7 @@
 }
 
 .art-cont .info {
+  padding: 14px 15px;
   font-size: 13px;
   display: flex;
   align-items: center;

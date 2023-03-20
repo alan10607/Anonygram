@@ -2,16 +2,20 @@
   font-size: 16px;
   line-height: 28px;
   font-family: Microsoft JhengHei;
-  margin: 15px 0;
+  margin: 12px 0;
 }
 
-.word div:first-child:not(img){
+.word > div:not(:has(img)){
+  padding: 0 15px;
+}
+
+/* .word > div:first-child:not(img){
   padding-left: 15px;
 }
 
-.word div:last-child:not(img){
+.word > div > div:last-child:not(img){
   padding-right: 15px;
-}
+} */
 
 .word span, .word a{
   white-space: pre-wrap;
@@ -30,4 +34,6 @@
 
 .word img{
   max-width: 100%;
+  margin: 0 auto;
+  display: block;
 }

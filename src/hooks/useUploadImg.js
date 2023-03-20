@@ -2,7 +2,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { uploadImg } from '../redux/actions/post';
 
 export default function useUploadImg () {
-  debugger
   const dispatch = useDispatch();
   const {imgUrl} = useSelector(state => ({
     imgUrl : state.console.uploadImgUrl

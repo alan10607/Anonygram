@@ -40,7 +40,7 @@ export default function Word({ id, word }) {
     let last = 0;
     for (let i = 0; i < line.length; i++) {
       if (m.has(line[i])) {
-        if (last < i) allLine.push(createSpan(line.substring(last, i)));
+        if (last < i) allNode.push(createSpan(line.substring(last, i)));
         allNode.push(m.get(line[i]));
         last = i + 1;//跳過這個替換元
       }

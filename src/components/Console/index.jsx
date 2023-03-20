@@ -29,7 +29,7 @@ export default function Console() {
       <div id="console" className={isClose ? "console-close" : "console-open"}>
         {consoleStr}
       </div>
-      <div id="loading" className={"full-screan center " + isLoading ? "" : "disable"}>
+      <div id="loading" className={"full-screan center " + (isLoading ? "" : "disable")}>
         <div>
           <div className="loading-icon">
             <div></div>

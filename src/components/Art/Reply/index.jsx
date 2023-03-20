@@ -5,7 +5,7 @@ import useShowConsole from '../../../utli/useShowConsole';
 import useShowLoading from '../../../utli/useShowLoading';
 import useUploadImg from '../../../utli/useUploadImg';
 import getNowTime from '../../../utli/getNowTime';
-import { getContentWord, pasteAsPlain } from '../../../utli/InputControll';
+import { getContentWord, pasteAsPlain } from '../../../utli/inputControll';
 import { replyPost, uploadImg } from '../../../redux/actions/post';
 import { ICON_USER, ICON_UPLOAD_IMG } from '../../../utli/constant';
 
@@ -16,7 +16,7 @@ export default function Reply({ id, userName = "???" }) {
     contNum: state.post.get(id).contNum,
   }));
   const showConsole = useShowConsole();
-  const [uploadImg, newHtml] = useUploadImg(inputRef);
+  const [uploadImg, newHtml] = useUploadImg(id, inputRef);
   const dispatch = useDispatch();
 
   useEffect(() => {//更新html
