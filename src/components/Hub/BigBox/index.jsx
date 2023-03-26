@@ -1,0 +1,22 @@
+import React from 'react';
+import { Routes, Route } from "react-router-dom";
+import { useSelector } from 'react-redux';
+import New from './New';
+import Setting from './Setting';
+import './index.css';
+
+export default function BigBox() {
+  const { isOpenBigBox } = useSelector(state => ({
+    isOpenBigBox : state.common.isOpenBigBox
+  }));
+
+  return (
+    <div id="big-box" className={isOpenBigBox ? "big-box-open" : "big-box-close"}>
+      <Routes>
+        <Route exact path="/hub/new" component={New} />
+        <Route exact path="/hub/setting" setting={Setting} />
+      </Routes>
+    </div>
+  )
+
+}

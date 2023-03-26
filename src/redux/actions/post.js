@@ -1,5 +1,5 @@
 import { postApi } from "../../utli/api";
-import { SHOW_CONSOLE, NEED_RELOAD, SHOW_LOADING, CLOSE_LOADING } from "./common";
+import { SHOW_CONSOLE } from "./common";
 
 /* --- 同時也是request url --- */
 export const FIND_ID_SET = "findIdSet";
@@ -16,7 +16,8 @@ export const UPLOAD_IMG = "uploadImg";
 export const SAVE_ID_LIST = "saveidList";
 export const SAVE_FIND_ID_START = "saveFindIdStart";
 
-
+export const SHOW_LOADING = "showLoading";
+export const CLOSE_LOADING = "closeLoading";
 /* --- 查詢所有文章id --- */
 export const findIdSet = () => (dispatch) => {
   postApi(FIND_ID_SET, {}).then((idList) => {
@@ -41,7 +42,7 @@ export const findPost = (data) => (dispatch) => {
 export const createPost = (data) => (dispatch) => {
   postApi(CREATE_POST, data).then((res) => {
     dispatch({ type: SHOW_CONSOLE, data : "文章發佈成功!!" });
-    dispatch({ type: NEED_RELOAD });
+    dispatch({ type: CREATE_POST });
   }).catch((e) => {
     dispatch({ type: SHOW_CONSOLE, data : "文章發布失敗, 請稍後再試" });
   });
@@ -50,6 +51,7 @@ export const createPost = (data) => (dispatch) => {
 /* --- 刪除文章 --- */
 export const deletePost = (data) => (dispatch) => {
   postApi(DELETE_POST, data).then((res) => {
+    dispatch({ type: DELETE_POST, data : data });
     dispatch({ type: SHOW_CONSOLE, data : "刪除文章成功" });
   }).catch((e) => {
     dispatch({ type: SHOW_CONSOLE, data : "文章刪除失敗, 刪除權限已過期" });
@@ -82,6 +84,7 @@ export const replyPost = (data) => (dispatch, getState) => {
 /* --- 刪除留言 --- */
 export const deleteCont = (data) => (dispatch) => {
   postApi(DELETE_CONT, data).then((res) => {
+    dispatch({ type: DELETE_CONT, data : data });
     dispatch({ type: SHOW_CONSOLE, data : "刪除留言成功" });
   }).catch((e) => {
     dispatch({ type: SHOW_CONSOLE, data : "留言刪除失敗, 刪除權限已過期" });

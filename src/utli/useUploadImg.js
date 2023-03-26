@@ -1,16 +1,18 @@
 import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import useShowConsole from './useShowConsole';
+import { useTranslation } from 'react-i18next';
+import useConsole from './useConsole';
 import { uploadImg } from '../redux/actions/post';
 
 export default function useUploadImg(id, inputRef) {
   const imgQuality = 0.97, imgMaxWidth = 450, plainHtml = "<div><br></div>";
   const [html, setHtml] = useState(plainHtml);
-  const showConsole = useShowConsole();
   const { imgUrl } = useSelector(state => ({
     imgUrl : state.common.uploadImgUrl
   }));
   const dispatch = useDispatch();
+  const { t } = useTranslation();
+  const showConsole = useConsole();
 
   /* --- 將上傳圖片傳回畫面--- */
   useEffect(() => {
@@ -21,30 +23,31 @@ export default function useUploadImg(id, inputRef) {
   }, [imgUrl])
 
   /* --- 影像壓鎖與預覽 --- */
-  const startUpload = (event) => {
+  const startUpload = async (event) => {
     const files = event.target.files;
     if (files == null || files.length == 0 || files[0] == null) {
-      showConsole("選擇圖片為空");
+      showConsole(t("empty-img"));
       return;
     }
 
     const file = files[0];
     const fileTypeExp = /image\/\w+/g;//必須為MIME image type
     if (!fileTypeExp.test(file.type)) {
-      showConsole("圖片格式錯誤");
+      showConsole(t("not-img"));
       return;
     }
     
-    convertToBase64(file).then(base64 => {
+    const newBase64 = await convertToBase64(file)
+    .then(base64 => {
       return buildImg(base64);
     }).then(image => {
       return compressImg(image, imgQuality, imgMaxWidth);
-    }).then(newBase64 => {
-      doUploadImg(newBase64);
     }).catch(e => {
-      console.log("Image read failed", e);
-      showConsole("圖片上傳失敗");
+      console.log("Image load failed", e);
+      showConsole(t("load-img-err"));
     });
+
+    doUploadImg(newBase64);
   }
 
   /* --- 影像讀取與壓鎖 --- */

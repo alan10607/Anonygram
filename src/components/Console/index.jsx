@@ -4,14 +4,13 @@ import './index.css';
 
 export default function Console() {
   const [isClose, setIsClose] = useState(true);
-  const { consoleStr, isLoading, needReload } = useSelector(state => ({
+  const { consoleStr, isLoading } = useSelector(state => ({
     consoleStr : state.common.consoleStr,
     isLoading : state.common.isLoading,
-    needReload : state.common.needReload
   }));
 
   useEffect(() => {
-    if (consoleStr === "") return;
+    if (!consoleStr) return;
 
     setIsClose(false);
     const closeTimeout = setTimeout(() => setIsClose(true), 3000);
@@ -19,10 +18,6 @@ export default function Console() {
       clearTimeout(closeTimeout);
     }
   }, [consoleStr])
-
-  if(needReload) {//監測有無需要跳轉
-    setTimeout(() => window.location.reload(true), 800);
-  }
 
   return (
     <div>

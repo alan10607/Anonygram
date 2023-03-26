@@ -1,0 +1,38 @@
+.art-cont {
+  padding: 0;
+}
+
+.art-cont .title {
+  padding: 0 15px;
+  font-size: 20px;
+  font-weight: 600;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.art-cont .info {
+  padding: 14px 15px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  color: #8e8e8e;
+}
+
+.art-cont .info .del{
+  flex: 0 1 auto;
+  font-size: 13px;
+  color: #545454;
+  padding-left: 10px;
+  font-weight: normal;
+}
+
+.art-cont .likes-icon {
+  width: 12px;
+  height: 12px;
+  padding: 5px 6px 4px 0px;
+  filter: invert(61%) sepia(2%) saturate(184%) hue-rotate(19deg) brightness(93%) contrast(77%);
+}
+
+.art-cont .likes-icon-yes {
+  filter: invert(15%) sepia(55%) saturate(6826%) hue-rotate(0deg) brightness(103%) contrast(95%);
+}

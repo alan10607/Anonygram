@@ -1,0 +1,58 @@
+.login{
+  width: 100%;
+  height: 100vh;
+}
+
+.login .logo{
+  width: 220px;
+  margin: 10px auto;
+}
+
+.login form{
+  padding: 0px 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding-bottom: 12vh;
+}
+
+.login input{
+  margin: 9px 0;
+  display: block;
+  flex: 1 1 auto;
+}
+
+.login input[type="button"], .login input[type="submit"]{
+  background-color: #0095f6;
+  color: #ffffff;
+}
+
+.login .info{
+  text-align: right;
+  font-size: 15px;
+  color: #8e8e8e;
+}
+
+.login .hint{
+  text-align: center;
+  font-size: 15px;
+  color: #ff1616;
+  margin-top: 24px;
+}
+
+.login .register{
+  color: #262626;
+}
+
+.login .line-word{
+  margin: 4vh auto 8vh auto;
+}
+
+.login .line-word:before, .line-word:after {
+  display: inline-block;
+  width: 60px;
+  height: 8px;
+  margin: 0 2px 5px 2px;
+  content: "";
+  border-bottom: 0.5px solid #b1b1b1;
+}

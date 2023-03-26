@@ -5,8 +5,7 @@ import {
   SHOW_CONSOLE,
   CLOSE_CONSOLE,
   SHOW_LOADING,
-  CLOSE_LOADING,
-  NEED_RELOAD
+  CLOSE_LOADING
 } from "../actions/common";
 
 const initState = {
@@ -15,12 +14,12 @@ const initState = {
   uploadImgUrl : "",
   consoleStr : "",
   isLoading : false,
-  isOpenBigBox : false,
-  needReload : false
+  isOpenBigBox : false
 };
 
 export default function commonReducer(preState = initState, action) {
   const { type, data } = action;
+
   switch (type) {
     case SAVE_ID_LIST:
       return Object.assign({}, preState, { idList : data });
@@ -48,9 +47,6 @@ export default function commonReducer(preState = initState, action) {
 
     case CLOSE_LOADING:
       return Object.assign({}, preState, { isLoading : false });
-
-    case NEED_RELOAD:
-      return Object.assign({}, preState, { needReload : true });
 
     default:
       return preState;

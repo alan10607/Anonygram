@@ -1,54 +1,64 @@
-import { useState, useEffect, useRef } from 'react';
-import { axiosInstance, userApi } from '../../utli/api';
-import { useLocalStorage } from '../../utli/useLocalStorage';
-import { setCookie } from '../../utli/cookie';
-import { LOGIN_TOKEN } from '../../utli/constant';
+import { useState, useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
+import { saveUserData } from '../../redux/actions/user';
+import { userApi } from '../../utli/api';
+import { ICON_LOGO } from '../../utli/constant';
+import useJwt from '../../utli/useJwt';
+import './index.css'
 
 export default function Login() {
-  const userRef = useRef("");
+  const emailRef = useRef("");
   const pwRef = useRef("");
-  const [user, setUser] = useState("");
-  const [pw, setPw] = useState("");
-  const [error, setError] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [jwtToken, setJwtToken] = useLocalStorage("ag-jwt");
+  const [hint, setHint] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { t } = useTranslation();
+  const [jwtToken, setJwtToken] = useJwt();
 
   const doLogin = (event) => {
     event.preventDefault();
 
     const data = {
-      username : userRef.current.value,
-      password : pwRef.current.value,
+      email: emailRef.current.value,
+      pw: pwRef.current.value,
     }
+
     userApi("login", data).then((res) => {
-      console.log(res);
-      setJwtToken(res.jwtToken);
-    }).catch((e) => {
-      console.log(e);
+      setJwtToken(res.token);
+      dispatch(saveUserData(res));
+      navigate("/hub");
+    }).catch(() => {
+      setHint(t("login-err"));
     });
   }
 
+  const doLoginAnony = (event) => {
+    event.preventDefault();
+    userApi("loginAnonymity", {}).then((res) => {
+      setJwtToken(res.jwtToken);
+      navigate("/hub");
+    }).catch(() => {});
+  }
 
   return (
-    <div id="login" className="center">
+    <div className="login center">
       <div>
-        <img className="logo" th:src="@{~/pic/logo.svg}" />
-        <form onSummit={doLogin} method="post" action="loginProcessing">
-          <input res={userRef} id="username" type="text" placeholder="Email" required autofocus/>
-          <input res={pwRef} id="password" type="password" placeholder="密碼" required/>
-          <input type="hidden" th:if="${_csrf != null}" name="${_csrf.parameterName}" value="${_csrf.token}" />
-          <input type="submit" value="登入" />
+        <img className="logo" src={ICON_LOGO} />
+        <form onSubmit={doLogin}>
+          <input ref={emailRef} type="text" placeholder="Email" required autoFocus />
+          <input ref={pwRef} type="password" placeholder={t("pw")} required />
+          {/* <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> */}
+          <input type="submit" value={t("submit")} />
         </form>
         <p className="info">
-          <span>還沒有帳號?</span>
-          <a className="register" href="register">註冊</a>
+          <span>{t("no-account?")}</span>
+          <a className="register" href="register">{t("register")}</a>
         </p>
-        <p className="error">
-          {error && <span th:if="${param.error != null}">Email或用戶密碼錯誤</span>}
-          {/* <span th:if="${param.logout != null}">登出成功</span> */}
-        </p>
-        <div className="line-word">或</div>
-        <input type="button" value="以匿名登入" onclick="toHub();" />
+        <p className="hint">{hint}</p>
+        <div className="line-word">{t("or")}</div>
+        <input type="button" value={t("as-anony")} onClick={doLoginAnony} />
       </div>
     </div>
   )
