@@ -8,12 +8,18 @@
   margin: 10px auto;
 }
 
-.login form{
-  padding: 0px 15px;
+.login .col-flex{
+  padding: 0px 25px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   padding-bottom: 12vh;
+}
+
+.login .col-flex form{
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 
 .login input{
@@ -45,7 +51,7 @@
 }
 
 .login .line-word{
-  margin: 4vh auto 8vh auto;
+  margin: 10px auto 55px auto;
 }
 
 .login .line-word:before, .line-word:after {

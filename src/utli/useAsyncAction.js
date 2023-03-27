@@ -1,16 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
-import { 
-  findIdSet, 
-
-  FIND_POST, 
-  SAVE_FIND_ID_START 
-} from '../redux/actions/post';
-import { showConsole, SHOW_CONSOLE } from '../redux/actions/common';
 import useAxios from './useAxios';
-import reload from './reload';
+import { reload } from './reolad';
+import { useDispatch } from 'react-redux';
+import { TokenExpiredError } from './useAxios';
 
 /* --- 同時也是request url --- */
+export const FIND_ID_SET = "findIdSet";
 export const FIND_POST = "findPost";
 export const CREATE_POST = "createPost";
 export const DELETE_POST = "deletePost";
@@ -24,27 +21,27 @@ export const UPLOAD_IMG = "uploadImg";
 export const SAVE_ID_LIST = "saveidList";
 export const SAVE_FIND_ID_START = "saveFindIdStart";
 
-const { t } = useTranslation();
+export const SHOW_LOADING = "showLoading";
+export const CLOSE_LOADING = "closeLoading";
 
-export const useFindIdSet = (data) => {
-  useAsyncAction(FIND_ID_SET, data, (idList) => {
-    dispatch({ type: FIND_ID_SET, data : idList });
-    dispatch({ type: SAVE_ID_LIST, data : idList });
-  }, (error) => {
-    dispatch({ type: SHOW_CONSOLE, data : t("findIdSet-err") });
-  })();
-}
+export const SHOW_CONSOLE = "showConsole";
 
-export const useFindPost = (data) => {
-  useAsyncAction(FIND_POST, data, (artList) => {
-    dispatch({ type: FIND_POST, data : artList });
-    dispatch({ type: SAVE_FIND_ID_START, data : artList });
-  }, (error) => {
-    dispatch({ type: SHOW_CONSOLE, data : t("findPost-err") });
-  })();
-}
+// const { t } = useTranslation();
 
-export default useAsyncAction = (
+export const useFindIdSet = () => {};
+
+
+// export const useFindPost = (data) => {
+//   const dispatch = useDispatch();
+//   useAsyncAction(FIND_POST, data, (artList) => {
+//     dispatch({ type: FIND_POST, data : artList });
+//     dispatch({ type: SAVE_FIND_ID_START, data : artList });
+//   }, (error) => {
+//     dispatch({ type: SHOW_CONSOLE, data : t("findPost-err") });
+//   })();
+// }
+
+const useAsyncAction = (
   url, 
   data, 
   afterFunc = () => {}, 
@@ -52,19 +49,19 @@ export default useAsyncAction = (
   loadingFunc = () => {}
 ) => {
   const [fetchData, res, error, loading] = useAxios(url);
+  const navigate = useNavigate();
   useEffect(() => {
     if (loading) {
       loadingFunc();
     } else if (error) {
-      
-      // if(error instanceof BackendFormatError) reload();
+      if(error instanceof TokenExpiredError) navigate("/");
       errorFunc();
     } else if (res) {
       afterFunc();
     }
   }, [res, error, loading])
 
-  return () => { fetchData(data) };
+  return fetchData;
 }
 
 
@@ -73,8 +70,4 @@ export default useAsyncAction = (
 //   return token ? { headers : { Authorization : `Bearer ${token}` } } : {}; 
 // };
 
-// const isTokenValid = () => {
-//   const exp = localStorage.getItem(JWT_TOKEN_EXP);
-//   const now = Math.floor(Date.now() / 1000);
-//   return tokenExp && );
-// }
+

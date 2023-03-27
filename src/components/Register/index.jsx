@@ -13,7 +13,7 @@ export default function Register() {
   const [hint, setHint] = useState("");
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const [jwtToken, setJwtToken] = useJwt();
+  const { setJwt } = useJwt();
 
   const doRegister = (event) => {
     event.preventDefault();
@@ -29,7 +29,7 @@ export default function Register() {
 
     const data = { email, userName, pw };
     userApi("register", data).then((res) => {
-      setJwtToken(res.jwtToken);
+      setJwt(res.jwtToken);
       waitThenGo(3);
     }).catch(() => {
       setHint(t("register-err"));

@@ -12,10 +12,10 @@ export default function BigBox() {
 
   return (
     <div id="big-box" className={isOpenBigBox ? "big-box-open" : "big-box-close"}>
-      <Routes>
-        <Route exact path="/hub/new" component={New} />
-        <Route exact path="/hub/setting" setting={Setting} />
-      </Routes>
+
+        {/* <Route path='/hub/new' element={<New />} />
+        <Route exact path='/hub/setting' element={<Setting />} /> */}
+
     </div>
   )
 

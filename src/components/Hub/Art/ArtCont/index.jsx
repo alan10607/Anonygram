@@ -30,7 +30,7 @@ export default function ArtCont({ id, no = 0 }) {
       <div className="info">
         <img className={"likes-icon " + (isUserLike ? "likes-icon-yes" : "")}
           src={ICON_LIKE} onClick={ toggleLike(id, no, isUserLike) } />
-        <div>{getLikeStr()} ,  B{no} ,  {getTimeFromStr(createDate)}</div>
+        <div>{getLikeStr()} B{no}, {getTimeFromStr(createDate)}</div>
         <div className="del" onClick={() => { dispatch(deletePost({ id, no })) }}>{t("del")}</div>
       </div>
     </div>

@@ -12,8 +12,8 @@ export default function ContDel({ id, no }) {
         <img className="bar-head" src={ICON_USER} />
         <div className="author">{t("del-author")}</div>
       </div>
-      <div className="word">{t("del-word")}</div>
-      <div className="info">B{no} ,  {t("del-done")}</div>
+      <div className="del-word">{t("del-word")}</div>
+      <div className="info">B{no}, {t("del-done")}</div>
     </div>
   )
 }

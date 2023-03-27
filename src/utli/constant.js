@@ -6,7 +6,6 @@ export const DOMAIN  = "localhost";
 
 //Jwt
 export const JWT_TOKEN = "ag-jwt";
-export const JWT_TOKEN_EXP = "ag-jwt-exp";
 
 //Pic
 export const ICON_USER = "/pic/user.png";

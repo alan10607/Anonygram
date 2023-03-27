@@ -26,7 +26,7 @@ export default function Cont({ id, no }) {
       </div>
       <Word id={id} word={word} />
       <div className="info">
-        <div>B{no} ,  {getTimeFromStr(createDate)}</div>
+        <div>B{no}, {getTimeFromStr(createDate)}</div>
         <div className="del" onClick={() => { dispatch(deleteCont({ id, no })) }}>{t("del")}</div>
       </div>
     </div>

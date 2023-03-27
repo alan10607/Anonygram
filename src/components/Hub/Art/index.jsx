@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { findIdSet, findPost } from '../../../redux/actions/post';
-import { closeBigBox } from '../../../redux/actions/common';
 import { CONT_STATUS_TYPE } from '../../../utli/constant';
 import ArtCont from './ArtCont';
 import Bar from './Bar';
@@ -18,7 +17,7 @@ export default function Art() {
   const { post, idList, findIdStart } = useSelector(state => ({
     post : state.post,
     idList : state.common.idList,
-    findIdStart : state.common.findIdStart
+    findIdStart : state.common.findIdStart,
   }));
   const dispatch = useDispatch();
 
@@ -65,8 +64,8 @@ export default function Art() {
   }
 
   const clickReply = (event) => {
-    if(!event.target.hasAttribute("data-click-reply")){
-      dispatch(closeBigBox());
+    if(!event.target.closest("[data-click-reply]")){
+      setReplyId("");
     }
   }
 
@@ -126,6 +125,7 @@ export default function Art() {
 
   return (
     <div>
+      <div className="empty-head"></div>
       {createArt()}
     </div>
   )

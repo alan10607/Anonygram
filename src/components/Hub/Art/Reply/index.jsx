@@ -8,25 +8,26 @@ import { ICON_USER, ICON_UPLOAD_IMG } from '../../../../utli/constant';
 import useConsole from '../../../../utli/useConsole';
 import useUploadImg from '../../../../utli/useUploadImg';
 import './index.css';
+import useJwt from '../../../../utli/useJwt';
 
 export default function Reply({ id }) {
   const [html, setHtml] = useState("");
   const inputRef = useRef();
-  const { contNum, username } = useSelector(state => ({
+  const { contNum } = useSelector(state => ({
     contNum : state.post.get(id).contNum,
-    username : state.user.username
   }));
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const showConsole = useConsole();
   const [uploadImg, newHtml] = useUploadImg(id, inputRef);
+  const { payload : { sub : username } } = useJwt();
 
   useEffect(() => {//更新html
     setHtml(newHtml);
   }, [id, newHtml])
   
   const doReplyPost = () => {
-    const word = getContentWord(inputRef);
+    const word = getContentWord(inputRef.current);
     if (word.trim() == "") return showConsole(t("empty-word"));
     dispatch(replyPost({ id, word }));
   }
@@ -37,7 +38,7 @@ export default function Reply({ id }) {
         <img className="bar-head" src={ICON_USER} />
         <div className="author">{username}</div>
       </div>
-      <div className="info">B{contNum} ,  {getNowTime()}</div>
+      <div className="info">B{contNum}, {getNowTime()}</div>
       <div 
         ref={inputRef}
         className="reply-input"

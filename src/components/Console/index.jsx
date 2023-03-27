@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { closeConsole } from '../../redux/actions/common';
 import './index.css';
 
 export default function Console() {
@@ -8,20 +9,20 @@ export default function Console() {
     consoleStr : state.common.consoleStr,
     isLoading : state.common.isLoading,
   }));
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!consoleStr) return;
 
-    setIsClose(false);
-    const closeTimeout = setTimeout(() => setIsClose(true), 3000);
+    const closeTimeout = setTimeout(() => { dispatch(closeConsole()) }, 2000);
     return () => {
       clearTimeout(closeTimeout);
     }
-  }, [consoleStr])
+  })
 
   return (
     <div>
-      <div id="console" className={isClose ? "console-close" : "console-open"}>
+      <div id="console" className={consoleStr ? "console-open" : "console-close"}>
         {consoleStr}
       </div>
       <div id="loading" className={"full-screan center " + (isLoading ? "" : "disable")}>

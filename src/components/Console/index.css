@@ -7,10 +7,11 @@
   transition-duration: 0.2s;
   padding: 30px;
   text-align: center;
+  z-index: 99999;
 }
 
 .console-open{
-  top: 10vh;
+  top: 17vh;
 }
 
 .console-close {

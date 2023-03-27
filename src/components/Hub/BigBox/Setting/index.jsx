@@ -11,10 +11,10 @@ export default function Setting() {
     username : state.user.isAnony
   }));
   const { t } = useTranslation();
-  const [jwtToken, setJwtToken] = useJwt();
+  const { setJwt } = useJwt();
 
   const clearJwt = () => {
-    setJwtToken("");
+    setJwt("");
     console.log("Logout clear jwt");
   }
 

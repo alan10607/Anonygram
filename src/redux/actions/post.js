@@ -1,5 +1,5 @@
 import { postApi } from "../../utli/api";
-import { SHOW_CONSOLE } from "./common";
+import { SHOW_CONSOLE, SHOW_LOADING, CLOSE_LOADING } from "./common";
 
 /* --- 同時也是request url --- */
 export const FIND_ID_SET = "findIdSet";
@@ -16,8 +16,6 @@ export const UPLOAD_IMG = "uploadImg";
 export const SAVE_ID_LIST = "saveidList";
 export const SAVE_FIND_ID_START = "saveFindIdStart";
 
-export const SHOW_LOADING = "showLoading";
-export const CLOSE_LOADING = "closeLoading";
 /* --- 查詢所有文章id --- */
 export const findIdSet = () => (dispatch) => {
   postApi(FIND_ID_SET, {}).then((idList) => {
@@ -76,6 +74,7 @@ export const replyPost = (data) => (dispatch, getState) => {
       no : state.post.get(data.id).contList.length
     };
     dispatch(findTopCont(findTopContData));
+    dispatch({ type: REPLY_POST, data : data});
   }).catch((e) => {
     dispatch({ type: SHOW_CONSOLE, data : "留言失敗, 請稍後再試" });
   });

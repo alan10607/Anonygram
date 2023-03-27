@@ -10,13 +10,14 @@
   flex-direction: column;
   padding: 15px;
   color: #262626;
+  z-index: 9999;
 }
 
-#big-box .big-box-open{
+#big-box.big-box-open{
   bottom: 0;
 }
 
-#big-box .big-box-close{
+#big-box.big-box-close{
   bottom: 100vh;
   visibility: hidden;
   overflow: hidden;

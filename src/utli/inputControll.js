@@ -1,8 +1,5 @@
 /* --- 白板內容讀取 --- */
-export const getContentWord = (ref) => {
-  if (!ref || !ref.current) return
-
-  const e = ref.current;
+export const getContentWord = (e) => {
   const row = [];
   e.childNodes.forEach((node, i) => {
     if (node.nodeName == "IMG") {

@@ -2,7 +2,7 @@ import React from 'react';
 import { ICON_LOGO } from "../../utli/constant";
 import "./index.css";
 
-export default Error = () => {
+export default function Error() {
   return (
     <div id="error" class="full-screan center">
       <div>

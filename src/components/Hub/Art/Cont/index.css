@@ -65,3 +65,11 @@
   padding-left: 10px;
   font-weight: normal;
 }
+
+.cont .del-word{
+  font-size: 16px;
+  line-height: 28px;
+  font-family: Microsoft JhengHei;
+  margin: 12px 0;
+  padding: 0 15px;
+}

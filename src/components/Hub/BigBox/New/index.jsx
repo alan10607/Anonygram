@@ -8,19 +8,18 @@ import { ICON_USER, ICON_UPLOAD_IMG } from '../../../../utli/constant';
 import useConsole from '../../../../utli/useConsole';
 import useUploadImg from '../../../../utli/useUploadImg';
 import TopBar from './TopBar';
+import useJwt from '../../../../utli/useJwt';
 import './index.css';
 
 export default function New() {
   const [html, setHtml] = useState("");
   const inputRef = useRef();
   const inputTitleRef = useRef();
-  const { username } = useSelector(state => ({
-    username : state.user.username
-  }));
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const showConsole = useConsole();
   const [uploadImg, newHtml] = useUploadImg(inputRef);
+  const { payload : { sub : username } } = useJwt();
 
   useEffect(() => {//上傳圖片後更新html
     setHtml(newHtml);

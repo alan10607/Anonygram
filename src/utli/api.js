@@ -1,6 +1,7 @@
 import axios from "axios";
 import { reload } from "./reolad";
-import { PROTOCOL, DOMAIN, JWT_TOKEN, JWT_TOKEN_EXP } from "./constant";
+import { PROTOCOL, DOMAIN, JWT_TOKEN } from "./constant";
+import { getPayload } from "./useJwt";
 
 export const axiosInstance = axios.create({
   baseURL: `${PROTOCOL}//${DOMAIN}/`,
@@ -9,15 +10,15 @@ export const axiosInstance = axios.create({
 });
 
 export const postApi = (path, data) => api(path, data, "/post");
-export const userApi = (path, data) => api(path, data, "/user");
+export const userApi = (path, data) => api(path, data, "/auth");
 
 const api = async (path, data = {}, method = "") => {
-  if(!isTokenValid()) return reload();
+  // if(!isTokenValid()) return reload();
 
   const url = `${method}/${path}`;
   try{
     const res = await axiosInstance.post(url, data, getHeader());
-    if(!res.data || !res.data.result) throw "Response format error: " + url;
+    if(!res.data) throw "Response format error: " + url;
     return Promise.resolve(res.data.result);
   }catch(e){
     console.log(e.response.data.result || e.message || e);
@@ -31,7 +32,7 @@ const getHeader = () => {
 };
 
 const isTokenValid = () => {
-  const exp = localStorage.getItem(JWT_TOKEN_EXP);
-  const now = Math.floor(Date.now() / 1000);
-  return exp > now;
+  const token = localStorage.getItem(JWT_TOKEN);
+  const payload = getPayload(token);
+  return payload.exp > Math.floor(Date.now() / 1000);;
 }

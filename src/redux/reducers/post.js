@@ -34,6 +34,10 @@ export default function postReducer(preState = initState, action) {
       newState.get(data[0].id).contList.push(...data);
       return newState;
     
+    case REPLY_POST:
+      newState.get(data.id).contNum++;
+      return newState;
+    
     case DELETE_CONT:
       newState.get(data.id).contList[data.no].status = CONT_STATUS_TYPE.DELETED;
       return newState;

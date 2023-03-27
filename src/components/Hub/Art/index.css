@@ -5,3 +5,7 @@
 .art + .art{
   margin-top: 10px
 }
+
+.empty-head{
+  height: 70px;
+}

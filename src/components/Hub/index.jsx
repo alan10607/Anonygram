@@ -7,17 +7,18 @@ import Art from "./Art";
 
 export default function Hub() {
   const navigate = useNavigate();
-  const [jwtToken, setJwtToken] = useJwt();
+  const { jwt } = useJwt();
 
   useEffect(() => {
-    if(!jwtToken) navigate("/login");
-  }, jwtToken);
+    console.log("Check jwtToken", jwt)
+    if(!jwt) navigate("/login");
+  }, [jwt]);
 
   return (
     <div>
-      {/* <Header /> */}
+      <Header />
+      <BigBox />
       <Art />
-      {/* <BigBox /> */}
     </div>
   )
 }
