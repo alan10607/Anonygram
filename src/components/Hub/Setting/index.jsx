@@ -1,33 +1,39 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import useJwt from '../../../../utli/useJwt';
-import TopBar from '../New/TopBar';
+import { BIG_BOX_ID, JWT_TOKEN } from '../../../utli/constant';
+import useJwt from '../../../utli/useJwt';
+import Bigbox from '../BigBox';
 import './index.css';
 
 export default function Setting() {
-  const { isAnony } = useSelector(state => ({
-    username : state.user.isAnony
-  }));
   const { t } = useTranslation();
-  const { setJwt } = useJwt();
+  const { setJwt, payload : { isAnonymous } } = useJwt();
 
   const clearJwt = () => {
-    setJwt("");
+    debugger
+    localStorage.setItem(JWT_TOKEN, null);
     console.log("Logout clear jwt");
   }
 
-  return (
+  const boxRender = () => (
     <div id="setting">
-      <TopBar/>
       <div className="list">
-        {isAnony ?
+        {isAnonymous ?
           <Link to="/login"><div>{t("login")}</div></Link> :
           <Link to="/login"><div onClick={clearJwt}>{t("logout")}</div></Link>
         }
       </div>
     </div>
+  )
+
+  return (
+    <Bigbox
+      bigBoxId={BIG_BOX_ID.SETTING}
+      title=""
+      btnRender={() => <div></div>}
+      boxRender={boxRender}
+    />
   )
 
 }

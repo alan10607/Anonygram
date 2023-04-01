@@ -5,7 +5,7 @@ import useConsole from './useConsole';
 import { uploadImg } from '../redux/actions/post';
 
 export default function useUploadImg(id, inputRef) {
-  const imgQuality = 0.97, imgMaxWidth = 450, plainHtml = "<div><br></div>";
+  const imgQuality = 1, imgMaxWidth = 450, plainHtml = "<div><br></div>";
   const [html, setHtml] = useState(plainHtml);
   const { imgUrl } = useSelector(state => ({
     imgUrl : state.common.uploadImgUrl

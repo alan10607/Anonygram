@@ -39,5 +39,5 @@ export const getNowTime = () => {
     hh : String(now.getHours()).padStart(2, "0"),
     mm : String(now.getMinutes()).padStart(2, "0")
   };
-  return i18next.t("date-half", dateObj) ;;
+  return i18next.t("time-half", dateObj) ;;
 }

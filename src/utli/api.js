@@ -1,7 +1,7 @@
 import axios from "axios";
 import { reload } from "./reolad";
 import { PROTOCOL, DOMAIN, JWT_TOKEN } from "./constant";
-import { getPayload } from "./useJwt";
+import { Jwt } from "./useJwt";
 
 export const axiosInstance = axios.create({
   baseURL: `${PROTOCOL}//${DOMAIN}/`,
@@ -33,6 +33,6 @@ const getHeader = () => {
 
 const isTokenValid = () => {
   const token = localStorage.getItem(JWT_TOKEN);
-  const payload = getPayload(token);
+  const payload = Jwt.getPayload(token);
   return payload.exp > Math.floor(Date.now() / 1000);;
 }

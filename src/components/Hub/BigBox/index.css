@@ -1,4 +1,4 @@
-#big-box{
+.big-box{
   position: fixed;
   top: 0;
   left: 0;
@@ -8,17 +8,52 @@
   transition-duration: 0.2s;
   display: flex;
   flex-direction: column;
-  padding: 15px;
+  padding: 0;
   color: #262626;
   z-index: 9999;
 }
 
-#big-box.big-box-open{
+.big-box.big-box-open{
   bottom: 0;
 }
 
-#big-box.big-box-close{
+.big-box.big-box-close{
   bottom: 100vh;
   visibility: hidden;
   overflow: hidden;
+  opacity: 0;
+}
+
+.big-box .top-bar{
+  display: flex;
+  align-items: center;
+  height: 70px;
+  padding: 0 15px;
+}
+
+.big-box .top-bar > div:nth-child(1){
+  flex: 0 1 auto;
+  font-size: 20px;
+}
+
+.big-box .top-bar > div:nth-child(2){
+  flex: 1 1 auto;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.big-box .top-bar > div:nth-child(3){
+  flex: 0 1 auto;
+  width: 28px;
+  height: 28px;
+}
+
+.big-box .top-bar img{
+  width: 100%;
+}
+
+.big-box > div:last-child{
+  flex: 1 1 auto;
+  padding: 0 15px;
 }

@@ -18,3 +18,4 @@ export const ICON_LOGO = "/pic/logo.svg";
 
 //Data static
 export const CONT_STATUS_TYPE = { NORMAL : "NORMAL", DELETED : "DELETED" };
+export const BIG_BOX_ID = { NEW : "NEW", SETTING : "SETTING" };

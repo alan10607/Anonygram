@@ -1,11 +1,14 @@
+import { CONT_STATUS_TYPE } from "../../utli/constant";
 import {
   FIND_ID_SET,
-  FIND_POST, CREATE_POST, DELETE_POST,
-  FIND_TOP_CONT, REPLY_POST, DELETE_CONT,
-  LIKE_CONTENT, UNLIKE_CONTENT,
+  FIND_POST, 
+  DELETE_POST,
+  FIND_TOP_CONT, 
+  REPLY_POST, 
+  DELETE_CONT,
+  LIKE_CONTENT, 
+  UNLIKE_CONTENT
 } from "../actions/post";
-import { CONT_STATUS_TYPE } from "../../utli/constant";
-import { reload } from "../../utli/reolad";
 
 const initState = new Map();
 
@@ -20,10 +23,6 @@ export default function postReducer(preState = initState, action) {
 
     case FIND_POST:
       data.forEach(art => newState.set(art.id, art));
-      return newState;
-
-    case CREATE_POST:
-      reload(800);
       return newState;
 
     case DELETE_POST:

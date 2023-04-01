@@ -21,6 +21,7 @@
   "anony": "Anonymous",
   "register": "Register",
   "login-err": "Email or password not correct",
+  "login-anony-err": "Login failed, please try again later",
   "register-err": "Registration failed, please try again later",
   "register-email-err": "Email format error",
   "register-username-err": "Username cannot be empty",

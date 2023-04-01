@@ -22,11 +22,11 @@ export default function useAxios(url) {
   const [loading, setLoading] = useState(false);
   const controller = useRef(new AbortController());
   const cancel = () => controller.current.abort();
-  const { token, setToken, tokenExp } = useJwt();
+  const { jwt, isValid } = useJwt();
 
   const config = {
     signal : controller.current.signal,
-    headers : { Authorization : `Bearer ${token}` } 
+    headers : { Authorization : `Bearer ${jwt}` } 
   };
   
   const fetchData = async (data = {}) => {
@@ -37,14 +37,12 @@ export default function useAxios(url) {
     }, 30 * 1000);
 
     try{
-      if (!tokenExp || tokenExp < Math.floor(Date.now() / 1000)) {
-        setToken("");
+      if (!isValid)
         throw new TokenExpiredError(url);
-      }
 
       const res = await axiosInstance.post(url, data, config);
 
-      if(!res.data || !res.data.result) 
+      if (!res.data) 
         throw new Error("Response format error: " + url);
       
       setRes(res.data.result);

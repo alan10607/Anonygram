@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useJwt from "../../utli/useJwt";
 import Header from "./Header";
-import BigBox from "./BigBox";
+import New from "./New";
+import Setting from "./Setting";
 import Art from "./Art";
 
 export default function Hub() {
@@ -17,7 +18,8 @@ export default function Hub() {
   return (
     <div>
       <Header />
-      <BigBox />
+      <New />
+      <Setting />
       <Art />
     </div>
   )

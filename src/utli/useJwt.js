@@ -1,22 +1,10 @@
 import { useEffect } from 'react';
-import useLocalStorage from "./useLocalStorage";
-import { JWT_TOKEN, JWT_TOKEN_EXP } from "./constant";
+import useLocalStorage, { getLocalStorage } from "./useLocalStorage";
+import { JWT_TOKEN } from "./constant";
 
-export default function useJwt() {
-  const [jwt, setJwt] = useLocalStorage(JWT_TOKEN, null);
-  const payload = getPayload(jwt);
+const getJwt = () => getLocalStorage(JWT_TOKEN);
 
-  useEffect(() => {
-    if (payload.exp > -1 && payload.exp < Math.floor(Date.now() / 1000)) {
-      setJwt(null);
-      console.log("Jwt is expired");
-    }
-  })
-  
-  return {jwt, setJwt, payload};
-}
-
-export const getPayload = (jwt) => jwt ? 
+const getPayload = (jwt = getJwt()) => jwt ? 
   JSON.parse(window.atob(jwt.split('.')[1])) : 
   {
     isAnonymous : false,
@@ -24,3 +12,26 @@ export const getPayload = (jwt) => jwt ?
     iat : -1,
     exp : -1
   };
+
+const isValid = (exp = getPayload(getJwt()).exp) => exp > Math.floor(Date.now() / 1000);
+
+export const Jwt = {
+  getJwt,
+  getPayload,
+  isValid
+}
+
+export default function useJwt() {
+  const [jwt, setJwt] = useLocalStorage(JWT_TOKEN, null);
+  const payload = getPayload(jwt);
+  const valid = isValid(payload.exp);
+
+  useEffect(() => {
+    if (!valid) {
+      setJwt(null);
+      console.log("Jwt is expired");
+    }
+  })
+  
+  return { jwt, setJwt, payload };
+}

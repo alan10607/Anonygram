@@ -22,6 +22,7 @@
 
 #loading{
   background-color: #8d8d8c80;
+  z-index: 999999;
 }
 
 .loading-icon {

@@ -21,6 +21,7 @@
   "anony": "匿名",
   "register": "註冊",
   "login-err": "Email或用戶密碼錯誤",
+  "login-anony-err": "目前無法登入, 請稍後再試",
   "register-err": "註冊失敗, 請稍後再試",
   "register-email-err": "Email格式錯誤",
   "register-username-err": "用戶暱稱不可為空",

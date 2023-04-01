@@ -1,35 +1,33 @@
-import { useState, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
-import { userApi } from '../../utli/api';
-import useJwt from '../../utli/useJwt';
+import { userApi } from '../../service/api';
 import { ICON_LOGO } from '../../utli/constant';
+import Auth from '../../service/auth';
 import '../Login/index.css'
 
 export default function Register() {
-  const emailRef = useRef("");
-  const userNameRef = useRef("");
-  const pwRef = useRef("");
+  const emailRef = useRef();
+  const userNameRef = useRef();
+  const pwRef = useRef();
   const [hint, setHint] = useState("");
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { setJwt } = useJwt();
 
-  const doRegister = (event) => {
+  const register = (event) => {
+    const datas = {
+      email: emailRef.current.value,
+      pw: pwRef.current.value,
+    };
     event.preventDefault();
-
     const email = emailRef.current.value;
     const userName = userNameRef.current.value;
     const pw = pwRef.current.value;
     const errorStr = checkUserData(email, userName, pw);
-    if (errorStr != "") {
-      setHint(errorStr);
-      return;
-    }
+    if (errorStr != "") return setHint(errorStr);
 
     const data = { email, userName, pw };
-    userApi("register", data).then((res) => {
-      setJwt(res.jwtToken);
+    Auth.register(data).then((res) => {
       waitThenGo(3);
     }).catch(() => {
       setHint(t("register-err"));
@@ -47,8 +45,8 @@ export default function Register() {
 
   const waitThenGo = (sec) => {
     if (sec > 0) {
-      setHint(t("register-success", {sec}));
-      setTimeout(waitThenGo(sec - 1), 1000);
+      setHint(t("register-success", { sec }));
+      setTimeout(() => waitThenGo(sec - 1), 1000);
     } else {
       navigate("/login");
     }
@@ -58,14 +56,16 @@ export default function Register() {
     <div className="login center">
       <div>
         <img className="logo" src={ICON_LOGO} />
-        <form onSummit={doRegister}>
-          <h4>{t("user-register")}</h4>
-          <input res={emailRef} type="text" placeholder="Email" required autofocus />
-          <input res={userNameRef} type="text" placeholder={t("username")} required />
-          <input res={pwRef} type="password" placeholder={t("pw")} required />
-          <input type="button" value={t("register")} />
-        </form>
-        <p className="hint">{hint}</p>
+        <div className="col-flex">
+          <form onSubmit={register}>
+            <h4>{t("user-register")}</h4>
+            <input ref={emailRef} type="text" placeholder="Email" required autoFocus />
+            <input ref={userNameRef} type="text" placeholder={t("username")} required />
+            <input ref={pwRef} type="password" placeholder={t("pw")} required />
+            <input type="submit" value={t("register")} />
+          </form>
+          <p className="hint">{hint}</p>
+        </div>
       </div>
     </div>
   )

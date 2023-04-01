@@ -1,21 +1,26 @@
 import React from 'react';
-import { Routes, Route } from "react-router-dom";
-import { useSelector } from 'react-redux';
-import New from './New';
-import Setting from './Setting';
+import { useSelector, useDispatch } from 'react-redux';
+import { closeBigBox } from '../../../redux/actions/common';
+import { ICON_CLOSE } from '../../../utli/constant';
 import './index.css';
 
-export default function BigBox() {
-  const { isOpenBigBox } = useSelector(state => ({
-    isOpenBigBox : state.common.isOpenBigBox
+export default function Bigbox({ bigBoxId, title = "", 
+  btnRender = () => <div></div>, boxRender = () => <div></div> }) {
+  const { openBigBoxId } = useSelector(state => ({
+    openBigBoxId : state.common.openBigBoxId
   }));
+  const dispatch = useDispatch();
 
   return (
-    <div id="big-box" className={isOpenBigBox ? "big-box-open" : "big-box-close"}>
-
-        {/* <Route path='/hub/new' element={<New />} />
-        <Route exact path='/hub/setting' element={<Setting />} /> */}
-
+    <div className={"big-box " + (openBigBoxId == bigBoxId ? "big-box-open" : "big-box-close")}>
+      <div className="top-bar">
+        {btnRender()}
+        <div>{title}</div>
+        <div>
+          <img src={ICON_CLOSE} onClick={() => { dispatch(closeBigBox()) }} />
+        </div>
+      </div>
+      {boxRender()}
     </div>
   )
 

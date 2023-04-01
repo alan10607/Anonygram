@@ -1,15 +1,27 @@
 /* --- 白板內容讀取 --- */
 export const getContentWord = (e) => {
+  // const row = [];
+  // e.childNodes.forEach((node, i) => {
+  //   if (node.nodeName == "IMG") {
+  //     row.push(node.src);
+  //   } else {
+  //     row.push((node.innerText || "").replaceAll("\n", ""));
+  //   }
+  // });
+
+  const childNodes = e.childNodes;
   const row = [];
-  e.childNodes.forEach((node, i) => {
+  debugger
+  for(let node of childNodes){
     if (node.nodeName == "IMG") {
       row.push(node.src);
-    } else {
-      row.push((node.innerText || "").replaceAll("\n", ""));
+    } else{
+      row.push(node.textContent.trim());
     }
-  });
+  }
+
   console.log(row);
-  return row.join("\n");
+  return row.join("\n").trim();
 }
 
 /* --- 貼上自動為純文字 --- */

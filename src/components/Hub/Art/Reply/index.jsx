@@ -25,11 +25,16 @@ export default function Reply({ id }) {
   useEffect(() => {//更新html
     setHtml(newHtml);
   }, [id, newHtml])
+
+  useEffect(() => {//更新html
+    debugger
+  }, [contNum])
   
   const doReplyPost = () => {
     const word = getContentWord(inputRef.current);
     if (word.trim() == "") return showConsole(t("empty-word"));
     dispatch(replyPost({ id, word }));
+    setHtml("uiouou");
   }
 
   return (
