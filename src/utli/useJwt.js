@@ -4,14 +4,13 @@ import { JWT_TOKEN } from "./constant";
 
 const getJwt = () => getLocalStorage(JWT_TOKEN);
 
-const getPayload = (jwt = getJwt()) => jwt ? 
-  JSON.parse(window.atob(jwt.split('.')[1])) : 
-  {
-    isAnonymous : false,
-    sub : "???",
-    iat : -1,
-    exp : -1
+const getPayload = (jwt = getJwt()) => {
+  let payload = {
+
   };
+  if(jwt) payload = JSON.parse(window.atob(jwt.split('.')[1]));
+  return payload;
+}
 
 const isValid = (exp = getPayload(getJwt()).exp) => exp > Math.floor(Date.now() / 1000);
 
@@ -33,5 +32,5 @@ export default function useJwt() {
     }
   })
   
-  return { jwt, setJwt, payload };
+  return { jwt, setJwt, payload, valid };
 }

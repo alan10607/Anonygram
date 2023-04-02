@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import useConsole from './useConsole';
 import { uploadImg } from '../redux/actions/post';
+import { saveUploadImgUrl } from '../redux/actions/common';
 
 export default function useUploadImg(id, inputRef) {
   const imgQuality = 1, imgMaxWidth = 450, plainHtml = "<div><br></div>";
@@ -19,6 +20,7 @@ export default function useUploadImg(id, inputRef) {
     if (imgUrl !== "") {
       const html = inputRef.current.innerHTML;
       setHtml(`${html}<img src="${imgUrl}" alt="${imgUrl}"/>${plainHtml}`);
+      dispatch(saveUploadImgUrl(""));//設定完後丟棄redux避免再獲取到
     }
   }, [imgUrl])
 

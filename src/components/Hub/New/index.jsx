@@ -64,7 +64,7 @@ export default function New() {
     <Bigbox
       bigBoxId={BIG_BOX_ID.NEW}
       title={t("add-post")}
-      btnRender={() => <div onClick={doCreatePost}>{t("submit")}</div>}
+      btnRender={() => <div className="new-submit" onClick={doCreatePost}>{t("submit")}</div>}
       boxRender={boxRender}
     />
   )

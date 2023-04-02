@@ -1,6 +1,7 @@
 export const SAVE_ID_LIST = "saveidList";
 export const SAVE_FIND_ID_START = "saveFindIdStart";
 export const SAVE_UPLOAD_IMG_URL = "saveUploadImgUrl";
+export const SAVE_REPLY_ID = "saveReplyId";
 export const SHOW_BIG_BOX = "showBigBox";
 export const CLOSE_BIG_BOX = "closeBigBox";
 export const SHOW_CONSOLE = "showConsole";
@@ -10,8 +11,9 @@ export const CLOSE_LOADING = "closeLoading";
 export const DISPATCH_RELOAD = "dispatchReload";
 
 export const saveIdList = (idList) => ({ type: SAVE_ID_LIST, data : idList });
-export const saveFindIdStart = (artList) => ({ type: SAVE_FIND_ID_START, data : artList });
-export const saveUploadImgUrl = (imgData) => ({ type: SAVE_UPLOAD_IMG_URL, data : imgData });
+export const saveFindIdStart = (startId) => ({ type: SAVE_FIND_ID_START, data : startId });
+export const saveUploadImgUrl = (imgUrl) => ({ type: SAVE_UPLOAD_IMG_URL, data : imgUrl });
+export const saveReplyId = (id) => ({ type: SAVE_REPLY_ID, data : id });
 export const showBigBox = (openBigBoxId) => ({ type: SHOW_BIG_BOX, data: openBigBoxId });
 export const closeBigBox = () => ({ type: CLOSE_BIG_BOX });
 export const showConsole = (data) => ({ type: SHOW_CONSOLE, data });

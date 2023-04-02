@@ -1,18 +1,7 @@
 /* --- 白板內容讀取 --- */
 export const getContentWord = (e) => {
-  // const row = [];
-  // e.childNodes.forEach((node, i) => {
-  //   if (node.nodeName == "IMG") {
-  //     row.push(node.src);
-  //   } else {
-  //     row.push((node.innerText || "").replaceAll("\n", ""));
-  //   }
-  // });
-
-  const childNodes = e.childNodes;
   const row = [];
-  debugger
-  for(let node of childNodes){
+  for(let node of e.childNodes){
     if (node.nodeName == "IMG") {
       row.push(node.src);
     } else{

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { findIdSet, findPost } from '../../../redux/actions/post';
+import { closeBigBox, saveReplyId } from '../../../redux/actions/common';
 import { CONT_STATUS_TYPE } from '../../../utli/constant';
 import ArtCont from './ArtCont';
 import Bar from './Bar';
@@ -11,22 +12,22 @@ import Move from './Move';
 import './index.css';
 
 export default function Art() {
-  const [replyId, setReplyId] = useState("");
   const findPostLock = useRef(false);
   const findPostSize = 10;
-  const { post, idList, findIdStart } = useSelector(state => ({
+  const { post, idList, findIdStart, replyId } = useSelector(state => ({
     post : state.post,
     idList : state.common.idList,
     findIdStart : state.common.findIdStart,
+    replyId : state.common.replyId
   }));
   const dispatch = useDispatch();
 
   /* --- 初始化頁面 --- */
   useEffect(() => {
-    dispatch(findIdSet());
-    window.addEventListener("click", clickReply);
+    if(idList.length === 0) dispatch(findIdSet());
+    // window.addEventListener("click", clickReply);
     return () => {
-      window.removeEventListener("click", clickReply);
+      // window.removeEventListener("click", clickReply);
     }
   }, [])
 
@@ -65,7 +66,7 @@ export default function Art() {
 
   const clickReply = (event) => {
     if(!event.target.closest("[data-click-reply]")){
-      setReplyId("");
+      dispatch(saveReplyId(""));
     }
   }
 
@@ -86,7 +87,7 @@ export default function Art() {
 
   const openReply = (id) => {
     return () => {
-      setReplyId(id);
+      dispatch(saveReplyId(id));
     }
   }
 

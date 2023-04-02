@@ -6,14 +6,14 @@
 
 .bar-art .bar-head{
   flex: 0 1 auto;
-  width: 24px;
-  height: 24px;
+  width: 28x;
+  height: 28px;
   margin-right: 8px;
 }
 
 .bar-art .author{
   flex: 1 1 auto;
-  font-size: 14px;
+  font-size: 16px;
   margin: 0;
   font-weight: 600;
 }

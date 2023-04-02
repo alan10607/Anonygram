@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import { userApi } from '../../service/api';
 import { ICON_LOGO } from '../../utli/constant';
@@ -58,12 +58,15 @@ export default function Register() {
         <img className="logo" src={ICON_LOGO} />
         <div className="col-flex">
           <form onSubmit={register}>
-            <h4>{t("user-register")}</h4>
+            <h2>{t("user-register")}</h2>
             <input ref={emailRef} type="text" placeholder="Email" required autoFocus />
             <input ref={userNameRef} type="text" placeholder={t("username")} required />
             <input ref={pwRef} type="password" placeholder={t("pw")} required />
             <input type="submit" value={t("register")} />
           </form>
+          <p className="info">
+            <Link to="/login">{t("back-to-login")}</Link>
+          </p>
           <p className="hint">{hint}</p>
         </div>
       </div>

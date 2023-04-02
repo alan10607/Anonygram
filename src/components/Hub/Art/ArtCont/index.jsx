@@ -5,17 +5,20 @@ import { deletePost } from '../../../../redux/actions/post';
 import { getTimeFromStr } from '../../../../utli/time';
 import { ICON_LIKE } from '../../../../utli/constant';
 import useToggleLike from '../../../../utli/useToggleLike';
+import useJwt from '../../../../utli/useJwt';
 import Word from '../Word';
 import './index.css';
 
 export default function ArtCont({ id, no = 0 }) {
-  const { art: { title }, cont: { word, isUserLike, likes, createDate } } = useSelector(state => ({
+  const { art: { title }, cont: { author, word, isUserLike, likes, createDate } } = useSelector(state => ({
     art : state.post.get(id),
     cont : state.post.get(id).contList[no]
   }));
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const toggleLike = useToggleLike();
+  const { payload: { id: userId, sub : username } } = useJwt();
+  const canDel = userId.toString() == author || (userId == -1 && username == author);
 
   const getLikeStr = () => {
     if (likes == 0) return t("like-one", { likes });
@@ -30,8 +33,8 @@ export default function ArtCont({ id, no = 0 }) {
       <div className="info">
         <img className={"likes-icon " + (isUserLike ? "likes-icon-yes" : "")}
           src={ICON_LIKE} onClick={ toggleLike(id, no, isUserLike) } />
-        <div>{getLikeStr()} B{no}, {getTimeFromStr(createDate)}</div>
-        <div className="del" onClick={() => { dispatch(deletePost({ id, no })) }}>{t("del")}</div>
+        <div>{getLikeStr()}, {getTimeFromStr(createDate)}</div>
+        {canDel && <div className="del" onClick={() => { dispatch(deletePost({ id, no })) }}>{t("del")}</div>}
       </div>
     </div>
   )

@@ -7,7 +7,8 @@ import {
   REPLY_POST, 
   DELETE_CONT,
   LIKE_CONTENT, 
-  UNLIKE_CONTENT
+  UNLIKE_CONTENT,
+  RESET_POST_DATA
 } from "../actions/post";
 
 const initState = new Map();
@@ -50,6 +51,9 @@ export default function postReducer(preState = initState, action) {
       newState.get(data.id).contList[data.no].isUserLike = false;
       newState.get(data.id).contList[data.no].likes--;
       return newState;
+
+    case RESET_POST_DATA:
+      return new Map();
 
     default:
       return preState;

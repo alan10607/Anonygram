@@ -1,15 +1,24 @@
 #setting .list{
   display: flex;
   flex-direction: column;
-  padding: 5px 9px;
+  padding: 20px 10px;
 }
 
-#setting .list div{
-  padding: 15px 10px;
+#setting .list a{
+  padding: 20px 15px;
+  margin: 10px 0;
   flex: 0 1 auto;
   background-color: #ececec;
+  font-size: 20px;
+  display: block;
+  transition-timing-function: ease-in-out;
+  transition-duration: 0.2s;
 }
 
-#setting .list div + #setting .list div{
+#setting .list a + a{
   border-top: 0.5px solid #8e8e8e;
+}
+
+#setting .list a:hover{
+  background-color: #c2c2c2;
 }

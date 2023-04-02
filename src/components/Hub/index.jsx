@@ -11,8 +11,10 @@ export default function Hub() {
   const { jwt } = useJwt();
 
   useEffect(() => {
-    console.log("Check jwtToken", jwt)
-    if(!jwt) navigate("/login");
+    if(!jwt) {
+      console.log("Hub check jwt not found");
+      navigate("/login");
+    }
   }, [jwt]);
 
   return (

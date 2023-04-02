@@ -22,21 +22,16 @@ export default function Reply({ id }) {
   const [uploadImg, newHtml] = useUploadImg(id, inputRef);
   const { payload : { sub : username } } = useJwt();
 
-  useEffect(() => {//更新html
+  useEffect(() => {//更新html為加入圖片後的
     setHtml(newHtml);
   }, [id, newHtml])
-
-  useEffect(() => {//更新html
-    debugger
-  }, [contNum])
   
   const doReplyPost = () => {
     const word = getContentWord(inputRef.current);
     if (word.trim() == "") return showConsole(t("empty-word"));
     dispatch(replyPost({ id, word }));
-    setHtml("uiouou");
   }
-
+ 
   return (
     <div className="reply replying" data-click-reply>
       <div className="bar">

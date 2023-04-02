@@ -12,7 +12,7 @@
 }
 
 .cont .bar{
-  padding: 12px 15px;
+  padding: 12px 15px 0px 15px;
   display: flex;
   align-items: center;
 }
@@ -51,7 +51,7 @@
 }
 
 .cont .info{
-  padding: 14px 15px 12px 15px;
+  padding: 2px 17px 7px 17px;
   font-size: 13px;
   display: flex;
   align-items: center;
@@ -62,8 +62,9 @@
   flex: 0 1 auto;
   font-size: 13px;
   color: #545454;
-  padding-left: 10px;
+  margin-left: 10px;
   font-weight: normal;
+  cursor: pointer;
 }
 
 .cont .del-word{

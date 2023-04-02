@@ -13,13 +13,13 @@
 #new .bar{
   display: flex;
   align-items: center;
-  padding: 2px 0px 4px 0px;
+  padding: 20px 0px 3px 0px;
 }
 
 #new .bar-head{
   flex: 0 1 auto;
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   margin-right: 8px;
 }
 
@@ -75,8 +75,9 @@
 }
 
 #new .new-img img{
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
 }
 
 #new .new-img input{

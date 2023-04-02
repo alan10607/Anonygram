@@ -17,14 +17,14 @@
 
 .reply .bar .bar-head {
   flex: 0 1 auto;
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   margin-right: 8px;
 }
 
 .reply .bar .author{
   flex: 1 1 auto;
-  font-size: 14px;
+  font-size: 16px;
   margin: 0;
   font-weight: 600;
 }
@@ -68,8 +68,9 @@
 }
 
 .reply .move .reply-img img {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
 }
 
 .reply .move .reply-img input {
@@ -78,6 +79,7 @@
 
 .reply .move .reply-summit {
   flex: 0 0 auto;
-  font-size: 14px;
+  font-size: 16px;
   color: #262626;
+  cursor: pointer;
 }

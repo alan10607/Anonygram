@@ -5,16 +5,19 @@ import { deleteCont } from '../../../../redux/actions/post';
 import { getTimeFromStr } from '../../../../utli/time';
 import { ICON_USER, ICON_LIKE } from '../../../../utli/constant';
 import useToggleLike from '../../../../utli/useToggleLike';
+import useJwt from '../../../../utli/useJwt';
 import Word from '../Word';
 import './index.css';
 
 export default function Cont({ id, no }) {
-  const { cont : { authorName, isUserLike, likes, word, createDate } } = useSelector(state => ({
+  const { cont : { author, authorName, isUserLike, likes, word, createDate } } = useSelector(state => ({
     cont : state.post.get(id).contList[no]
   }));
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const toggleLike = useToggleLike();
+  const { payload: { id: userId, sub : username } } = useJwt();
+  const canDel = userId.toString() == author || (userId == -1 && username == author);
 
   return (
     <div id={`${id}_${no}`} className="cont">
@@ -27,7 +30,7 @@ export default function Cont({ id, no }) {
       <Word id={id} word={word} />
       <div className="info">
         <div>B{no}, {getTimeFromStr(createDate)}</div>
-        <div className="del" onClick={() => { dispatch(deleteCont({ id, no })) }}>{t("del")}</div>
+        {canDel && <div className="del" onClick={() => { dispatch(deleteCont({ id, no })) }}>{t("del")}</div>}
       </div>
     </div>
   )

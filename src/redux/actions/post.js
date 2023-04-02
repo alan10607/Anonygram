@@ -5,10 +5,12 @@ import {
   saveIdList, 
   saveFindIdStart, 
   saveUploadImgUrl,
+  saveReplyId, 
   showConsole, 
   showLoading, 
   closeLoading,
-  dispatchReload, 
+  closeBigBox,
+  dispatchReload
 } from "./common";
 
 const post = Service.post;
@@ -25,21 +27,24 @@ export const LIKE_CONTENT = "likeContent";
 export const UNLIKE_CONTENT = "unlikeContent";
 export const UPLOAD_IMG = "uploadImg";
 
+export const RESET_POST_DATA = "resetPostData";
+
 /* --- 查詢所有文章id --- */
 export const findIdSet = () => (dispatch) => {
   postApi(FIND_ID_SET).then((idList) => {
     dispatch({ type: FIND_ID_SET, data : idList });
     dispatch(saveIdList(idList));
+    dispatch(saveFindIdStart(0));
   }).catch((e) => {
     dispatch(showConsole(i18next.t("findIdSet-err")));
   });
 }
 
 /* --- 查詢文章 --- */
-export const findPost = (data) => (dispatch) => {
+export const findPost = (data) => (dispatch, getState) => {
   postApi(FIND_POST, data).then((artList) => {
     dispatch({ type: FIND_POST, data : artList });
-    dispatch(saveFindIdStart(artList));
+    dispatch(saveFindIdStart(getState().common.findIdStart + artList.length));
   }).catch((e) => {
     dispatch(showConsole(i18next.t("findPost-err")));
   });
@@ -84,6 +89,7 @@ export const replyPost = (data) => (dispatch, getState) => {
     };
     dispatch(findTopCont(findTopContData));
     dispatch({ type: REPLY_POST, data : data});
+    dispatch(saveReplyId(""));
   }).catch((e) => {
     dispatch(showConsole(i18next.t("replyPost-err")));
   });
@@ -117,10 +123,19 @@ export const unlikeContent = (data) => (dispatch) => {
 export const uploadImg = (data) => (dispatch) => {
   dispatch(showLoading());
   postApi(UPLOAD_IMG, data).then((imgData) => {
-    dispatch(saveUploadImgUrl(imgData));
+    dispatch(saveUploadImgUrl(imgData.imgUrl));
   }).catch((e) => {
     dispatch(showConsole(i18next.t("uploadImg-err")));
   }).finally(() => {
     dispatch(closeLoading());
   });
+}
+
+export const resetPostData = (data) => (dispatch) => {
+  dispatch({ type: RESET_POST_DATA });
+  dispatch(saveIdList([]));
+  dispatch(saveFindIdStart(0));
+  dispatch(saveReplyId(""));
+  dispatch(closeBigBox());
+  dispatch(closeLoading());
 }

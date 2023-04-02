@@ -3,6 +3,7 @@ import {
   SAVE_ID_LIST,
   SAVE_FIND_ID_START,
   SAVE_UPLOAD_IMG_URL,
+  SAVE_REPLY_ID,
   SHOW_BIG_BOX,
   CLOSE_BIG_BOX,
   SHOW_CONSOLE,
@@ -16,6 +17,7 @@ const initState = {
   idList: [],
   findIdStart: 0,
   uploadImgUrl: "",
+  replyId: "",
   consoleStr: "",
   isLoading: false,
   openBigBoxId: ""
@@ -29,10 +31,13 @@ export default function commonReducer(preState = initState, action) {
       return Object.assign({}, preState, { idList: data });
 
     case SAVE_FIND_ID_START:
-      return Object.assign({}, preState, { findIdStart: preState.findIdStart + data.length });
+      return Object.assign({}, preState, { findIdStart: data });
 
     case SAVE_UPLOAD_IMG_URL:
-      return Object.assign({}, preState, { uploadImgUrl: data.imgUrl });
+      return Object.assign({}, preState, { uploadImgUrl: data });
+
+    case SAVE_REPLY_ID:
+      return Object.assign({}, preState, { replyId: data });
 
     case SHOW_BIG_BOX:
       return Object.assign({}, preState, { openBigBoxId: data });

@@ -50,7 +50,7 @@ const fetchData = async (request, cancel) => {
     if (!res.data) throw Error("Response format error:" + request);
     return Promise.resolve(res.data.result);
   } catch (e) {
-    console.log(e);
+    console.error("Api error:", e.response?.data?.result || e.message || e);
     return Promise.reject(e);
   } finally {
     // clearTimeout(timer);

@@ -14,9 +14,11 @@ export default function Header() {
 
   return (
     <div id="header">
-      <div className="user">{user}</div>
-      <img src={ICON_ADD} onClick={() => { dispatch(showBigBox(BIG_BOX_ID.NEW)) }} />
-      <img src={ICON_OPTION} onClick={() => { dispatch(showBigBox(BIG_BOX_ID.SETTING)) }} />
+      <div>
+        <div className="user">{user}</div>
+        <img src={ICON_ADD} onClick={() => { dispatch(showBigBox(BIG_BOX_ID.NEW)) }} />
+        <img src={ICON_OPTION} onClick={() => { dispatch(showBigBox(BIG_BOX_ID.SETTING)) }} />
+      </div>
     </div>
   )
 }

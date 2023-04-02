@@ -15,8 +15,8 @@ export const getTimeFromStr = (dateStr) => {
   if(gap >= week){//超過一周直接顯示日期
     const dateObj = {
       yyyy : date.getFullYear(),
-      MM : date.getMonth(),
-      dd : date.getDate()
+      MM : String(date.getMonth()).padStart(2, "0"),
+      dd : String(date.getDate()).padStart(2, "0")
     };
     return now.getFullYear() > date.getFullYear() ? 
       i18next.t("date-full", dateObj) :

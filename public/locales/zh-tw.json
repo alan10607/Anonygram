@@ -28,6 +28,7 @@
   "register-pw-err": "密碼未滿6位字母或格式錯誤",
   "register-success": "註冊成功!! {{sec}}秒後自動轉導...",
   "no-account?": "還沒有帳號?",
+  "back-to-login": "返回登入",
   "or": "或",
   "as-anony": "以匿名登入",
   "user-register": "用戶註冊",

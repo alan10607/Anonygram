@@ -31,19 +31,20 @@
 .login input[type="button"], .login input[type="submit"]{
   background-color: #0095f6;
   color: #ffffff;
+  cursor: pointer;
 }
 
 .login .info{
   text-align: right;
-  font-size: 15px;
+  font-size: 16px;
   color: #8e8e8e;
 }
 
 .login .hint{
   text-align: center;
-  font-size: 15px;
+  font-size: 16px;
   color: #ff1616;
-  margin-top: 24px;
+  margin-bottom: 24px;
 }
 
 .login .register{
@@ -52,6 +53,7 @@
 
 .login .line-word{
   margin: 10px auto 55px auto;
+  font-size: 16px;
 }
 
 .login .line-word:before, .line-word:after {
