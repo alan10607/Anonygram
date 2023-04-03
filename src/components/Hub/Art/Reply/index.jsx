@@ -8,19 +8,18 @@ import { ICON_USER, ICON_UPLOAD_IMG } from '../../../../utli/constant';
 import useConsole from '../../../../utli/useConsole';
 import useUploadImg from '../../../../utli/useUploadImg';
 import './index.css';
-import useJwt from '../../../../utli/useJwt';
 
 export default function Reply({ id }) {
   const [html, setHtml] = useState("");
   const inputRef = useRef();
-  const { contNum } = useSelector(state => ({
+  const { contNum, username } = useSelector(state => ({
     contNum : state.post.get(id).contNum,
+    username : state.user.username
   }));
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const showConsole = useConsole();
   const [uploadImg, newHtml] = useUploadImg(id, inputRef);
-  const { payload : { sub : username } } = useJwt();
 
   useEffect(() => {//更新html為加入圖片後的
     setHtml(newHtml);

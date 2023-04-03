@@ -27,7 +27,7 @@ export default function Move({ id, openReply }) {
 
   return (
     <div className="move">
-      <div className={"open " + (contNum > 1 ? "can-open" : "")}
+      <div className={"open " + (contNum == 1 ? "not-open" : "")}
         onClick={doFindTopCont}>{getOpenStr(contNum, startNo)}</div>
       <div className="flex-empty"></div>
       <div className={"reply-btn " + (contNum == 1 || startNo > 1 ? "" : "disable") } onClick={openReply} data-click-reply>{t("add-cont")}</div>

@@ -1,22 +1,23 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { BIG_BOX_ID, JWT_TOKEN } from '../../../utli/constant';
-import useJwt from '../../../utli/useJwt';
+import { resetPostData } from '../../../redux/actions/post';
+import { deleteJwt } from '../../../utli/jwt';
+import { BIG_BOX_ID } from '../../../utli/constant';
 import Bigbox from '../BigBox';
 import './index.css';
-import { closeBigBox } from '../../../redux/actions/common';
-import { resetPostData } from '../../../redux/actions/post';
 
 export default function Setting() {
+  const { isAnonyUser } = useSelector(state => ({
+    isAnonyUser : state.user.isAnonyUser
+  }));
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const { setJwt, payload : { isAnonymous } } = useJwt();
 
-  const clearJwtAndExit = () => {
-    localStorage.setItem(JWT_TOKEN, null);
-    console.log("Logout clear jwt");
+  const deleteJwtAndExit = () => {
+    deleteJwt()
+    console.log("Logout delete jwt");
     exit();
   }
 
@@ -27,9 +28,9 @@ export default function Setting() {
   const boxRender = () => (
     <div id="setting">
       <div className="list">
-        {isAnonymous ?
+        {isAnonyUser ?
           <Link to="/login" onClick={exit}>{t("login")}</Link> :
-          <Link to="/login" onClick={clearJwtAndExit}>{t("logout")}</Link>
+          <Link to="/login" onClick={deleteJwtAndExit}>{t("logout")}</Link>
         }
       </div>
     </div>

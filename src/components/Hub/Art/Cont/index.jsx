@@ -5,18 +5,18 @@ import { deleteCont } from '../../../../redux/actions/post';
 import { getTimeFromStr } from '../../../../utli/time';
 import { ICON_USER, ICON_LIKE } from '../../../../utli/constant';
 import useToggleLike from '../../../../utli/useToggleLike';
-import useJwt from '../../../../utli/useJwt';
 import Word from '../Word';
 import './index.css';
 
 export default function Cont({ id, no }) {
-  const { cont : { author, authorName, isUserLike, likes, word, createDate } } = useSelector(state => ({
-    cont : state.post.get(id).contList[no]
+  const { cont : { author, authorName, isUserLike, likes, word, createDate }, userId, username } = useSelector(state => ({
+    cont : state.post.get(id).contList[no],
+    userId : state.user.userId,
+    username : state.user.username
   }));
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const toggleLike = useToggleLike();
-  const { payload: { id: userId, sub : username } } = useJwt();
   const canDel = userId.toString() == author || (userId == -1 && username == author);
 
   return (

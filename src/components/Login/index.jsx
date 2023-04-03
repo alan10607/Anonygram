@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import Service from '../../service';
 import { ICON_LOGO } from '../../utli/constant';
 import Auth from '../../service/auth';
-import useJwt from '../../utli/useJwt';
+import { setJwt, isJwtValid } from '../../utli/jwt';
 import usePrevious from '../../utli/usePrevious';
 import './index.css'
 
@@ -15,12 +15,10 @@ export default function Login() {
   const [done, setDone] = useState(false);
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { payload, setJwt, valid } = useJwt();
 
   //取得新的jwt後跳轉
   useEffect(() => {
     if (done){
-      console.log("Login check Jwt", payload);
       navigate("/hub");
     }
   }, [done]);
@@ -43,7 +41,7 @@ export default function Login() {
   const loginAnony = (event) => {
     event.preventDefault();
 
-    if(valid){
+    if(isJwtValid()){
       setDone(true);
     }else{
       Service.auth.anony().then((res) => {
@@ -68,7 +66,7 @@ export default function Login() {
           </form>
           <p className="info">
             <span>{t("no-account?")} </span>
-            <Link to="/register" className="register">{t("register")}</Link>
+            <Link to="/register" className="info-link">{t("register")}</Link>
           </p>
           <p className="hint">{hint}</p>
           <div className="line-word">{t("or")}</div>

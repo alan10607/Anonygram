@@ -1,5 +1,6 @@
 import i18next from "i18next";
 import { postApi } from "../../utli/api";
+import { deleteUserData } from "./user";
 import Service from "../../service";
 import { 
   saveIdList, 
@@ -138,4 +139,5 @@ export const resetPostData = (data) => (dispatch) => {
   dispatch(saveReplyId(""));
   dispatch(closeBigBox());
   dispatch(closeLoading());
+  dispatch(deleteUserData());
 }

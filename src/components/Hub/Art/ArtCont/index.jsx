@@ -5,19 +5,19 @@ import { deletePost } from '../../../../redux/actions/post';
 import { getTimeFromStr } from '../../../../utli/time';
 import { ICON_LIKE } from '../../../../utli/constant';
 import useToggleLike from '../../../../utli/useToggleLike';
-import useJwt from '../../../../utli/useJwt';
 import Word from '../Word';
 import './index.css';
 
 export default function ArtCont({ id, no = 0 }) {
-  const { art: { title }, cont: { author, word, isUserLike, likes, createDate } } = useSelector(state => ({
+  const { art: { title }, cont: { author, word, isUserLike, likes, createDate }, userId, username } = useSelector(state => ({
     art : state.post.get(id),
-    cont : state.post.get(id).contList[no]
+    cont : state.post.get(id).contList[no],
+    userId : state.user.userId,
+    username : state.user.username
   }));
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const toggleLike = useToggleLike();
-  const { payload: { id: userId, sub : username } } = useJwt();
   const canDel = userId.toString() == author || (userId == -1 && username == author);
 
   const getLikeStr = () => {

@@ -1,6 +1,5 @@
 #error img {
   width: min(80vw, 80vh);
-  height: min(80vw, 80vh);
-  margin: 100px auto;
+  margin: 0 auto;
   display: block;
 }

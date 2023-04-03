@@ -2,16 +2,18 @@
   display: flex;
   align-items: center;
   font-size: 14px;
-  color: #8e8e8e;
+  color: #262626;
   padding: 14px 17px;
 }
 
 .move .open{
   flex: 0 1 auto;
+  cursor: pointer;
 }
 
-.move .can-open{
-  cursor: pointer;
+.move .not-open{
+  cursor: initial;
+  color: #8e8e8e;
 }
 
 .move .reply-btn{

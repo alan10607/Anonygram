@@ -59,6 +59,7 @@
   outline-width: 0px;
   padding: 4px 10px 4px 10px;
   overflow-x: auto;
+  font-size: 16px;
 }
 
 #new .new-move{

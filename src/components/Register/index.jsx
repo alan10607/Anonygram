@@ -59,13 +59,13 @@ export default function Register() {
         <div className="col-flex">
           <form onSubmit={register}>
             <h2>{t("user-register")}</h2>
-            <input ref={emailRef} type="text" placeholder="Email" required autoFocus />
-            <input ref={userNameRef} type="text" placeholder={t("username")} required />
-            <input ref={pwRef} type="password" placeholder={t("pw")} required />
+            <input ref={emailRef} type="text" placeholder="Email" autoComplete="off" required autoFocus />
+            <input ref={userNameRef} type="text" placeholder={t("username")} autoComplete="off" required />
+            <input ref={pwRef} type="password" placeholder={t("pw")} autoComplete="off" required />
             <input type="submit" value={t("register")} />
           </form>
           <p className="info">
-            <Link to="/login">{t("back-to-login")}</Link>
+            <Link to="/login" className="info-link">{t("back-to-login")}</Link>
           </p>
           <p className="hint">{hint}</p>
         </div>

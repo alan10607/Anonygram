@@ -1,8 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { findIdSet, findPost } from '../../../redux/actions/post';
-import { closeBigBox, saveReplyId } from '../../../redux/actions/common';
+import { saveReplyId } from '../../../redux/actions/common';
+import { saveUserData } from '../../../redux/actions/user';
 import { CONT_STATUS_TYPE } from '../../../utli/constant';
+import { getJwt, getJwtPayload, isJwtValid } from '../../../utli/jwt';
 import ArtCont from './ArtCont';
 import Bar from './Bar';
 import Cont from './Cont';
@@ -21,10 +24,34 @@ export default function Art() {
     replyId : state.common.replyId
   }));
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   /* --- 初始化頁面 --- */
   useEffect(() => {
-    if(idList.length === 0) dispatch(findIdSet());
+    const jwt = getJwt();
+    if (!jwt) {
+      console.log("Jwt not found, navigate to login...");
+      navigate("/login");
+      return;
+    }
+
+    const payload = getJwtPayload(jwt);
+    const expStr = new Date(payload.exp * 1000).toLocaleString();
+    if(!isJwtValid(payload.exp)){
+      console.log(`Jwt was expired at ${expStr}, navigate to login...`);
+      navigate("/login");
+      return;
+    }
+
+    dispatch(saveUserData(payload));
+    console.log("Load jwt payload", payload, );
+    console.log(`Jwt will expire at ${expStr}`);
+
+    if(idList.length === 0) {
+      dispatch(findIdSet());
+      console.log("Load id set");
+    }
+
     // window.addEventListener("click", clickReply);
     return () => {
       // window.removeEventListener("click", clickReply);
@@ -72,7 +99,7 @@ export default function Art() {
 
   /* --- 其他 --- */
   const doFindPost = () => {
-    console.log("Loading posts from index", findIdStart);
+    console.log("Load posts from index", findIdStart);
     dispatch(findPost({
       idList : idList.slice(findIdStart, findIdStart + findPostSize)
     }));

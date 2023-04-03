@@ -4,7 +4,7 @@
 }
 
 .login .logo{
-  width: 220px;
+  width: 280px;
   margin: 10px auto;
 }
 
@@ -47,7 +47,7 @@
   margin-bottom: 24px;
 }
 
-.login .register{
+.login .info-link{
   color: #262626;
 }
 
