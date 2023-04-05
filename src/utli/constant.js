@@ -8,13 +8,14 @@ export const DOMAIN  = "localhost";
 export const JWT_TOKEN = "ag-jwt";
 
 //Pic
-export const ICON_USER = "/pic/user.png";
-export const ICON_LIKE = "/pic/like.svg";
-export const ICON_UPLOAD_IMG = "/pic/uploadImg.png";
-export const ICON_ADD = "/pic/add.png";
-export const ICON_OPTION = "/pic/option.png";
-export const ICON_CLOSE = "/pic/close.png";
-export const ICON_LOGO = "/pic/logo.svg";
+const PUBLIC_URL = process.env.PUBLIC_URL;
+export const ICON_USER = `${PUBLIC_URL}/pic/user.png`;
+export const ICON_LIKE = `${PUBLIC_URL}/pic/like.svg`;
+export const ICON_UPLOAD_IMG = `${PUBLIC_URL}/pic/uploadImg.png`;
+export const ICON_ADD = `${PUBLIC_URL}/pic/add.png`;
+export const ICON_OPTION = `${PUBLIC_URL}/pic/option.png`;
+export const ICON_CLOSE = `${PUBLIC_URL}/pic/close.png`;
+export const ICON_LOGO = `${PUBLIC_URL}/pic/logo.svg`;
 
 //Data static
 export const CONT_STATUS_TYPE = { NORMAL : "NORMAL", DELETED : "DELETED" };

@@ -72,6 +72,7 @@ export default function Login() {
           <div className="line-word">{t("or")}</div>
           <input type="button" value={t("as-anony")} onClick={loginAnony} />
         </div>
+        <div className="version">v0405</div>
       </div>
     </div>
   )

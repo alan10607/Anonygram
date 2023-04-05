@@ -9,7 +9,7 @@ export default i18n
   .use(initReactI18next)//pass the i18n instance to react-i18next.
   .init({
     backend: {
-      loadPath: "/locales/{{lng}}.json"
+      loadPath: `${process.env.PUBLIC_URL}/locales/{{lng}}.json`
     },
     fallbackLng: 'en',
     lng: "en", // default language
