@@ -35,6 +35,7 @@
   "email": "Email",
   "username": "用戶暱稱(可為中文)",
   "pw": "用戶密碼",
+  "lang": "語言",
 
   "findIdSet-err": "看起來泡麵打翻機台了, 請稍後再進來試試",
   "findPost-err": "讀取文章異常",
