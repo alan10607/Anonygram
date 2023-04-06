@@ -1,9 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
-import { userApi } from '../../service/api';
+import authService from '../../service/authService';
 import { ICON_LOGO } from '../../utli/constant';
-import Auth from '../../service/auth';
 import '../Login/index.css'
 
 export default function Register() {
@@ -27,7 +26,7 @@ export default function Register() {
     if (errorStr != "") return setHint(errorStr);
 
     const data = { email, userName, pw };
-    Auth.register(data).then((res) => {
+    authService.register(data).then((res) => {
       waitThenGo(3);
     }).catch(() => {
       setHint(t("register-err"));

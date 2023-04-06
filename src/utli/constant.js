@@ -1,11 +1,12 @@
+export const VERSION = "v0406";
 //Backend url
-export const PROTOCOL = "https:";
-export const DOMAIN  = "localhost";
+export const BACKEND_API_URL = "https://13.112.45.117/";
 // const PROTOCOL = window.location.protocol;
 // const DOMAIN = window.location.host;
 
-//Jwt
+//LocalStorage
 export const JWT_TOKEN = "ag-jwt";
+export const LANG = "ag-lang";
 
 //Pic
 const PUBLIC_URL = process.env.PUBLIC_URL;

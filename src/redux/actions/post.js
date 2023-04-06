@@ -1,7 +1,7 @@
 import i18next from "i18next";
-import { postApi } from "../../utli/api";
+import { postApi } from "../../service";
 import { deleteUserData } from "./user";
-import Service from "../../service";
+import postService from "../../service/postService";
 import { 
   saveIdList, 
   saveFindIdStart, 
@@ -14,7 +14,6 @@ import {
   dispatchReload
 } from "./common";
 
-const post = Service.post;
 
 /* --- 同時也是request url --- */
 export const FIND_ID_SET = "findIdSet";
@@ -32,7 +31,7 @@ export const RESET_POST_DATA = "resetPostData";
 
 /* --- 查詢所有文章id --- */
 export const findIdSet = () => (dispatch) => {
-  postApi(FIND_ID_SET).then((idList) => {
+  postService.findIdSet({}).then((idList) => {
     dispatch({ type: FIND_ID_SET, data : idList });
     dispatch(saveIdList(idList));
     dispatch(saveFindIdStart(0));
@@ -43,7 +42,7 @@ export const findIdSet = () => (dispatch) => {
 
 /* --- 查詢文章 --- */
 export const findPost = (data) => (dispatch, getState) => {
-  postApi(FIND_POST, data).then((artList) => {
+  postService.findPost(data).then((artList) => {
     dispatch({ type: FIND_POST, data : artList });
     dispatch(saveFindIdStart(getState().common.findIdStart + artList.length));
   }).catch((e) => {
@@ -53,7 +52,7 @@ export const findPost = (data) => (dispatch, getState) => {
 
 /* --- 新增文章 --- */
 export const createPost = (data) => (dispatch) => {
-  postApi(CREATE_POST, data).then((res) => {
+  postService.createPost(data).then((res) => {
     dispatch(showConsole(i18next.t("createPost-ok")));
     dispatch(dispatchReload());
   }).catch((e) => {
@@ -63,7 +62,7 @@ export const createPost = (data) => (dispatch) => {
 
 /* --- 刪除文章 --- */
 export const deletePost = (data) => (dispatch) => {
-  postApi(DELETE_POST, data).then((res) => {
+  postService.deletePost(data).then((res) => {
     dispatch({ type: DELETE_POST, data : data });
     dispatch(showConsole(i18next.t("deletePost-ok")));
   }).catch((e) => {
@@ -73,7 +72,7 @@ export const deletePost = (data) => (dispatch) => {
 
 /* --- 查詢留言 --- */
 export const findTopCont = (data) => (dispatch) => {
-  postApi(FIND_TOP_CONT, data).then((contList) => {
+  postService.findTopCont(data).then((contList) => {
     dispatch({ type: FIND_TOP_CONT, data : contList });
   }).catch((e) => {
     dispatch(showConsole(i18next.t("findTopCont-err")));
@@ -82,7 +81,7 @@ export const findTopCont = (data) => (dispatch) => {
 
 /* --- 新增留言 --- */
 export const replyPost = (data) => (dispatch, getState) => {
-  postApi(REPLY_POST, data).then((res) => {
+  postService.replyPost(data).then((res) => {
     const state = getState();
     const findTopContData = {
       id : data.id, 
@@ -98,7 +97,7 @@ export const replyPost = (data) => (dispatch, getState) => {
 
 /* --- 刪除留言 --- */
 export const deleteCont = (data) => (dispatch) => {
-  postApi(DELETE_CONT, data).then((res) => {
+  postService.deleteCont(data).then((res) => {
     dispatch({ type: DELETE_CONT, data : data });
     dispatch(showConsole(i18next.t("deleteCont-ok")));
   }).catch((e) => {
@@ -108,14 +107,14 @@ export const deleteCont = (data) => (dispatch) => {
 
 /* --- 按讚 --- */
 export const likeContent = (data) => (dispatch) => {
-  postApi(LIKE_CONTENT, data).then((res) => {
+  postService.likeContent(data).then((res) => {
     dispatch({ type: LIKE_CONTENT, data : data });
   }).catch((e) => console.log("Like content failed", e) );
 }
 
 /* --- 取消按讚 --- */
 export const unlikeContent = (data) => (dispatch) => {
-  postApi(UNLIKE_CONTENT, data).then((res) => {
+  postService.unlikeContent(data).then((res) => {
     dispatch({ type: UNLIKE_CONTENT, data : data });
   }).catch((e) => console.log("Unlike content failed", e) );
 }
@@ -123,7 +122,7 @@ export const unlikeContent = (data) => (dispatch) => {
 /* --- 圖片上傳 --- */
 export const uploadImg = (data) => (dispatch) => {
   dispatch(showLoading());
-  postApi(UPLOAD_IMG, data).then((imgData) => {
+  postService.uploadImg(data).then((imgData) => {
     dispatch(saveUploadImgUrl(imgData.imgUrl));
   }).catch((e) => {
     dispatch(showConsole(i18next.t("uploadImg-err")));

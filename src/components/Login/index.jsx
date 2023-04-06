@@ -1,12 +1,13 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
-import Service from '../../service';
-import { ICON_LOGO } from '../../utli/constant';
-import Auth from '../../service/auth';
+
+import { ICON_LOGO, VERSION } from '../../utli/constant';
+import Auth from '../../service/authService';
 import { setJwt, isJwtValid } from '../../utli/jwt';
 import usePrevious from '../../utli/usePrevious';
 import './index.css'
+import authService from '../../service/authService';
 
 export default function Login() {
   const emailRef = useRef();
@@ -16,8 +17,7 @@ export default function Login() {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  //取得新的jwt後跳轉
-  useEffect(() => {
+  useEffect(() => {//取得新的jwt後跳轉
     if (done){
       navigate("/hub");
     }
@@ -30,7 +30,7 @@ export default function Login() {
       email: emailRef.current.value,
       pw: pwRef.current.value,
     };
-    Service.auth.login(data).then((res) => {
+    authService.login(data).then((res) => {
       setJwt(res.token);
       setDone(true);
     }).catch(() => {
@@ -44,7 +44,7 @@ export default function Login() {
     if(isJwtValid()){
       setDone(true);
     }else{
-      Service.auth.anony().then((res) => {
+      authService.anony().then((res) => {
         setJwt(res.token);
         setDone(true);
       }).catch(() => {
@@ -72,7 +72,7 @@ export default function Login() {
           <div className="line-word">{t("or")}</div>
           <input type="button" value={t("as-anony")} onClick={loginAnony} />
         </div>
-        <div className="version">v0405</div>
+        <div className="version">{VERSION}</div>
       </div>
     </div>
   )

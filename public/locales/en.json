@@ -35,6 +35,7 @@
   "email": "Email",
   "username": "Username",
   "pw": "Password",
+  "lang": "language",
 
   "findIdSet-err": "It seems that the instant noodles have overturned on the machine, please try again later",
   "findPost-err": "Loading posts error",

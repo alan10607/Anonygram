@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useRef } from 'react';
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -9,11 +9,17 @@ import Bigbox from '../BigBox';
 import './index.css';
 
 export default function Setting() {
+  const langRef = useRef();
+  const colorRef = useRef();
   const { isAnonyUser } = useSelector(state => ({
     isAnonyUser : state.user.isAnonyUser
   }));
   const dispatch = useDispatch();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    langRef.current.value = i18n.language;
+  }, [i18n.language]);
 
   const deleteJwtAndExit = () => {
     deleteJwt()
@@ -25,13 +31,41 @@ export default function Setting() {
     dispatch(resetPostData());
   }
 
+  const changeLang = () => {
+    i18n.changeLanguage(langRef.current.value);
+  }
+
+  const changeColor = () => {
+    const rootStyle = window.getComputedStyle(document.documentElement);
+    const root = document.documentElement;
+    const color = colorRef.current.value;
+    const v = `--b-bg`;
+    root.style.setProperty("--bg", rootStyle.getPropertyValue(v));
+  }
+
   const boxRender = () => (
     <div id="setting">
       <div className="list">
-        {isAnonyUser ?
-          <Link to="/login" onClick={exit}>{t("login")}</Link> :
-          <Link to="/login" onClick={deleteJwtAndExit}>{t("logout")}</Link>
-        }
+        <div>
+          {isAnonyUser ?
+            <Link to="/login" onClick={exit}>{t("login")}</Link> :
+            <Link to="/login" onClick={deleteJwtAndExit}>{t("logout")}</Link>
+          }
+        </div>
+        <div className="lang">
+          <div>{t("lang")}</div>
+          <select ref={langRef} onChange={changeLang}>
+            <option value="en">English</option>
+            <option value="zh-tw">繁體中文</option>
+          </select>
+        </div>
+        <div className="lang">
+          <div>{t("lang")}</div>
+          <select ref={colorRef} onChange={changeColor}>
+            <option value="b">black</option>
+            <option value="w">white</option>
+          </select>
+        </div>
       </div>
     </div>
   )

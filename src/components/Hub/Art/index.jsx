@@ -37,7 +37,7 @@ export default function Art() {
 
     const payload = getJwtPayload(jwt);
     const expStr = new Date(payload.exp * 1000).toLocaleString();
-    if(!isJwtValid(payload.exp)){
+    if(!isJwtValid(jwt)){
       console.log(`Jwt was expired at ${expStr}, navigate to login...`);
       navigate("/login");
       return;

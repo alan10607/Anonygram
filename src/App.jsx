@@ -5,7 +5,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Error from './components/Error'
 import Console from './components/Console';
-import './App.css';
+import './App.scss';
 
 export default function App() {
   return (

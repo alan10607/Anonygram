@@ -1,3 +1,23 @@
+:root {
+  --b-bg: #fff;
+  $b-bg-box: #262833;
+  $b-color: #262833;
+  $b-color-mid: #262833;
+  $b-color-light: #262833;
+  $w-bg: #fff;
+  $w-bg-box: #262833;
+  $w-color: #262833;
+  $w-color-mid: #262833;
+  $w-color-light: #262833;
+  
+  $bg: #fff;
+  $bg-box: #262833;
+  $color: #262833;
+  $color-mid: #262833;
+  $color-light: #2628d3;
+}
+
+
 body {
   font-family: Microsoft JhengHei;
   background-color: #e0e0e0;
@@ -16,7 +36,7 @@ a {
   font-size: inherit;
 }
 
-body textarea {
+textarea {
   font-size: 18px;
   line-height: 28px;
   background-color: #fafafa;
@@ -26,7 +46,7 @@ body textarea {
   outline-width: 0px;
 }
 
-body button {
+button {
   font-size: 18px;
   line-height: 28px;
   padding: 4px 10px 4px 10px;
@@ -36,7 +56,7 @@ body button {
   transition: 0.1s;
 }
 
-body button:hover {
+button:hover {
   box-shadow: #38373759 0px 0px 7px 0px;
   transition: 0.1s;
 }
@@ -57,6 +77,19 @@ input {
 table {
   border-collapse: collapse;
   border-spacing: 0;
+}
+
+select{
+  font-size: 20px;
+  line-height: 34px;
+  font-family: Microsoft JhengHei;
+  background-color: #fafafa;
+  border: 0.5px solid #d1d1d1;
+  outline-width: 0px;
+  padding: 4px 10px 4px 10px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 table td {
