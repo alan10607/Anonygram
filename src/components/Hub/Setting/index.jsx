@@ -56,7 +56,7 @@ export default function Setting() {
           <div>{t("lang")}</div>
           <select ref={langRef} onChange={changeLang}>
             <option value="en">English</option>
-            <option value="zh-tw">繁體中文</option>
+            <option value="zh-TW">繁體中文</option>
           </select>
         </div>
         <div className="lang">
