@@ -1,7 +1,7 @@
-export const VERSION = "v0406";
+export const VERSION = "v0409";
 //Backend url
-// export const BACKEND_API_URL = "https://13.112.45.117/";
-export const BACKEND_API_URL = "https://localhost/";//test
+export const BACKEND_API_URL = "https://13.112.45.117/";
+// export const BACKEND_API_URL = "https://localhost/";//test
 // const PROTOCOL = window.location.protocol;
 // const DOMAIN = window.location.host;
 

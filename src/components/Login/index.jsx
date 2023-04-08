@@ -18,7 +18,6 @@ export default function Login() {
   useEffect(() => {//測試用, 確認後台ssl
     authService.testSsl().then((res) => {})
     .catch((e) => {
-      debugger
       //跳轉到後台後再返回
       const sslUrl = `${BACKEND_API_URL}ssl?callbackUrl=${window.location.href}`;
       console.log("Check ssl move to:", sslUrl)
