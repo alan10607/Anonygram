@@ -76,3 +76,9 @@ $nav-height: 100px;
     display: none;
   }
 }
+
+@mixin login-btn {
+  background-color: #0095f6;
+  color: #ffffff;
+  cursor: pointer;
+}

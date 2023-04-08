@@ -29,15 +29,11 @@
 	}
 
 	input[type="button"] {
-		background-color: var(--bg-btn-login);
-		color: #ffffff;
-		cursor: pointer;
+		@include login-btn;
 	}
 
 	input[type="submit"] {
-		background-color: var(--bg-btn-login);
-		color: #ffffff;
-		cursor: pointer;
+		@include login-btn;
 	}
 
 	.info {

@@ -75,8 +75,8 @@ export default function Setting() {
         <div>
           <div>{t("theme")}</div>
           <select ref={themeRef} onChange={changeTheme}>
-            <option value="dark">{t("theme-dark")}</option>
             <option value="light">{t("theme-light")}</option>
+            <option value="dark">{t("theme-dark")}</option>
           </select>
         </div>
         <div className="flex-empty"></div>
