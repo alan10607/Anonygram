@@ -10,8 +10,7 @@ import {
   showConsole, 
   showLoading, 
   closeLoading,
-  closeBigBox,
-  dispatchReload
+  closeBigBox
 } from "./common";
 
 
@@ -54,7 +53,7 @@ export const findPost = (data) => (dispatch, getState) => {
 export const createPost = (data) => (dispatch) => {
   postService.createPost(data).then((res) => {
     dispatch(showConsole(i18next.t("createPost-ok")));
-    dispatch(dispatchReload());
+    dispatch(resetPostData());
   }).catch((e) => {
     dispatch(showConsole(i18next.t("createPost-err")));
   });

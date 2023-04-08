@@ -1,0 +1,14 @@
+@import '../../../root.scss';
+
+.art {
+	background-color: var(--bg-box);
+	+ {
+		.art {
+			margin-top: 10px;
+		}
+	}
+}
+
+#empty-head {
+  height: $nav-height;
+}  

@@ -2,6 +2,10 @@ export const locationReload = (t = 0) => {
   setTimeout(() => window.location.reload(true), t);
 }
 
-export const locationTo = (url = "/") => {
-  window.location.href = process.env.PUBLIC_URL + url;
+export const locationLocalTo = (url = "/") => {
+  locationTo(process.env.PUBLIC_URL + url);
+}
+
+export const locationTo = (url) => {
+  window.location.href = url;
 }

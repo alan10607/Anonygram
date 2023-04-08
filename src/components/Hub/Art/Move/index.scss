@@ -1,0 +1,25 @@
+@import '../../../../root.scss';
+
+.move {
+	display: flex;
+	align-items: center;
+	font-size: 14px;
+	color: var(--color-normal);
+	padding: 20px 17px;
+
+	.open {
+		flex: 0 1 auto;
+		cursor: pointer;
+	}
+
+	.not-open {
+		cursor: initial;
+		color: var(--color-light);
+	}
+  
+	.reply-btn {
+		flex: 0 1 auto;
+		cursor: pointer;
+		font-size: 16px;
+	}
+}

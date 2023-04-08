@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { findTopCont } from '../../../../redux/actions/post';
-import './index.css';
+import './index.scss';
 
 export default function Move({ id, openReply }) {
   const { contNum, startNo } = useSelector(state => ({

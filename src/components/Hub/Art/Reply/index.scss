@@ -1,0 +1,72 @@
+@import '../../../../root.scss';
+
+.reply {
+	transition-timing-function: cubic-bezier(0.18, 0.89, 0.32, 1.28);
+	transition-duration: 0.5s;
+	display: flex;
+	flex-direction: column;
+
+	&:before {
+		@include line
+	}
+
+	.bar {
+		display: flex;
+		align-items: center;
+		padding: 13px 15px;
+
+		.bar-head {
+			flex: 0 1 auto;
+			width: 28px;
+			height: 28px;
+			margin-right: 8px;
+		}
+
+		.author {
+			flex: 1 1 auto;
+			font-size: 16px;
+			margin: 0;
+			font-weight: 600;
+		}
+	}
+
+	.info {
+		padding: 0 15px 8px 15px;
+		font-size: 13px;
+		display: flex;
+		align-items: center;
+		color: var(--color-light);
+	}
+
+	.reply-input {
+		@include input-box;
+
+		img {
+			max-width: 100%;
+		}
+	}
+
+	.move {
+		display: flex;
+		align-items: center;
+		font-size: 14px;
+		color: var(--color-light);
+		padding: 20px 17px;
+
+		.reply-img {
+			flex: 0 1 auto;
+			@include upload-img;
+		}
+
+		.reply-summit {
+			flex: 0 0 auto;
+			font-size: 16px;
+			color: var(--color-normal);
+			cursor: pointer;
+		}
+	}
+}
+
+.reply.replying {
+	bottom: 60vh;
+}

@@ -1,13 +1,11 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
-
-import { ICON_LOGO, VERSION } from '../../utli/constant';
-import Auth from '../../service/authService';
 import { setJwt, isJwtValid } from '../../utli/jwt';
-import usePrevious from '../../utli/usePrevious';
-import './index.css'
+import { locationTo } from '../../utli/reolad';
+import { ICON_LOGO, VERSION, BACKEND_API_URL } from '../../utli/constant';
 import authService from '../../service/authService';
+import './index.scss'
 
 export default function Login() {
   const emailRef = useRef();
@@ -16,6 +14,17 @@ export default function Login() {
   const [done, setDone] = useState(false);
   const navigate = useNavigate();
   const { t } = useTranslation();
+
+  useEffect(() => {//測試用, 確認後台ssl
+    authService.testSsl().then((res) => {})
+    .catch((e) => {
+      debugger
+      //跳轉到後台後再返回
+      const sslUrl = `${BACKEND_API_URL}ssl?callbackUrl=${window.location.href}`;
+      console.log("Check ssl move to:", sslUrl)
+      locationTo(sslUrl);
+    });
+  }, []);
 
   useEffect(() => {//取得新的jwt後跳轉
     if (done){
@@ -56,7 +65,7 @@ export default function Login() {
   return (
     <div className="login center">
       <div>
-        <img className="logo" src={ICON_LOGO} />
+        <img className="icon logo" src={ICON_LOGO} />
         <div className="col-flex">
           <form onSubmit={login}>
             <input ref={emailRef} type="text" placeholder="Email" autoComplete="on" required autoFocus />

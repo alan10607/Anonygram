@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import authService from '../../service/authService';
 import { ICON_LOGO } from '../../utli/constant';
-import '../Login/index.css'
+import '../Login/index.scss'
 
 export default function Register() {
   const emailRef = useRef();
@@ -54,7 +54,7 @@ export default function Register() {
   return (
     <div className="login center">
       <div>
-        <img className="logo" src={ICON_LOGO} />
+        <img className="logo icon" src={ICON_LOGO} />
         <div className="col-flex">
           <form onSubmit={register}>
             <h2>{t("user-register")}</h2>

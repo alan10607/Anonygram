@@ -8,7 +8,7 @@ import { ICON_USER, ICON_UPLOAD_IMG, BIG_BOX_ID } from '../../../utli/constant';
 import useConsole from '../../../utli/useConsole';
 import useUploadImg from '../../../utli/useUploadImg';
 import Bigbox from '../BigBox';
-import './index.css';
+import './index.scss';
 
 export default function New() {
   const [html, setHtml] = useState("");
@@ -39,7 +39,7 @@ export default function New() {
   const boxRender = () => (
     <div id="new">
       <div className="bar">
-        <img className="bar-head" src={ICON_USER} />
+        <img className="bar-head icon" src={ICON_USER} />
         <div className="author">{username}</div>
         <div className="time">{getNowTime()}</div>
       </div>
@@ -53,7 +53,7 @@ export default function New() {
       ></div>
       <div className="new-move">
         <label className="new-img">
-          <img src={ICON_UPLOAD_IMG} />
+          <img className="icon" src={ICON_UPLOAD_IMG} />
           <input type="file" accept="image/*" onChange={uploadImg} />
         </label>
         <div className="flex-empty"></div>

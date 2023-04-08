@@ -16,7 +16,7 @@ export default function App() {
         <Route path='/register/' element={<Register />} />
         <Route path='/hub/' element={<Hub />} />
         <Route path='/error' element={<Error />} />
-        <Route path='/*' element={<Navigate to='/' />} />
+        <Route path='*' element={<Navigate to='/login' />} />
       </Routes>
       <Console />
     </div>

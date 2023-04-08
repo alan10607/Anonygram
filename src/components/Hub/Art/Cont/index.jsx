@@ -6,7 +6,7 @@ import { getTimeFromStr } from '../../../../utli/time';
 import { ICON_USER, ICON_LIKE } from '../../../../utli/constant';
 import useToggleLike from '../../../../utli/useToggleLike';
 import Word from '../Word';
-import './index.css';
+import './index.scss';
 
 export default function Cont({ id, no }) {
   const { cont : { author, authorName, isUserLike, likes, word, createDate }, userId, username } = useSelector(state => ({
@@ -22,7 +22,7 @@ export default function Cont({ id, no }) {
   return (
     <div id={`${id}_${no}`} className="cont">
       <div className="bar">
-        <img className="bar-head" src={ICON_USER} />
+        <img className="bar-head icon" src={ICON_USER} />
         <div className="author">{authorName}</div>
         <img className={"likes-icon " + (isUserLike ? "likes-icon-yes" : "")} src={ICON_LIKE} onClick={toggleLike(id, no, isUserLike)} />
         <div className="likes-num">{likes}</div>

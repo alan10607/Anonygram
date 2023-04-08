@@ -7,7 +7,7 @@ import { getContentWord, pasteAsPlain } from '../../../../utli/inputControll';
 import { ICON_USER, ICON_UPLOAD_IMG } from '../../../../utli/constant';
 import useConsole from '../../../../utli/useConsole';
 import useUploadImg from '../../../../utli/useUploadImg';
-import './index.css';
+import './index.scss';
 
 export default function Reply({ id }) {
   const [html, setHtml] = useState("");
@@ -34,7 +34,7 @@ export default function Reply({ id }) {
   return (
     <div className="reply replying" data-click-reply>
       <div className="bar">
-        <img className="bar-head" src={ICON_USER} />
+        <img className="bar-head icon" src={ICON_USER} />
         <div className="author">{username}</div>
       </div>
       <div className="info">B{contNum}, {getNowTime()}</div>
@@ -47,7 +47,7 @@ export default function Reply({ id }) {
       ></div>
       <div className="move">
         <label className="reply-img">
-          <img src={ICON_UPLOAD_IMG} />
+          <img className="icon" src={ICON_UPLOAD_IMG} />
           <input type="file" accept="image/*" onChange={uploadImg}/>
         </label>
         <div className="flex-empty"></div>

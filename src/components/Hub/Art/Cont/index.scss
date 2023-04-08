@@ -1,0 +1,73 @@
+@import '../../../../root.scss';
+
+.cont {
+	padding: 0;
+
+	&:after {
+		@include line;
+	}
+
+	.bar {
+		padding: 12px 15px 0px 15px;
+		display: flex;
+		align-items: center;
+	}
+
+	.bar-head {
+		flex: 0 1 auto;
+		width: 24px;
+		height: 24px;
+		padding: 2px 6px 2px 0px;
+	}
+
+	.author {
+		flex: 1 1 auto;
+		font-size: 14px;
+		margin: 0;
+		font-weight: 600;
+	}
+
+	.likes-icon {
+		width: 12px;
+		height: 12px;
+		padding: 5px 6px 4px 0px;
+		filter: invert(61%) sepia(2%) saturate(184%) hue-rotate(19deg) brightness(93%) contrast(77%);
+	}
+
+	.likes-icon-yes {
+		filter: invert(15%) sepia(55%) saturate(6826%) hue-rotate(0deg) brightness(103%) contrast(95%);
+	}
+
+	.likes-num {
+		flex: 0 1 auto;
+		font-size: 13px;
+		color: var(--color-light);
+		min-width: 8px;
+		text-align: right;
+	}
+
+	.info {
+		padding: 2px 17px 7px 17px;
+		font-size: 13px;
+		display: flex;
+		align-items: center;
+		color: var(--color-light);
+
+		.del {
+			flex: 0 1 auto;
+			font-size: 13px;
+			color: var(--color-mid);
+			margin-left: 10px;
+			font-weight: normal;
+			cursor: pointer;
+		}
+	}
+
+	.del-word {
+		font-size: 16px;
+		line-height: 28px;
+		font-family: Microsoft JhengHei;
+		margin: 12px 0;
+		padding: 0 15px;
+	}
+}

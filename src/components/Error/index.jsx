@@ -1,6 +1,6 @@
 import React from 'react';
 import { ICON_LOGO } from "../../utli/constant";
-import "./index.css";
+import "./index.scss";
 
 export default function Error() {
   return (

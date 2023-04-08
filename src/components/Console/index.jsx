@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { closeConsole } from '../../redux/actions/common';
-import './index.css';
+import './index.scss';
 
 export default function Console() {
   const [isClose, setIsClose] = useState(true);

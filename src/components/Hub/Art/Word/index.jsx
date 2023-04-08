@@ -1,5 +1,5 @@
 import React from 'react';
-import './index.css';
+import './index.scss';
 
 export default function Word({ id, word }) {
   const createWord = () => {//建構內文
@@ -51,7 +51,10 @@ export default function Word({ id, word }) {
     }
 
     //加入key, key為const故Object.assign
-    allNode = allNode.map((node, i) => Object.assign({}, node, { key : i }));
+    allNode = allNode.map((node, i) => Object.assign({}, node, { 
+      key : i, 
+      props : {...node.props, className: 'my-class'} 
+    }));
     return allNode;
   }
 
@@ -70,7 +73,8 @@ export default function Word({ id, word }) {
   }
 
   const goTo = (ele = "body") => {
-    window.scrollTo({ top : ele.offsetTop, behavior : "smooth" });
+    const buffer = document.getElementById("empty-head").offsetHeight;
+    window.scrollTo({ top : ele.offsetTop - buffer, behavior : "smooth" });
   }
 
   return (

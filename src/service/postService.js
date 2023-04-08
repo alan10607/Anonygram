@@ -1,15 +1,16 @@
-import { jwtRequest } from ".";
+import { jwtPostRequest } from ".";
 
-const req = (path, data) => jwtRequest(`post/${path}`, data);
-const findIdSet = (data) => req("findIdSet", data);
-const findPost = (data) => req("findPost", data);
-const createPost = (data) => req("createPost", data);
-const deletePost = (data) => req("deletePost", data);
-const findTopCont = (data) => req("findTopCont", data);
-const deleteCont = (data) => req("deleteCont", data);
-const likeContent = (data) => req("likeContent", data);
-const unlikeContent = (data) => req("unlikeContent", data);
-const uploadImg = (data) => req("uploadImg", data);
+const pReq = (path, data) => jwtPostRequest(`post/${path}`, data);
+const findIdSet = (data) => pReq("findIdSet", data);
+const findPost = (data) => pReq("findPost", data);
+const createPost = (data) => pReq("createPost", data);
+const deletePost = (data) => pReq("deletePost", data);
+const findTopCont = (data) => pReq("findTopCont", data);
+const replyPost = (data) => pReq("replyPost", data);
+const deleteCont = (data) => pReq("deleteCont", data);
+const likeContent = (data) => pReq("likeContent", data);
+const unlikeContent = (data) => pReq("unlikeContent", data);
+const uploadImg = (data) => pReq("uploadImg", data);
 
 export default {
   findIdSet,
@@ -17,6 +18,7 @@ export default {
   createPost,
   deletePost,
   findTopCont,
+  replyPost,
   deleteCont,
   likeContent,
   unlikeContent,

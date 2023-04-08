@@ -1,7 +1,7 @@
 import axios from "axios";
 import { BACKEND_API_URL } from "../utli/constant";
 import { getJwt, isJwtValid, deleteJwt } from "../utli/jwt";
-import { locationTo } from "../utli/reolad";
+import { locationLocalTo } from "../utli/reolad";
 
 const config = {
   baseURL: BACKEND_API_URL,
@@ -23,24 +23,36 @@ const getJwtInstance = () => {
   if(!jwt || !isJwtValid(jwt)) {
     console.log("Get expired Jwt when api request");
     deleteJwt()
-    locationTo("/login");
+    locationLocalTo("/login");
   }
   const jwtConfig = Object.assign({}, config);
   jwtConfig.headers["Authorization"] = `Bearer ${jwt}`;
   return getInstance(jwtConfig);
 }
 
-const fetchData = async (url, data = {}, instance) => {
+const postPromise = async (url, data = {}, instance) => {
   try{
     const res = await instance.post(url, data);
-    if(!res.data) throw "Response format error: " + url;
+    if(!res.data) throw `Post format error: ${url}`;
     return Promise.resolve(res.data.result);
   }catch(e){
-    console.error("Api error:", e.response?.data?.result || e.message || e);
+    console.error(`Post error: ${url}`, e.response?.data?.result || e.message || e);
     return Promise.reject(e);
   }
 }
 
-export const request = (url, data) => fetchData(url, data, getInstance());
+const getPromise = async (url, data = {}, instance) => {
+  try{
+    const res = await instance.get(url, { params: data })
+    return Promise.resolve(res.data);
+  }catch(e){
+    console.error(`Get error: ${url}`, e.message || e);
+    return Promise.reject(e);
+  }
+}
 
-export const jwtRequest = (url, data) => fetchData(url, data, getJwtInstance());
+export const getRequest = (url, data) => getPromise(url, data, getInstance());
+
+export const postRequest = (url, data) => postPromise(url, data, getInstance());
+
+export const jwtPostRequest = (url, data) => postPromise(url, data, getJwtInstance());

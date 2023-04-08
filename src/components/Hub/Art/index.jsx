@@ -7,12 +7,11 @@ import { saveUserData } from '../../../redux/actions/user';
 import { CONT_STATUS_TYPE } from '../../../utli/constant';
 import { getJwt, getJwtPayload, isJwtValid } from '../../../utli/jwt';
 import ArtCont from './ArtCont';
-import Bar from './Bar';
 import Cont from './Cont';
 import ContDel from './Cont/ContDel';
 import Reply from './Reply';
 import Move from './Move';
-import './index.css';
+import './index.scss';
 
 export default function Art() {
   const findPostLock = useRef(false);
@@ -56,7 +55,7 @@ export default function Art() {
     return () => {
       // window.removeEventListener("click", clickReply);
     }
-  }, [])
+  }, [idList])
 
   /* --- 往下滑動找更多文章 --- */
   useEffect(() => {
@@ -126,7 +125,6 @@ export default function Art() {
 
       allArt.push(
         <div key={id} id={id} className="art">
-          <Bar id={id} />
           <ArtCont id={id} />
           <div>{createCont(a.contList)}</div>
           <Move id={id} openReply={openReply(id)} />
@@ -153,7 +151,7 @@ export default function Art() {
 
   return (
     <div>
-      <div className="empty-head"></div>
+      <div id="empty-head"></div>
       {createArt()}
     </div>
   )
