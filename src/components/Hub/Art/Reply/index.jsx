@@ -42,6 +42,7 @@ export default function Reply({ id }) {
         ref={inputRef}
         className="reply-input"
         onPaste={pasteAsPlain}
+        onBlur={() => setHtml(inputRef.current.innerHTML)}
         contentEditable="true"
         dangerouslySetInnerHTML={{ __html: html }}
       ></div>

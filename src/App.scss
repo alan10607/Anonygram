@@ -21,6 +21,7 @@ a {
 textarea {
 	font-size: 18px;
 	line-height: 28px;
+	color: var(--color-normal);
 	background-color: var(--bg-btn);
 	border: 0;
 	padding: 4px 5px 3px 5px;
@@ -33,6 +34,7 @@ button {
 	line-height: 28px;
 	padding: 4px 10px 4px 10px;
 	border: $border-btn;
+	color: var(--color-normal);
 	background-color: var(--bg-btn);
 	cursor: pointer;
 }
@@ -41,6 +43,7 @@ input {
 	font-size: 20px;
 	line-height: 34px;
 	font-family: Microsoft JhengHei;
+	color: var(--color-normal);
 	background-color: var(--bg-btn);
 	border: $border-btn;
 	outline-width: 0px;
@@ -64,6 +67,7 @@ select {
 	font-size: 20px;
 	line-height: 34px;
 	font-family: Microsoft JhengHei;
+	color: var(--color-normal);
 	background-color: var(--bg-btn);
 	border: $border-btn;
 	outline-width: 0px;

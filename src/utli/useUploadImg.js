@@ -9,18 +9,19 @@ export default function useUploadImg(id, inputRef) {
   const imgQuality = 1, imgMaxWidth = 450, plainHtml = "<div><br></div>";
   const [html, setHtml] = useState(plainHtml);
   const { imgUrl } = useSelector(state => ({
-    imgUrl : state.common.uploadImgUrl
+    imgUrl : state.common.uploadImgUrl[id]
   }));
+
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const showConsole = useConsole();
 
   /* --- 將上傳圖片傳回畫面--- */
   useEffect(() => {
-    if (imgUrl !== "") {
+    if (imgUrl) {
       const html = inputRef.current.innerHTML;
       setHtml(`${html}<img src="${imgUrl}" alt="${imgUrl}"/>${plainHtml}`);
-      dispatch(saveUploadImgUrl(""));//設定完後丟棄redux避免再獲取到
+      dispatch(saveUploadImgUrl({}));//設定完後丟棄redux避免再獲取到
     }
   }, [imgUrl])
 
@@ -100,5 +101,5 @@ export default function useUploadImg(id, inputRef) {
     dispatch(uploadImg(data));
   }
 
-  return [startUpload, html, imgUrl];
+  return [startUpload, html];
 }

@@ -16,7 +16,7 @@ import {
 const initState = {
   idList: [],
   findIdStart: 0,
-  uploadImgUrl: "",
+  uploadImgUrl: {},
   replyId: "",
   consoleStr: "",
   isLoading: false,

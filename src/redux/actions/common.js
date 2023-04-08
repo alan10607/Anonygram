@@ -12,7 +12,7 @@ export const DISPATCH_RELOAD = "dispatchReload";
 
 export const saveIdList = (idList) => ({ type: SAVE_ID_LIST, data : idList });
 export const saveFindIdStart = (startId) => ({ type: SAVE_FIND_ID_START, data : startId });
-export const saveUploadImgUrl = (imgUrl) => ({ type: SAVE_UPLOAD_IMG_URL, data : imgUrl });
+export const saveUploadImgUrl = (id, imgUrl) => ({ type: SAVE_UPLOAD_IMG_URL, data : { [id]: imgUrl } });
 export const saveReplyId = (id) => ({ type: SAVE_REPLY_ID, data : id });
 export const showBigBox = (openBigBoxId) => ({ type: SHOW_BIG_BOX, data: openBigBoxId });
 export const closeBigBox = () => ({ type: CLOSE_BIG_BOX });

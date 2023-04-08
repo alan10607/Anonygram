@@ -122,7 +122,7 @@ export const unlikeContent = (data) => (dispatch) => {
 export const uploadImg = (data) => (dispatch) => {
   dispatch(showLoading());
   postService.uploadImg(data).then((imgData) => {
-    dispatch(saveUploadImgUrl(imgData.imgUrl));
+    dispatch(saveUploadImgUrl(data.id, imgData.imgUrl));
   }).catch((e) => {
     dispatch(showConsole(i18next.t("uploadImg-err")));
   }).finally(() => {
@@ -137,5 +137,9 @@ export const resetPostData = (data) => (dispatch) => {
   dispatch(saveReplyId(""));
   dispatch(closeBigBox());
   dispatch(closeLoading());
+}
+
+export const resetPostAndUserData = (data) => (dispatch) => {
+  dispatch(resetPostData());
   dispatch(deleteUserData());
 }

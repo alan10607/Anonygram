@@ -11,10 +11,10 @@
 
   --dark-bg-body: #000000;
   --dark-bg-box: #111111;
-  --dark-bg-setting: #515050;
-  --dark-bg-btn: #b5b5b5;
+  --dark-bg-setting: #1a1a1a;
+  --dark-bg-btn: #131313;
   --dark-bg-login-btn: #111111;
-  --dark-color-normal: #ffffff;
+  --dark-color-normal: #ececec;
   --dark-color-mid: #efefef;
   --dark-color-light: #aaaaaa;
   --dark-icon-filter: invert(100%) sepia(57%) saturate(41%) hue-rotate(308deg) brightness(113%) contrast(87%);
@@ -30,14 +30,11 @@
   --icon-filter: var(--light-icon-filter);
 }
 
-
 $color-word-a: #639cf9;
 $color-word-bx: #639cf9;
-
 $border-light: 0.5px solid #8e8e8e;
 $border-btn: 0.5px solid #d1d1d1;
-
-$nav-height: 100px;
+$nav-height: 80px;
 
 @mixin line {
   display: block;
@@ -51,7 +48,7 @@ $nav-height: 100px;
 @mixin input-box {
   display: block;
   flex: 1 1 auto;
-  height: 250px;
+  height: 200px;
   line-height: 28px;
   font-family: Microsoft JhengHei;
   border: $border-btn;
@@ -84,4 +81,33 @@ $nav-height: 100px;
   background-color: var(--bg-login-btn);
   color: #ffffff;
   cursor: pointer;
+}
+
+@mixin likes-icon{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  &.likes-icon-yes {
+    img{
+    filter: invert(21%) sepia(45%) saturate(3883%) hue-rotate(344deg) brightness(109%) contrast(79%);
+    }
+  }
+
+  img{
+    flex: 0 1 auto;
+    width: 13px;
+    height: 13px;
+    padding: 7px 6px 6px 0;
+    cursor: pointer;
+    filter: invert(61%) sepia(2%) saturate(184%) hue-rotate(19deg) brightness(93%) contrast(77%);
+  }
+
+  div{
+    flex: 0 1 auto;
+    font-size: 13px;
+    color: var(--color-light);
+    min-width: 10px;
+    text-align: right;
+  }
 }

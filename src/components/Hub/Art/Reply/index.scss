@@ -40,6 +40,7 @@
 
 	.reply-input {
 		@include input-box;
+		margin: 0 15px;
 
 		img {
 			max-width: 100%;

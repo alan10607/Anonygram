@@ -3,10 +3,11 @@ import Header from "./Header";
 import New from "./New";
 import Setting from "./Setting";
 import Art from "./Art";
+import './index.scss';
 
 export default function Hub() {
   return (
-    <div>
+    <div id="hub">
       <Header />
       <New />
       <Setting />

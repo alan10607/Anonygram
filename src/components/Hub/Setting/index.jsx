@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react';
-import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { resetPostData } from '../../../redux/actions/post';
+import { useLang, useTheme } from '../../../utli/localSetting';
+import { resetPostAndUserData } from '../../../redux/actions/post';
 import { deleteJwt } from '../../../utli/jwt';
 import { BIG_BOX_ID } from '../../../utli/constant';
 import Bigbox from '../BigBox';
@@ -12,55 +12,27 @@ import './index.scss';
 export default function Setting() {
   const langRef = useRef();
   const themeRef = useRef();
+  const [lang, setLang] = useLang();
+  const [theme, setTheme] = useTheme();
   const { isAnonyUser } = useSelector(state => ({
     isAnonyUser: state.user.isAnonyUser
   }));
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   useEffect(() => {
-    langRef.current.value = i18n.language;
-  }, [i18n.language]);
-
-  useEffect(() => {
-    changeTheme();
-  }, []);
+    langRef.current.value = lang;
+    themeRef.current.value = theme;
+  }, [lang, theme]);
 
   const exit = () => {
     if (!isAnonyUser) {
       deleteJwt()
       console.log("Logout delete jwt");
     }
-    dispatch(resetPostData());
+    dispatch(resetPostAndUserData());
     navigate("/login");
-  }
-
-  const changeLang = () => {
-    i18n.changeLanguage(langRef.current.value);
-  }
-
-  const styleName = [
-    "bg-body",
-    "bg-box",
-    "bg-setting",
-    "bg-btn",
-    "bg-login-btn",
-    "color-normal",
-    "color-mid",
-    "color-light",
-    "icon-filter"
-  ];
-
-  const changeTheme = () => {
-    const root = document.documentElement;
-    const rootStyle = window.getComputedStyle(root);
-    const theme = themeRef.current.value;
-    for (let name of styleName) {
-      const value = rootStyle.getPropertyValue(`--${theme}-${name}`);
-      root.style.setProperty(`--${name}`, value);
-      console.log(`--${name}`, value)
-    }
   }
 
   const boxRender = () => (
@@ -68,14 +40,14 @@ export default function Setting() {
       <div className="list">
         <div>
           <div>{t("lang")}</div>
-          <select ref={langRef} onChange={changeLang}>
+          <select ref={langRef} onChange={(event) => { setLang(event.target.value) }}>
             <option value="en">English</option>
             <option value="zh-TW">繁體中文</option>
           </select>
         </div>
         <div>
           <div>{t("theme")}</div>
-          <select ref={themeRef} onChange={changeTheme}>
+          <select ref={themeRef} onChange={(event) => { setTheme(event.target.value) }}>
             <option value="light">{t("theme-light")}</option>
             <option value="dark">{t("theme-dark")}</option>
           </select>

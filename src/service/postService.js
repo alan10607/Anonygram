@@ -7,7 +7,7 @@ const createPost = (data) => pReq("createPost", data);
 const deletePost = (data) => pReq("deletePost", data);
 const findTopCont = (data) => pReq("findTopCont", data);
 const replyPost = (data) => pReq("replyPost", data);
-const deleteCont = (data) => pReq("deleteCont", data);
+const deleteCont = (data) => pReq("deleteContent", data);
 const likeContent = (data) => pReq("likeContent", data);
 const unlikeContent = (data) => pReq("unlikeContent", data);
 const uploadImg = (data) => pReq("uploadImg", data);

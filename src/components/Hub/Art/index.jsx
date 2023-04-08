@@ -26,7 +26,7 @@ export default function Art() {
   const navigate = useNavigate();
 
   /* --- 初始化頁面 --- */
-  useEffect(() => {
+  useEffect(() => {//檢查Jwt
     const jwt = getJwt();
     if (!jwt) {
       console.log("Jwt not found, navigate to login...");
@@ -46,14 +46,16 @@ export default function Art() {
     console.log("Load jwt payload", payload, );
     console.log(`Jwt will expire at ${expStr}`);
 
-    if(idList.length === 0) {
+    // window.addEventListener("click", clickReply);
+    // return () => {
+    //   window.removeEventListener("click", clickReply);
+    // }
+  }, [])
+
+  useEffect(() => {//初始化查詢文章id
+    if(getJwt() && idList.length === 0) {
       dispatch(findIdSet());
       console.log("Load id set");
-    }
-
-    // window.addEventListener("click", clickReply);
-    return () => {
-      // window.removeEventListener("click", clickReply);
     }
   }, [idList])
 

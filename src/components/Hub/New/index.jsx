@@ -14,8 +14,9 @@ export default function New() {
   const [html, setHtml] = useState("");
   const inputRef = useRef();
   const inputTitleRef = useRef();
-  const { username } = useSelector(state => ({
-    username : state.user.username
+  const { username, idList } = useSelector(state => ({
+    username : state.user.username,
+    idList : state.common.idList
   }));
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -25,6 +26,11 @@ export default function New() {
   useEffect(() => {//上傳圖片後更新html
     setHtml(newHtml);
   }, [newHtml])
+
+  useEffect(() => {//post後清空內容
+    inputTitleRef.current.value = "";
+    setHtml("");
+  }, [idList])
 
   const doCreatePost = () => {
     const title = inputTitleRef.current.value.trim();
@@ -48,6 +54,7 @@ export default function New() {
         ref={inputRef}
         className="new-input"
         onPaste={pasteAsPlain}
+        onBlur={() => setHtml(inputRef.current.innerHTML)}
         contentEditable="true"
         dangerouslySetInnerHTML={{ __html: html }}
       ></div>

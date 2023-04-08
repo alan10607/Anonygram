@@ -20,24 +20,20 @@ export default function ArtCont({ id, no = 0 }) {
   const toggleLike = useToggleLike();
   const canDel = userId.toString() == author || (userId == -1 && username == author);
 
-  const getLikeStr = () => {
-    if (likes == 0) return t("like-one", { likes });
-    if (likes == 1) return isUserLike ? t("like-you") : t("like-one", { likes });
-    return isUserLike ? t("like-you-cnt", { likes }) : t("like-cnt", { likes });
-  }
-
   return (
     <div id={`${id}_${no}`} className="art-cont">
       <div className="bar-art">
         <img className="bar-head icon" src={ICON_USER} />
         <div className="author">{authorName}</div>
+        <div className={"likes-icon " + (isUserLike ? "likes-icon-yes" : "")}>
+          <img src={ICON_LIKE} onClick={toggleLike(id, no, isUserLike)} />
+          <div>{likes}</div>
+        </div>
       </div>
       <div className="title">{title}</div>
       <Word id={id} word={word} />
       <div className="info">
-        <img className={"likes-icon " + (isUserLike ? "likes-icon-yes" : "")}
-          src={ICON_LIKE} onClick={toggleLike(id, no, isUserLike)} />
-        <div>{getLikeStr()}, {getTimeFromStr(createDate)}</div>
+        <div>B{no}, {getTimeFromStr(createDate)}</div>
         {canDel && <div className="del" onClick={() => { dispatch(deletePost({ id, no })) }}>{t("del")}</div>}
       </div>
     </div>

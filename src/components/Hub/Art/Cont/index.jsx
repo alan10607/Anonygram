@@ -24,8 +24,10 @@ export default function Cont({ id, no }) {
       <div className="bar">
         <img className="bar-head icon" src={ICON_USER} />
         <div className="author">{authorName}</div>
-        <img className={"likes-icon " + (isUserLike ? "likes-icon-yes" : "")} src={ICON_LIKE} onClick={toggleLike(id, no, isUserLike)} />
-        <div className="likes-num">{likes}</div>
+        <div className={"likes-icon " + (isUserLike ? "likes-icon-yes" : "")}>
+          <img src={ICON_LIKE} onClick={toggleLike(id, no, isUserLike)} />
+          <div>{likes}</div>
+        </div>
       </div>
       <Word id={id} word={word} />
       <div className="info">
