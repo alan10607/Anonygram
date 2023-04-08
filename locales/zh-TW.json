@@ -1,8 +1,4 @@
 {
-  "like-one": "{{likes}}人說讚",
-  "like-cnt": "{{likes}}人說讚",
-  "like-you": "你說讚",
-  "like-you-cnt": "你與{{likes}}人都說讚",
   "del-author": "這則留言已被本人刪除",
   "del-word": "已經刪除的內容就像青春一樣回不去了",
   "del-done": "已刪除",

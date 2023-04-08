@@ -1,8 +1,4 @@
 {
-  "like-one": "{{likes}} like",
-  "like-cnt": "{{likes}} likes",
-  "like-you": "You like",
-  "like-you-cnt": "You and {{likes}} people likes",
   "del-author": "This comment has been deleted by the author",
   "del-word": "Deleted comment never getting back",
   "del-done": "Deleted",
