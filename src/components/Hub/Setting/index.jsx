@@ -45,6 +45,7 @@ export default function Setting() {
     "bg-box",
     "bg-setting",
     "bg-btn",
+    "bg-login-btn",
     "color-normal",
     "color-mid",
     "color-light",
