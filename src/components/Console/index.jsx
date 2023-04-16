@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { closeConsole } from '../../redux/actions/common';
 import './index.scss';
 
 export default function Console() {
-  const [isClose, setIsClose] = useState(true);
   const { consoleStr, isLoading } = useSelector(state => ({
     consoleStr : state.common.consoleStr,
     isLoading : state.common.isLoading,
-  }));
+  }), shallowEqual);
   const dispatch = useDispatch();
 
   useEffect(() => {

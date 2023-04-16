@@ -1,0 +1,18 @@
+@import '../../../../root.scss';
+
+.info {
+  padding: 2px 17px 7px 17px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  color: var(--color-light);
+
+  .del {
+    flex: 0 1 auto;
+    font-size: 13px;
+    color: var(--color-mid);
+    margin-left: 10px;
+    font-weight: normal;
+    cursor: pointer;
+  }
+}

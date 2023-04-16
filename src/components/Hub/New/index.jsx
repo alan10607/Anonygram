@@ -1,69 +1,53 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { createPost } from '../../../redux/actions/post';
+import { replySetTitle } from '../../../redux/actions/reply';
 import { getNowTime } from '../../../utli/time';
-import { getContentWord, pasteAsPlain } from '../../../utli/inputControll';
-import { ICON_USER, ICON_UPLOAD_IMG, BIG_BOX_ID } from '../../../utli/constant';
+import { getContentWord } from '../../../utli/inputControll';
+import { ICON_USER, BIG_BOX_ID } from '../../../utli/constant';
 import useConsole from '../../../utli/useConsole';
-import useUploadImg from '../../../utli/useUploadImg';
 import Bigbox from '../BigBox';
 import './index.scss';
+import ReplyInput from '../Art/ReplyInput';
 
 export default function New() {
-  const [html, setHtml] = useState("");
+  const id = "new";
+  const titleRef = useRef();
   const inputRef = useRef();
-  const inputTitleRef = useRef();
-  const { username, idList } = useSelector(state => ({
-    username : state.user.username,
-    idList : state.common.idList
-  }));
+  const { username, title } = useSelector(state => ({
+    username: state.user.username,
+    title: state.reply.title,
+  }), shallowEqual);
   const dispatch = useDispatch();
-  const { t } = useTranslation();
   const showConsole = useConsole();
-  const [uploadImg, newHtml] = useUploadImg("new", inputRef);
+  const { t } = useTranslation();
 
-  useEffect(() => {//上傳圖片後更新html
-    setHtml(newHtml);
-  }, [newHtml])
-
-  useEffect(() => {//post後清空內容
-    inputTitleRef.current.value = "";
-    setHtml("");
-  }, [idList])
+  useEffect(() => {
+    titleRef.current.value = title;
+  }, [title])
 
   const doCreatePost = () => {
-    const title = inputTitleRef.current.value.trim();
     if (title == "") return showConsole(t("empty-title"));
 
     const word = getContentWord(inputRef.current);
     if (word.trim() == "") return showConsole(t("empty-word"));
 
     dispatch(createPost({ title, word }));
-  }
+  };
 
   const boxRender = () => (
     <div id="new">
-      <div className="bar">
-        <img className="bar-head icon" src={ICON_USER} />
-        <div className="author">{username}</div>
-        <div className="time">{getNowTime()}</div>
-      </div>
-      <input ref={inputTitleRef} className="new-title" type="text" placeholder={t("title")} />
-      <div
-        ref={inputRef}
-        className="new-input"
-        onPaste={pasteAsPlain}
-        onBlur={() => setHtml(inputRef.current.innerHTML)}
-        contentEditable="true"
-        dangerouslySetInnerHTML={{ __html: html }}
-      ></div>
-      <div className="new-move">
-        <label className="new-img">
-          <img className="icon" src={ICON_UPLOAD_IMG} />
-          <input type="file" accept="image/*" onChange={uploadImg} />
-        </label>
+      <div className="new-bar">
+        <img className="new-head icon" src={ICON_USER} />
+        <div className="new-author">{username}</div>
         <div className="flex-empty"></div>
+        <div className="new-info">{getNowTime()}</div>
+      </div>
+      <input ref={titleRef} onBlur={(event) => { dispatch(replySetTitle(event.target.value)) }}
+        className="new-title" type="text" placeholder={t("title")} />
+      <div className="new-input-box">
+        <ReplyInput id={id} inputRef={inputRef}/>
       </div>
     </div>
   )

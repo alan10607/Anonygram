@@ -1,58 +1,59 @@
 import axios from "axios";
-import { BACKEND_API_URL } from "../utli/constant";
-import { getJwt, isJwtValid, deleteJwt } from "../utli/jwt";
 import { locationLocalTo } from "../utli/reolad";
+import { deleteJwt, getJwt, setJwt } from "./jwt";
+import { addPending, removePending } from "./pending";
+import { BACKEND_API_URL } from "../utli/constant";
 
-const config = {
+const service = axios.create({
   baseURL: BACKEND_API_URL,
-  headers: {"Content-Type" : "application/json"},
+  headers: { "Content-Type": "application/json" },
   rejectUnauthorized: false, //for test disable ssl
   timeout: 5000
   // responseEncoding: 'utf8',
   // withCredentials: false, // default
   // xsrfCookieName: 'XSRF-TOKEN', // default
   // xsrfHeaderName: 'X-XSRF-TOKEN', // default
-}
+})
 
-const getInstance = (axiosConfig = config) => {
-  return axios.create(axiosConfig);
-}
+service.interceptors.request.use(config => {
+  removePending(config);//先刪除舊的request
+  addPending(config);//再加入新的
 
-const getJwtInstance = () => {
-  const jwt = getJwt();
-  if(!jwt || !isJwtValid(jwt)) {
-    console.log("Get expired Jwt when api request");
-    deleteJwt()
-    locationLocalTo("/login");
+  config.headers["Authorization"] = `Bearer ${getJwt()}`;//add Jwt
+  return config;
+}, error => {
+  Promise.reject(error);
+})
+
+service.interceptors.response.use(res => {
+  removePending(res.config);
+
+  if (res.status === 403  /* &&//if(...jwt失效)*/) {
+    //if(...jwt失效)
+    console.log("Jwt is expired, location to /login");
+    deleteJwt();
+    return locationLocalTo("/login");
   }
-  const jwtConfig = Object.assign({}, config);
-  jwtConfig.headers["Authorization"] = `Bearer ${jwt}`;
-  return getInstance(jwtConfig);
-}
 
-const postPromise = async (url, data = {}, instance) => {
-  try{
-    const res = await instance.post(url, data);
-    if(!res.data) throw `Post format error: ${url}`;
-    return Promise.resolve(res.data.result);
-  }catch(e){
-    console.error(`Post error: ${url}`, e.response?.data?.result || e.message || e);
-    return Promise.reject(e);
+  if (res.status !== 200) {
+    return Promise.reject(res.status);//返回错误码
   }
-}
 
-const getPromise = async (url, data = {}, instance) => {
-  try{
-    const res = await instance.get(url, { params: data })
-    return Promise.resolve(res.data);
-  }catch(e){
-    console.error(`Get error: ${url}`, e.message || e);
-    return Promise.reject(e);
+  if (res.config.url === "auth/login" || res.config.url === "auth/anony") {
+    const jwt = res.data.result.token;
+    setJwt(jwt);
+    console.log("Login get jwt", jwt);
   }
-}
 
-export const getRequest = (url, data) => getPromise(url, data, getInstance());
+  return res;
+}, error => {
+  if (axios.isCancel(error)) {
+    console.log(`Repeated request cancel: ${error.config.url}`)
+  } else {
+    console.error(`Response error: ${error.config.url}`, 
+      error.response?.data?.result || error.message || error);
+  }
+  return Promise.reject(error);
+})
 
-export const postRequest = (url, data) => postPromise(url, data, getInstance());
-
-export const jwtPostRequest = (url, data) => postPromise(url, data, getJwtInstance());
+export default service;

@@ -1,58 +1,46 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useRef } from 'react';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { replyPost } from '../../../../redux/actions/post';
 import { getNowTime } from '../../../../utli/time';
-import { getContentWord, pasteAsPlain } from '../../../../utli/inputControll';
-import { ICON_USER, ICON_UPLOAD_IMG } from '../../../../utli/constant';
+import { getContentWord } from '../../../../utli/inputControll';
+import { ICON_USER, REPLY_BOX_ATTR } from '../../../../utli/constant';
 import useConsole from '../../../../utli/useConsole';
-import useUploadImg from '../../../../utli/useUploadImg';
+import ReplyInput from '../ReplyInput';
 import './index.scss';
 
 export default function Reply({ id }) {
-  const [html, setHtml] = useState("");
   const inputRef = useRef();
-  const { contNum, username } = useSelector(state => ({
-    contNum : state.post.get(id).contNum,
-    username : state.user.username
-  }));
+  const { contNum, username, isOpen } = useSelector(state => ({
+    contNum: state.post.get(id).contNum,
+    username: state.user.username,
+    isOpen: state.reply.isOpen
+  }), shallowEqual);
   const dispatch = useDispatch();
-  const { t } = useTranslation();
   const showConsole = useConsole();
-  const [uploadImg, newHtml] = useUploadImg(id, inputRef);
+  const { t } = useTranslation();
 
-  useEffect(() => {//更新html為加入圖片後的
-    setHtml(newHtml);
-  }, [id, newHtml])
-  
   const doReplyPost = () => {
     const word = getContentWord(inputRef.current);
     if (word.trim() == "") return showConsole(t("empty-word"));
     dispatch(replyPost({ id, word }));
+  };
+
+  const submitRender = () => {
+    return (
+      <div className="reply-summit" onClick={doReplyPost}>{t("submit")}</div>
+    )
   }
- 
+
   return (
-    <div className="reply replying" data-click-reply>
-      <div className="bar">
-        <img className="bar-head icon" src={ICON_USER} />
-        <div className="author">{username}</div>
+    <div className={"reply " + (isOpen ? "" : "disable")} {...REPLY_BOX_ATTR}>
+      <div className="reply-bar">
+        <img className="reply-head icon" src={ICON_USER} />
+        <div className="reply-author">{username}</div>
       </div>
-      <div className="info">B{contNum}, {getNowTime()}</div>
-      <div 
-        ref={inputRef}
-        className="reply-input"
-        onPaste={pasteAsPlain}
-        onBlur={() => setHtml(inputRef.current.innerHTML)}
-        contentEditable="true"
-        dangerouslySetInnerHTML={{ __html: html }}
-      ></div>
-      <div className="move">
-        <label className="reply-img">
-          <img className="icon" src={ICON_UPLOAD_IMG} />
-          <input type="file" accept="image/*" onChange={uploadImg}/>
-        </label>
-        <div className="flex-empty"></div>
-        <div className="reply-summit" onClick={doReplyPost}>{t("submit")}</div>
+      <div className="reply-info">B{contNum}, {getNowTime()}</div>
+      <div className="reply-input-box">
+        <ReplyInput id={id} inputRef={inputRef} render={submitRender} />
       </div>
     </div>
   )

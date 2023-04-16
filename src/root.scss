@@ -45,69 +45,8 @@ $nav-height: 80px;
   border-bottom: $border-light;
 }
 
-@mixin input-box {
-  display: block;
-  flex: 1 1 auto;
-  height: 200px;
-  line-height: 28px;
-  font-family: Microsoft JhengHei;
-  border: $border-btn;
-	background-color: var(--bg-btn);
-  outline-width: 0px;
-  padding: 4px 10px 4px 10px;
-  overflow-x: auto;
-  font-size: 16px;
-
-  > img{
-    max-width: 100%;
-  }
-}
-
-@mixin upload-img{
-  height: 28px;
-			
-  img {
-    width: 28px;
-    height: 28px;
-    cursor: pointer;
-  }
-
-  input {
-    display: none;
-  }
-}
-
 @mixin login-btn {
   background-color: var(--bg-login-btn);
   color: #ffffff;
   cursor: pointer;
-}
-
-@mixin likes-icon{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
-  &.likes-icon-yes {
-    img{
-      filter: invert(15%) sepia(55%) saturate(6826%) hue-rotate(0deg) brightness(103%) contrast(95%);
-    }
-  }
-
-  img{
-    flex: 0 1 auto;
-    width: 13px;
-    height: 13px;
-    padding: 7px 6px 6px 0;
-    cursor: pointer;
-    filter: invert(61%) sepia(2%) saturate(184%) hue-rotate(19deg) brightness(93%) contrast(77%);
-  }
-
-  div{
-    flex: 0 1 auto;
-    font-size: 13px;
-    color: var(--color-light);
-    min-width: 10px;
-    text-align: right;
-  }
 }

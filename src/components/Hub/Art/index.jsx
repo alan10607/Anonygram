@@ -1,27 +1,29 @@
-import { useState, useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { Fragment, useState, useEffect, useRef } from 'react';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { findIdSet, findPost } from '../../../redux/actions/post';
-import { saveReplyId } from '../../../redux/actions/common';
 import { saveUserData } from '../../../redux/actions/user';
-import { CONT_STATUS_TYPE } from '../../../utli/constant';
-import { getJwt, getJwtPayload, isJwtValid } from '../../../utli/jwt';
+import { CONT_STATUS_TYPE, REPLY_BOX } from '../../../utli/constant';
+import { getJwt, getJwtPayload, isJwtValid } from '../../../service/jwt';
 import ArtCont from './ArtCont';
 import Cont from './Cont';
 import ContDel from './Cont/ContDel';
 import Reply from './Reply';
 import Move from './Move';
 import './index.scss';
+import useThrottle from '../../../utli/useThrottle';
+import { replySetOpen } from '../../../redux/actions/reply';
 
 export default function Art() {
   const findPostLock = useRef(false);
   const findPostSize = 10;
-  const { post, idList, findIdStart, replyId } = useSelector(state => ({
+  const { post, idList, findIdStart, replyId, replyIsOpen} = useSelector(state => ({
     post : state.post,
     idList : state.common.idList,
     findIdStart : state.common.findIdStart,
-    replyId : state.common.replyId
-  }));
+    replyId: state.reply.id,
+    replyIsOpen: state.reply.isOpen
+  }), shallowEqual);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -46,10 +48,10 @@ export default function Art() {
     console.log("Load jwt payload", payload, );
     console.log(`Jwt will expire at ${expStr}`);
 
-    // window.addEventListener("click", clickReply);
-    // return () => {
-    //   window.removeEventListener("click", clickReply);
-    // }
+    window.addEventListener("click", clickReply);
+    return () => {
+      window.removeEventListener("click", clickReply);
+    }
   }, [])
 
   useEffect(() => {//初始化查詢文章id
@@ -92,9 +94,11 @@ export default function Art() {
     }
   }
 
+  const scrollDownThro = useThrottle(scrollDown);
+
   const clickReply = (event) => {
-    if(!event.target.closest("[data-click-reply]")){
-      dispatch(saveReplyId(""));
+    if(replyIsOpen && !event.target.closest(`[${REPLY_BOX}]`)){
+      dispatch(replySetOpen(false));//設為關閉
     }
   }
 
@@ -113,12 +117,6 @@ export default function Art() {
     return clientHeight + scrollTop + 100 > scrollHeight;
   }
 
-  const openReply = (id) => {
-    return () => {
-      dispatch(saveReplyId(id));
-    }
-  }
-
   /* --- 頁面生成 --- */
   const createArt = () => {
     const allArt = [];
@@ -128,8 +126,8 @@ export default function Art() {
       allArt.push(
         <div key={id} id={id} className="art">
           <ArtCont id={id} />
-          <div>{createCont(a.contList)}</div>
-          <Move id={id} openReply={openReply(id)} />
+          <Fragment>{createCont(a.contList)}</Fragment>
+          <Move id={id} />
           {id == replyId && <Reply id={id} />}
         </div>
       );
@@ -141,6 +139,8 @@ export default function Art() {
     const allCont = [];
     for (let i = 1; i < contList.length; ++i) {
       const c = contList[i];
+      if (!c) continue;//未讀取, 就跳過
+
       const k = `${c.id}_${c.no}`;
       allCont.push(
         c.status == CONT_STATUS_TYPE.DELETED ?
@@ -153,7 +153,6 @@ export default function Art() {
 
   return (
     <div>
-      <div id="empty-head"></div>
       {createArt()}
     </div>
   )

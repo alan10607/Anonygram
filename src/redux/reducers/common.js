@@ -1,4 +1,3 @@
-import { locationReload } from "../../utli/reolad";
 import {
   SAVE_ID_LIST,
   SAVE_FIND_ID_START,
@@ -10,13 +9,12 @@ import {
   CLOSE_CONSOLE,
   SHOW_LOADING,
   CLOSE_LOADING,
-  DISPATCH_RELOAD
 } from "../actions/common";
 
 const initState = {
   idList: [],
   findIdStart: 0,
-  uploadImgUrl: {},
+  uploadImgUrl: "",
   replyId: "",
   consoleStr: "",
   isLoading: false,
@@ -56,10 +54,6 @@ export default function commonReducer(preState = initState, action) {
 
     case CLOSE_LOADING:
       return Object.assign({}, preState, { isLoading: false });
-
-    case DISPATCH_RELOAD:
-      locationReload(800);
-      return preState;
 
     default:
       return preState;

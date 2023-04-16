@@ -1,10 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
-import { setJwt, isJwtValid } from '../../utli/jwt';
+import { isJwtValid } from '../../service/jwt';
 import { locationTo } from '../../utli/reolad';
 import { ICON_LOGO, VERSION, BACKEND_API_URL } from '../../utli/constant';
-import authService from '../../service/authService';
+import authService from '../../service/request/authService';
 import './index.scss'
 
 export default function Login() {
@@ -34,12 +34,10 @@ export default function Login() {
   const login = (event) => {
     event.preventDefault();
 
-    const data = {
+    authService.login({
       email: emailRef.current.value,
       pw: pwRef.current.value,
-    };
-    authService.login(data).then((res) => {
-      setJwt(res.token);
+    }).then((res) => {
       setDone(true);
     }).catch(() => {
       setHint(t("login-err"));
@@ -53,7 +51,6 @@ export default function Login() {
       setDone(true);
     }else{
       authService.anony().then((res) => {
-        setJwt(res.token);
         setDone(true);
       }).catch(() => {
         setHint(t("login-anony-err"));
@@ -72,7 +69,7 @@ export default function Login() {
             {/* <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> */}
             <input type="submit" value={t("login")} />
           </form>
-          <p className="info">
+          <p className="login-info">
             <span>{t("no-account?")} </span>
             <Link to="/register" className="info-link">{t("register")}</Link>
           </p>

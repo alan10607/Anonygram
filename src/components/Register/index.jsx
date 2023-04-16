@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
-import authService from '../../service/authService';
+import authService from '../../service/request/authService';
 import { ICON_LOGO } from '../../utli/constant';
 import '../Login/index.scss'
 
@@ -63,7 +63,7 @@ export default function Register() {
             <input ref={pwRef} type="password" placeholder={t("pw")} autoComplete="off" required />
             <input type="submit" value={t("register")} />
           </form>
-          <p className="info">
+          <p className="login-info">
             <Link to="/login" className="info-link">{t("back-to-login")}</Link>
           </p>
           <p className="hint">{hint}</p>

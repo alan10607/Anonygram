@@ -1,0 +1,56 @@
+@import '../../../../root.scss';
+
+.reply-input{
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+  .input-box {
+    display: block;
+    flex: 1 1 auto;
+    height: 200px;
+    line-height: 28px;
+    font-family: Microsoft JhengHei;
+    border: $border-btn;
+    background-color: var(--bg-btn);
+    outline-width: 0px;
+    padding: 4px 10px 4px 10px;
+    overflow-x: auto;
+    font-size: 16px;
+  
+    img {
+      max-width: 100%;
+    }
+
+    .new-word{
+      margin: 0;
+      padding: 0;
+      border: 0;
+      font-size: 16px;
+      line-height: 28px;
+    }
+  }
+  
+  .move {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: var(--color-light);
+    padding: 20px 2px;
+
+    .upload-img {
+      flex: 0 1 auto;
+      height: 28px;
+          
+      img {
+        width: 28px;
+        height: 28px;
+        cursor: pointer;
+      }
+    
+      input {
+        display: none;
+      }
+    }
+  }
+}

@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useLang, useTheme } from '../../../utli/localSetting';
 import { resetPostAndUserData } from '../../../redux/actions/post';
-import { deleteJwt } from '../../../utli/jwt';
+import { deleteJwt } from '../../../service/jwt';
 import { BIG_BOX_ID } from '../../../utli/constant';
 import Bigbox from '../BigBox';
 import './index.scss';
@@ -16,7 +16,7 @@ export default function Setting() {
   const [theme, setTheme] = useTheme();
   const { isAnonyUser } = useSelector(state => ({
     isAnonyUser: state.user.isAnonyUser
-  }));
+  }), shallowEqual);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();

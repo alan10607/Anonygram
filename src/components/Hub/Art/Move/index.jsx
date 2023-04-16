@@ -1,21 +1,26 @@
-import React from 'react'
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { findTopCont } from '../../../../redux/actions/post';
+import { replySetId, replySetOpen } from '../../../../redux/actions/reply';
+import { REPLY_BOX_ATTR } from '../../../../utli/constant';
 import './index.scss';
 
-export default function Move({ id, openReply }) {
-  const { contNum, startNo } = useSelector(state => ({
+export default function Move({ id }) {
+  const { contNum, contList } = useSelector(state => ({
     contNum : state.post.get(id).contNum,
-    startNo : state.post.get(id).contList.length
-  }));
+    contList: state.post.get(id).contList
+  }), shallowEqual);
   const dispatch = useDispatch();
   const { t } = useTranslation();
-
-  const doFindTopCont = () => {
-    if (startNo == contNum) return;
-    dispatch(findTopCont({ id, no : startNo }));
+  const getStartNo = () => {
+    let i = 0;
+    while(i < contList.length) {
+      if(contList[i] == null) break;
+      ++i;
+    }
+    return i;
   }
+  const startNo = getStartNo();
 
   const getOpenStr = (contNum, startNo) => {
     const remain = contNum - startNo;
@@ -25,12 +30,20 @@ export default function Move({ id, openReply }) {
     return t("open-remain", {remain});
   }
 
+  const openReply = () => {
+    dispatch(replySetId(id));
+    dispatch(replySetOpen(true));
+  }
+
   return (
     <div className="move">
-      <div className={"open " + (contNum == 1 ? "not-open" : "")}
-        onClick={doFindTopCont}>{getOpenStr(contNum, startNo)}</div>
+      <div className={"open " + (contNum == 1 ? "not-open" : "")} onClick={() => {
+        dispatch(startNo == contNum ? null : findTopCont({ id, no : startNo }));
+      }}>
+        {getOpenStr(contNum, startNo)}
+      </div>
       <div className="flex-empty"></div>
-      <div className="reply-btn" onClick={openReply} data-click-reply>{t("add-cont")}</div>
+      <div className="reply-btn" onClick={openReply} {...REPLY_BOX_ATTR}>{t("add-cont")}</div>
     </div>
   )
 }

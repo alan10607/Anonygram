@@ -1,8 +1,14 @@
 import React from 'react';
+import { useSelector, shallowEqual } from 'react-redux';
 import './index.scss';
 
-export default function Word({ id, word }) {
-  const createWord = () => {//建構內文
+export default function Word({ id, no = 0 }) {
+  let k = 0;//所有node的key
+  const { cont: { word } } = useSelector(state => ({
+    cont: state.post.get(id).contList[no]
+  }), shallowEqual);
+
+  const createWord = (word) => {//建構內文
     const row = word.split("\n");
     const allLine = [];
     row.forEach((line, i) => allLine.push(
@@ -49,12 +55,11 @@ export default function Word({ id, word }) {
     if (last < line.length) {//加入最後
       allNode.push(createSpan(line.substring(last, line.length)));
     }
-
-    //加入key, key為const故Object.assign
-    allNode = allNode.map((node, i) => Object.assign({}, node, { 
-      key : i, 
-      props : {...node.props, className: 'my-class'} 
-    }));
+    
+        //加入key, key為const故Object.assign
+        allNode = allNode.map((node, i) => Object.assign({}, node, { 
+          key : i, 
+        }));
     return allNode;
   }
 
@@ -73,13 +78,13 @@ export default function Word({ id, word }) {
   }
 
   const goTo = (ele = "body") => {
-    const buffer = document.getElementById("empty-head").offsetHeight;
+    const buffer = document.getElementById("header").offsetHeight;
     window.scrollTo({ top : ele.offsetTop - buffer, behavior : "smooth" });
   }
 
   return (
     <div className="word">
-      {createWord()}
+      {createWord(word)}
     </div>
   )
 }

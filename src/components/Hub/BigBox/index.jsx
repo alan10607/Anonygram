@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { closeBigBox } from '../../../redux/actions/common';
 import { ICON_CLOSE } from '../../../utli/constant';
 import './index.scss';
@@ -8,7 +8,7 @@ export default function Bigbox({ bigBoxId, title = "",
   btnRender = () => <div></div>, boxRender = () => <div></div> }) {
   const { openBigBoxId } = useSelector(state => ({
     openBigBoxId: state.common.openBigBoxId
-  }));
+  }), shallowEqual);
   const dispatch = useDispatch();
 
   return (

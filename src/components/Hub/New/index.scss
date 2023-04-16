@@ -3,36 +3,29 @@
 #new {
 	display: flex;
 	flex-direction: column;
-
-	p {
-		font-size: 16px;
-		color: var(--color-normal);
-		flex: 0 1 auto;
-		margin: 10px 0;
-	}
-
-	.bar {
+	
+	.new-bar {
 		display: flex;
 		align-items: center;
-		padding: 20px 0px 3px 0px;
+    padding: 20px 0 11px 0;
 	}
 
-	.bar-head {
+	.new-head {
 		flex: 0 1 auto;
 		width: 28px;
 		height: 28px;
 		margin-right: 8px;
 	}
 
-	.author {
+	.new-author {
 		flex: 0 1 auto;
 		font-size: 20px;
 		margin-right: 10px;
 		font-weight: 600;
 	}
 
-	.time {
-		flex: 1 1 auto;
+	.new-info {
+		flex: 0 1 auto;
 		margin: 0;
 		font-size: 13px;
 		display: flex;
@@ -42,28 +35,18 @@
 	}
 
 	.new-title {
-		margin: 16px 0 8px 0;
+		margin: 8px 0;
 		flex: 0 1 auto;
 		font-size: 26px;
 		font-weight: 600;
 		height: 38px;
 	}
 
-	.new-input {
-    @include input-box;
-	}
+	.new-input-box{
+		flex: 1 1 auto;
 
-	.new-move {
-		display: flex;
-		align-items: center;
-		font-size: 14px;
-		color: var(--color-light);
-		flex: 0 1 auto;
-		padding: 20px 2px;
-	}
-
-	.new-img {
-		flex: 0 1 auto;
-		@include upload-img;
+		> div{
+			height: 100%;
+		}
 	}
 }

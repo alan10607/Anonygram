@@ -2,10 +2,13 @@
 export const getContentWord = (e) => {
   const row = [];
   for(let node of e.childNodes){
-    if (node.nodeName == "IMG") {
-      row.push(node.src);
-    } else{
-      row.push(node.textContent.trim());
+    switch (node.nodeName) {
+      case "IMG":
+        row.push(node.src);
+        break;
+  
+      default:
+        row.push(node.textContent.trim());
     }
   }
 

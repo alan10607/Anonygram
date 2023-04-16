@@ -6,53 +6,16 @@
 	&:after {
 		@include line
 	}
-
-	.bar-art {
-		display: flex;
-		align-items: center;
-		padding: 14px 15px 12px 15px;
 	
-		.bar-head {
-			flex: 0 1 auto;
-			width: 28x;
-			height: 28px;
-			margin-right: 8px;
-		}
-		
-		.author {
-			flex: 1 1 auto;
-			font-size: 16px;
-			margin: 0;
-			font-weight: 600;
-		}
+	.bar{
+		padding-bottom: 15px;
 	}
-	
+
 	.title {
 		padding: 0 15px;
 		font-size: 26px;
 		font-weight: 600;
 		white-space: pre-wrap;
 		word-break: break-word;
-	}
-
-	.info {
-		padding: 0px 17px 7px 17px;
-		font-size: 13px;
-		display: flex;
-		align-items: center;
-		color: var(--color-light);
-
-		.del {
-			flex: 0 1 auto;
-			font-size: 13px;
-			color: var(--color-mid);
-			margin-left: 10px;
-			font-weight: normal;
-			cursor: pointer;
-		}
-	}
-
-	.likes-icon {
-		@include likes-icon;
 	}
 }

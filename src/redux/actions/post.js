@@ -1,18 +1,16 @@
 import i18next from "i18next";
-import { postApi } from "../../service";
 import { deleteUserData } from "./user";
-import postService from "../../service/postService";
+import { resetReplyData, replyAddImg } from "./reply";
+import postService from "../../service/request/postService";
 import { 
   saveIdList, 
   saveFindIdStart, 
-  saveUploadImgUrl,
   saveReplyId, 
   showConsole, 
   showLoading, 
   closeLoading,
   closeBigBox
 } from "./common";
-
 
 /* --- 同時也是request url --- */
 export const FIND_ID_SET = "findIdSet";
@@ -54,6 +52,7 @@ export const createPost = (data) => (dispatch) => {
   postService.createPost(data).then((res) => {
     dispatch(showConsole(i18next.t("createPost-ok")));
     dispatch(resetPostData());
+    dispatch(resetReplyData());
   }).catch((e) => {
     dispatch(showConsole(i18next.t("createPost-err")));
   });
@@ -79,16 +78,10 @@ export const findTopCont = (data) => (dispatch) => {
 }
 
 /* --- 新增留言 --- */
-export const replyPost = (data) => (dispatch, getState) => {
-  postService.replyPost(data).then((res) => {
-    const state = getState();
-    const findTopContData = {
-      id : data.id, 
-      no : state.post.get(data.id).contList.length
-    };
-    dispatch(findTopCont(findTopContData));
-    dispatch({ type: REPLY_POST, data : data});
-    dispatch(saveReplyId(""));
+export const replyPost = (data) => (dispatch) => {
+  postService.replyPost(data).then((cont) => {
+    dispatch({ type: REPLY_POST, data : cont});
+    dispatch(resetReplyData());
   }).catch((e) => {
     dispatch(showConsole(i18next.t("replyPost-err")));
   });
@@ -108,21 +101,21 @@ export const deleteCont = (data) => (dispatch) => {
 export const likeContent = (data) => (dispatch) => {
   postService.likeContent(data).then((res) => {
     dispatch({ type: LIKE_CONTENT, data : data });
-  }).catch((e) => console.log("Like content failed", e) );
+  }).catch((e) => console.log("Like content failed!!") );
 }
 
 /* --- 取消按讚 --- */
 export const unlikeContent = (data) => (dispatch) => {
   postService.unlikeContent(data).then((res) => {
     dispatch({ type: UNLIKE_CONTENT, data : data });
-  }).catch((e) => console.log("Unlike content failed", e) );
+  }).catch((e) => console.log("Unlike content failed!!") );
 }
 
 /* --- 圖片上傳 --- */
 export const uploadImg = (data) => (dispatch) => {
   dispatch(showLoading());
   postService.uploadImg(data).then((imgData) => {
-    dispatch(saveUploadImgUrl(data.id, imgData.imgUrl));
+    dispatch(replyAddImg(imgData.imgUrl));
   }).catch((e) => {
     dispatch(showConsole(i18next.t("uploadImg-err")));
   }).finally(() => {
@@ -130,7 +123,8 @@ export const uploadImg = (data) => (dispatch) => {
   });
 }
 
-export const resetPostData = (data) => (dispatch) => {
+/* --- 重設資料 --- */
+export const resetPostData = () => (dispatch) => {
   dispatch({ type: RESET_POST_DATA });
   dispatch(saveIdList([]));
   dispatch(saveFindIdStart(0));
@@ -139,7 +133,7 @@ export const resetPostData = (data) => (dispatch) => {
   dispatch(closeLoading());
 }
 
-export const resetPostAndUserData = (data) => (dispatch) => {
+export const resetPostAndUserData = () => (dispatch) => {
   dispatch(resetPostData());
   dispatch(deleteUserData());
 }

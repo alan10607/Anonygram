@@ -9,10 +9,14 @@ export default function ContDel({ id, no }) {
   return (
     <div id={`${id}_${no}`} className="cont">
       <div className="bar">
-        <img className="bar-head icon" src={ICON_USER} />
+        <img className="head icon" src={ICON_USER} />
         <div className="author">{t("del-author")}</div>
       </div>
-      <div className="del-word">{t("del-word")}</div>
+      <div className="word">
+        <div>
+          <span>{t("del-word")}</span> 
+        </div>
+      </div>
       <div className="info">B{no}, {t("del-done")}</div>
     </div>
   )

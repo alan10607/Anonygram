@@ -2,9 +2,10 @@
 export const VERSION = "v0409";
 
 /* --- Backend url --- */
-export const BACKEND_API_URL = "https://13.112.45.117/";
-// export const BACKEND_API_URL = "https://localhost/";//test
-
+const CLOUD_URL = "https://13.112.45.117/";
+const TEST_URL = "https://localhost/";
+export const BACKEND_API_URL = window.location.host.indexOf("localhost") === -1 ? CLOUD_URL : TEST_URL;
+console.log("BACKEND_API_URL:", BACKEND_API_URL);
 
 /* --- LocalStorage --- */
 export const JWT_TOKEN = "ag-jwt";
@@ -24,3 +25,6 @@ export const ICON_LOGO = `${PUBLIC_URL}/pic/logo.svg`;
 /* --- Data static --- */
 export const CONT_STATUS_TYPE = { NORMAL : "NORMAL", DELETED : "DELETED" };
 export const BIG_BOX_ID = { NEW : "NEW", SETTING : "SETTING" };
+export const REPLY_CLOSED = "_close";
+export const REPLY_BOX = "data-reply-box";
+export const REPLY_BOX_ATTR = { [REPLY_BOX] : true };
