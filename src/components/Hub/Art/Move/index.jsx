@@ -13,13 +13,13 @@ export default function Move({ id }) {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const firstNotNull = contList.findIndex(cont => !cont);
-  const start = firstNotNull == -1 ? contList.length : firstNotNull;
+  const start = firstNotNull === -1 ? contList.length : firstNotNull;
   const remain = contNum - contList.filter(cont => cont).length;
 
   const getOpenStr = () => {
-    if (contNum == 1) return t("open-none");//只有本文
-    if (remain == 0) return "";//已展開全部留言
-    if (start == 1) return t("open-all", { remain });//尚未展開
+    if (contNum === 1) return t("open-none");//只有本文
+    if (remain === 0) return "";//已展開全部留言
+    if (start === 1) return t("open-all", { remain });//尚未展開
     return t("open-remain", { remain });//展開剩餘
   }
 
@@ -34,7 +34,7 @@ export default function Move({ id }) {
 
   return (
     <div className="move">
-      <div className={"open " + (contNum == 1 ? "not-open" : "")} onClick={doFindTopCont}>
+      <div className={"open " + (contNum === 1 ? "not-open" : "")} onClick={doFindTopCont}>
         {getOpenStr(contNum, start)}
       </div>
       <div className="flex-empty"></div>

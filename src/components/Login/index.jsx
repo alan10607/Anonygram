@@ -60,7 +60,7 @@ export default function Login() {
   return (
     <div className="login center">
       <div>
-        <img className="icon logo" src={ICON_LOGO} />
+        <img className="icon logo" src={ICON_LOGO} alt="ICON_LOGO" />
         <div className="col-flex">
           <form onSubmit={login}>
             <input ref={emailRef} type="text" placeholder="Email" autoComplete="on" required autoFocus />

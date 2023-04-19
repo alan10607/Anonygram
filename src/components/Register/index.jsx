@@ -20,7 +20,7 @@ export default function Register() {
     const userName = userNameRef.current.value;
     const pw = pwRef.current.value;
     const errorStr = checkUserData(email, userName, pw);
-    if (errorStr != "") return setHint(errorStr);
+    if (errorStr !== "") return setHint(errorStr);
 
     const data = { email, userName, pw };
     authService.register(data).then((res) => {
@@ -31,10 +31,10 @@ export default function Register() {
   }
 
   const checkUserData = (email, userName, pw) => {
-    const emailExp = /^[\w-\.]+@([\w-]+\.)+[\w-]+$/g;
+    const emailExp = /^[\w-.]+@([\w-]+\.)+[\w-]+$/g;
     const pwExp = /^[\w-.@$!%*#?&]{6,}$/g;
     if (!emailExp.test(email)) return t("register-email-err");
-    if (userName == "") return t("register-username-err");
+    if (userName === "") return t("register-username-err");
     if (!pwExp.test(pw)) return t("register-pw-err");
     return "";
   }
@@ -51,7 +51,7 @@ export default function Register() {
   return (
     <div className="login center">
       <div>
-        <img className="logo icon" src={ICON_LOGO} />
+        <img className="logo icon" src={ICON_LOGO} alt="ICON_LOGO"/>
         <div className="col-flex">
           <form onSubmit={register}>
             <h2>{t("user-register")}</h2>

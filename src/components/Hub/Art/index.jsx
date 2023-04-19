@@ -1,4 +1,4 @@
-import { Fragment, useState, useEffect, useRef } from 'react';
+import { Fragment, useEffect, useRef } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { findIdSet, findPost } from '../../../redux/actions/post';
@@ -126,7 +126,7 @@ export default function Art() {
           <ArtCont id={id} />
           <Fragment>{createCont(a.contList)}</Fragment>
           <Move id={id} />
-          {id == replyId && <Reply id={id} />}
+          {id === replyId && <Reply id={id} />}
         </div>
       );
     }
@@ -141,7 +141,7 @@ export default function Art() {
 
       const k = `${c.id}_${c.no}`;
       allCont.push(
-        c.status == CONT_STATUS_TYPE.DELETED ?
+        c.status === CONT_STATUS_TYPE.DELETED ?
           <ContDel key={k} id={c.id} no={c.no} /> :
           <Cont key={k} id={c.id} no={c.no} />
       );

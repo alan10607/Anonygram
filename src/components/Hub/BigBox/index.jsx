@@ -11,13 +11,14 @@ export default function Bigbox({ bigBoxId, title = "",
   const dispatch = useDispatch();
 
   return (
-    <div className={"big-box " + (openBigBoxId == bigBoxId ? "big-box-open" : "big-box-close")}>
+    <div className={"big-box " + (openBigBoxId === bigBoxId ? "big-box-open" : "big-box-close")}>
       <div>
         <div className="top-bar">
           {btnRender()}
           <div>{title}</div>
           <div>
-            <img className="icon" src={ICON_CLOSE} onClick={() => { dispatch(closeBigBox()) }} />
+            <img className="icon" src={ICON_CLOSE} alt="ICON_CLOSE" 
+              onClick={() => { dispatch(closeBigBox()) }} />
           </div>
         </div>
         {boxRender()}

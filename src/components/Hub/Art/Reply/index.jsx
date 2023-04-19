@@ -22,7 +22,7 @@ export default function Reply({ id }) {
 
   const doReplyPost = () => {
     const word = getContentWord(inputRef.current);
-    if (word.trim() == "") return showConsole(t("empty-word"));
+    if (word.trim() === "") return showConsole(t("empty-word"));
     dispatch(replyPost({ id, word }));
   };
 
@@ -35,7 +35,7 @@ export default function Reply({ id }) {
   return (
     <div className={"reply " + (isOpen ? "" : "disable")} {...REPLY_BOX_ATTR}>
       <div className="reply-bar">
-        <img className="reply-head icon" src={ICON_USER} />
+        <img className="reply-head icon" src={ICON_USER} alt="ICON_USER" />
         <div className="reply-author">{username}</div>
       </div>
       <div className="reply-info">B{contNum}, {getNowTime()}</div>

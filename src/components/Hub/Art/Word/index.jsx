@@ -13,7 +13,7 @@ export default function Word({ id, no = 0 }) {
     row.forEach((line, i) => {
       const nodes = createLine(line);
       allLine.push(
-        <div key={i} className={nodes[0].type == "img" ? "no-padding" : ""}>{nodes}</div>
+        <div key={i} className={nodes[0].type === "img" ? "no-padding" : ""}>{nodes}</div>
       )
     });
     return allLine;
@@ -23,8 +23,8 @@ export default function Word({ id, no = 0 }) {
     if (line.trim() === "") return [createBr()];
 
     //url = protocol(https) + domain/port(1~256) + country-code(0~6) + path
-    const urlExp = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.?[a-zA-Z0-9()]{0,6}\b[-a-zA-Z0-9@:%_\+.~#=?&\/()]*/gi;
-    const imgExp = /https?:[\/|.|\w|\s|-]*\.(?:jpeg|jpg|gif|png)/gi;
+    const urlExp = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.?[a-zA-Z0-9()]{0,6}\b[-a-zA-Z0-9@:%_+.~#=?&/()]*/gi;
+    const imgExp = /https?:[/|.|\w|\s|-]*\.(?:jpeg|jpg|gif|png)/gi;
     const bxExp = /\bB\d+\b/gi;
 
     const m = new Map();
@@ -67,7 +67,7 @@ export default function Word({ id, no = 0 }) {
   }
 
   const createImg = (imgUrl) => <img key={k++} src={imgUrl} alt={imgUrl} />;
-  const createA =      (url) => <a key={k++} href={url} target="_blank">{url}</a>;
+  const createA =      (url) => <a key={k++} href={url} target="_blank" rel="noreferrer">{url}</a>;
   const createBx =  (id, bx) => <span key={k++} className="bx" onClick={goToBx(id, bx.substr(1))}>{bx}</span>;
   const createSpan =   (str) => <span key={k++}>{str}</span>;
   const createBr =        () => <br key={k++}></br>;

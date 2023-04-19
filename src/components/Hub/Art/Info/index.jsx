@@ -13,9 +13,9 @@ export default function Info({ id, no = 0 }) {
   }), shallowEqual);
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const canDel = userId.toString() == author || (userId == -1 && username == author);
+  const canDel = userId.toString() === author || (userId === -1 && username === author);
   const deletePostOrCont = () => {
-    dispatch(no == 0 ? deletePost({ id, no }) : deleteCont({ id, no }));
+    dispatch(no === 0 ? deletePost({ id, no }) : deleteCont({ id, no }));
   };
 
   return (

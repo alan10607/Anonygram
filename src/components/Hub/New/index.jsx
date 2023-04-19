@@ -28,10 +28,10 @@ export default function New() {
   }, [title])
 
   const doCreatePost = () => {
-    if (title == "") return showConsole(t("empty-title"));
+    if (title === "") return showConsole(t("empty-title"));
 
     const word = getContentWord(inputRef.current);
-    if (word.trim() == "") return showConsole(t("empty-word"));
+    if (word.trim() === "") return showConsole(t("empty-word"));
 
     dispatch(createPost({ title, word }));
   };
@@ -39,7 +39,7 @@ export default function New() {
   const boxRender = () => (
     <div id="new">
       <div className="new-bar">
-        <img className="new-head icon" src={ICON_USER} />
+        <img className="new-head icon" src={ICON_USER} alt="ICON_USER" />
         <div className="new-author">{username}</div>
         <div className="flex-empty"></div>
         <div className="new-info">{getNowTime()}</div>

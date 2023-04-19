@@ -18,7 +18,7 @@ export default function ReplyInput({ id, inputRef, render = () => <div></div>}) 
 
   const doUploadImg = async (event) => {
     const files = event.target.files;
-    if (files == null || files.length == 0 || files[0] == null)
+    if (!files || files.length === 0 || !files[0])
       return showConsole(t("empty-img"));
 
     const file = files[0], fileTypeExp = /image\/\w+/g;//必須為MIME image type
@@ -48,7 +48,7 @@ export default function ReplyInput({ id, inputRef, render = () => <div></div>}) 
       ></div>
       <div className="move">
         <label className="upload-img">
-          <img className="icon" src={ICON_UPLOAD_IMG} />
+          <img className="icon" src={ICON_UPLOAD_IMG} alt="ICON_UPLOAD_IMG"/>
           <input type="file" accept="image/*" onChange={doUploadImg}/>
         </label>
         <div className="flex-empty"></div>
