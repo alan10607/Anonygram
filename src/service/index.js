@@ -1,7 +1,7 @@
 import axios from "axios";
 import { deleteJwt, getJwt, setJwt } from "./jwt";
 import { addPending, removePending } from "./pending";
-import { locationLocalTo } from "../util/reolad";
+import { locationLocalTo } from "../util/locationTo";
 import { BACKEND_API_URL } from "../util/constant";
 
 const service = axios.create({
