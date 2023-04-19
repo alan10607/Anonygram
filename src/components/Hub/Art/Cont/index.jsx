@@ -1,4 +1,3 @@
-import React from 'react'
 import Bar from '../Bar';
 import Word from '../Word';
 import Info from '../Info';

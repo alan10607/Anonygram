@@ -16,17 +16,16 @@ export default function Login() {
   const { t } = useTranslation();
 
   useEffect(() => {//測試用, 確認後台ssl
-    authService.testSsl().then((res) => {})
-    .catch((e) => {
-      //跳轉到後台後再返回
-      const sslUrl = `${BACKEND_API_URL}ssl?callbackUrl=${window.location.href}`;
-      console.log("Check ssl move to:", sslUrl)
-      locationTo(sslUrl);
-    });
+    authService.testSsl().then((res) => { })
+      .catch((e) => {//跳轉到後台後再返回
+        const sslUrl = `${BACKEND_API_URL}ssl?callbackUrl=${window.location.href}`;
+        console.log("Check ssl move to:", sslUrl)
+        locationTo(sslUrl);
+      });
   }, []);
 
   useEffect(() => {//取得新的jwt後跳轉
-    if (done){
+    if (done) {
       navigate("/hub");
     }
   }, [done]);
@@ -39,7 +38,7 @@ export default function Login() {
       pw: pwRef.current.value,
     }).then((res) => {
       setDone(true);
-    }).catch(() => {
+    }).catch((e) => {
       setHint(t("login-err"));
     });
   }
@@ -47,12 +46,12 @@ export default function Login() {
   const loginAnony = (event) => {
     event.preventDefault();
 
-    if(isJwtValid()){
+    if (isJwtValid()) {
       setDone(true);
-    }else{
+    } else {
       authService.anony().then((res) => {
         setDone(true);
-      }).catch(() => {
+      }).catch((e) => {
         setHint(t("login-anony-err"));
       });
     }
@@ -69,11 +68,11 @@ export default function Login() {
             {/* <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> */}
             <input type="submit" value={t("login")} />
           </form>
-          <p className="login-info">
+          <div className="login-info">
             <span>{t("no-account?")} </span>
             <Link to="/register" className="info-link">{t("register")}</Link>
-          </p>
-          <p className="hint">{hint}</p>
+          </div>
+          <div className="hint">{hint}</div>
           <div className="line-word">{t("or")}</div>
           <input type="button" value={t("as-anony")} onClick={loginAnony} />
         </div>

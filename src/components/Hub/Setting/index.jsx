@@ -2,9 +2,9 @@ import { useEffect, useRef } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useLang, useTheme } from '../../../utli/localSetting';
-import { resetPostAndUserData } from '../../../redux/actions/post';
+import { resetAllData } from '../../../redux/actions/post';
 import { deleteJwt } from '../../../service/jwt';
+import { useLang, useTheme } from '../../../utli/localSetting';
 import { BIG_BOX_ID } from '../../../utli/constant';
 import Bigbox from '../BigBox';
 import './index.scss';
@@ -23,15 +23,18 @@ export default function Setting() {
 
   useEffect(() => {
     langRef.current.value = lang;
+  }, [lang]);
+
+  useEffect(() => {
     themeRef.current.value = theme;
-  }, [lang, theme]);
+  }, [theme]);
 
   const exit = () => {
     if (!isAnonyUser) {
-      deleteJwt()
+      deleteJwt();
       console.log("Logout delete jwt");
     }
-    dispatch(resetPostAndUserData());
+    dispatch(resetAllData());
     navigate("/login");
   }
 
@@ -68,5 +71,4 @@ export default function Setting() {
       boxRender={boxRender}
     />
   )
-
 }

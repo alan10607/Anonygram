@@ -3,29 +3,28 @@ import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { findIdSet, findPost } from '../../../redux/actions/post';
 import { saveUserData } from '../../../redux/actions/user';
-import { CONT_STATUS_TYPE, REPLY_BOX } from '../../../utli/constant';
+import { replySetOpen } from '../../../redux/actions/reply';
 import { getJwt, getJwtPayload, isJwtValid } from '../../../service/jwt';
+import { CONT_STATUS_TYPE, REPLY_BOX } from '../../../utli/constant';
 import ArtCont from './ArtCont';
 import Cont from './Cont';
 import ContDel from './Cont/ContDel';
 import Reply from './Reply';
 import Move from './Move';
 import './index.scss';
-import useThrottle from '../../../utli/useThrottle';
-import { replySetOpen } from '../../../redux/actions/reply';
 
 export default function Art() {
   const findPostLock = useRef(false);
   const findPostSize = 10;
-  const { post, idList, findIdStart, replyId, replyIsOpen} = useSelector(state => ({
-    post : state.post,
-    idList : state.common.idList,
-    findIdStart : state.common.findIdStart,
+  const { post, replyId, replyIsOpen } = useSelector(state => ({
+    post: state.post,
     replyId: state.reply.id,
     replyIsOpen: state.reply.isOpen
   }), shallowEqual);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const idList = [...post.keys()];
+  const findPostList = idList.filter(id => !post.get(id));
 
   /* --- 初始化頁面 --- */
   useEffect(() => {//檢查Jwt
@@ -38,16 +37,18 @@ export default function Art() {
 
     const payload = getJwtPayload(jwt);
     const expStr = new Date(payload.exp * 1000).toLocaleString();
-    if(!isJwtValid(jwt)){
+    if (!isJwtValid(jwt)) {
       console.log(`Jwt was expired at ${expStr}, navigate to login...`);
       navigate("/login");
       return;
     }
 
     dispatch(saveUserData(payload));
-    console.log("Load jwt payload", payload, );
+    console.log("Load jwt payload", payload,);
     console.log(`Jwt will expire at ${expStr}`);
+  }, [])
 
+  useEffect(() => {//reply click
     window.addEventListener("click", clickReply);
     return () => {
       window.removeEventListener("click", clickReply);
@@ -55,15 +56,14 @@ export default function Art() {
   }, [])
 
   useEffect(() => {//初始化查詢文章id
-    if(getJwt() && idList.length === 0) {
+    if (getJwt() && idList.length === 0) {
       dispatch(findIdSet());
       console.log("Load id set");
     }
   }, [idList])
 
-  /* --- 往下滑動找更多文章 --- */
-  useEffect(() => {
-    if (idList.length > 0 && findIdStart < idList.length && checkInBottom()) {
+  useEffect(() => {//往下滑動找更多文章
+    if (idList.length > 0 && findPostList.length > 0 && checkInBottom()) {
       doFindPost();//初始化時載入, 載入完後有仍有空位則繼續載入
     } else {
       findPostLock.current = false;
@@ -74,39 +74,37 @@ export default function Art() {
     return () => {
       window.removeEventListener("scroll", scrollDown);
     }
-  }, [idList, findIdStart])
+  }, [idList, findPostList])
 
   /* --- EventListener --- */
   const scrollDown = (event) => {
-    if (findPostLock.current) {
-      console.log("findPostLock=true, skip find art");
-      return;
-    }
+    if (!checkInBottom()) return;
 
-    if (findIdStart == idList.length) {
+    if (findPostList.length === 0) {
       console.log("Already find all arts, skip find art");
       return;
     }
-
-    if (checkInBottom()) {
-      findPostLock.current = true;
-      doFindPost();
+    
+    if (findPostLock.current) {
+      console.log("Skip find art because findPostLock=true");
+      return;
     }
+
+    findPostLock.current = true;
+    doFindPost();
   }
 
-  const scrollDownThro = useThrottle(scrollDown);
-
-  const clickReply = (event) => {
-    if(replyIsOpen && !event.target.closest(`[${REPLY_BOX}]`)){
-      dispatch(replySetOpen(false));//設為關閉
+  const clickReply = (event) => {//關閉留言區
+    if (replyIsOpen && !event.target.closest(`[${REPLY_BOX}]`)) {
+      dispatch(replySetOpen(false));
     }
   }
 
   /* --- 其他 --- */
   const doFindPost = () => {
-    console.log("Load posts from index", findIdStart);
+    console.log("Load posts from index", idList.indexOf(findPostList[0]));
     dispatch(findPost({
-      idList : idList.slice(findIdStart, findIdStart + findPostSize)
+      idList: findPostList.slice(0, findPostSize)
     }));
   }
 

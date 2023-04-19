@@ -1,11 +1,8 @@
 import i18next from "i18next";
+import postService from "../../service/request/postService";
 import { deleteUserData } from "./user";
 import { resetReplyData, replyAddImg } from "./reply";
-import postService from "../../service/request/postService";
 import { 
-  saveIdList, 
-  saveFindIdStart, 
-  saveReplyId, 
   showConsole, 
   showLoading, 
   closeLoading,
@@ -30,8 +27,6 @@ export const RESET_POST_DATA = "resetPostData";
 export const findIdSet = () => (dispatch) => {
   postService.findIdSet({}).then((idList) => {
     dispatch({ type: FIND_ID_SET, data : idList });
-    dispatch(saveIdList(idList));
-    dispatch(saveFindIdStart(0));
   }).catch((e) => {
     dispatch(showConsole(i18next.t("findIdSet-err")));
   });
@@ -41,7 +36,6 @@ export const findIdSet = () => (dispatch) => {
 export const findPost = (data) => (dispatch, getState) => {
   postService.findPost(data).then((artList) => {
     dispatch({ type: FIND_POST, data : artList });
-    dispatch(saveFindIdStart(getState().common.findIdStart + artList.length));
   }).catch((e) => {
     dispatch(showConsole(i18next.t("findPost-err")));
   });
@@ -126,14 +120,12 @@ export const uploadImg = (data) => (dispatch) => {
 /* --- 重設資料 --- */
 export const resetPostData = () => (dispatch) => {
   dispatch({ type: RESET_POST_DATA });
-  dispatch(saveIdList([]));
-  dispatch(saveFindIdStart(0));
-  dispatch(saveReplyId(""));
   dispatch(closeBigBox());
   dispatch(closeLoading());
 }
 
-export const resetPostAndUserData = () => (dispatch) => {
+export const resetAllData = () => (dispatch) => {
   dispatch(resetPostData());
   dispatch(deleteUserData());
+  dispatch(resetReplyData());
 }

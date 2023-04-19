@@ -1,5 +1,15 @@
+/* --- Banner --- */
+console.log(String.raw`
+    ___  _   __ ___  _   __  __ ____ ____  ___  __  ___
+   /   |/ | / / __ \/ | /\ \/ / ___// __ \/   |/  |/  /
+  / /| /  |/ / / / /  |/ /\  / / __/ /_/ / /| / /|_/ /
+ / __ / /|  / /_/ / /|  / / / /_/ / _  _/ __ / /  / /
+/_/  /_/ |_/\____/_/ |_/ /_/\____/_/ |_/_/  /_/  /_/
+ 
+`);
+
 /* --- Backend url --- */
-export const VERSION = "v0416";
+export const VERSION = "v0418";
 
 /* --- Backend url --- */
 const CLOUD_URL = "https://13.112.45.117/";
@@ -25,6 +35,5 @@ export const ICON_LOGO = `${PUBLIC_URL}/pic/logo.svg`;
 /* --- Data static --- */
 export const CONT_STATUS_TYPE = { NORMAL : "NORMAL", DELETED : "DELETED" };
 export const BIG_BOX_ID = { NEW : "NEW", SETTING : "SETTING" };
-export const REPLY_CLOSED = "_close";
 export const REPLY_BOX = "data-reply-box";
 export const REPLY_BOX_ATTR = { [REPLY_BOX] : true };

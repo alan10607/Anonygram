@@ -1,8 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
-import authService from '../../service/request/authService';
 import { ICON_LOGO } from '../../utli/constant';
+import authService from '../../service/request/authService';
 import '../Login/index.scss'
 
 export default function Register() {
@@ -14,11 +14,8 @@ export default function Register() {
   const { t } = useTranslation();
 
   const register = (event) => {
-    const datas = {
-      email: emailRef.current.value,
-      pw: pwRef.current.value,
-    };
     event.preventDefault();
+
     const email = emailRef.current.value;
     const userName = userNameRef.current.value;
     const pw = pwRef.current.value;
@@ -28,7 +25,7 @@ export default function Register() {
     const data = { email, userName, pw };
     authService.register(data).then((res) => {
       waitThenGo(3);
-    }).catch(() => {
+    }).catch((e) => {
       setHint(t("register-err"));
     });
   }
@@ -63,10 +60,10 @@ export default function Register() {
             <input ref={pwRef} type="password" placeholder={t("pw")} autoComplete="off" required />
             <input type="submit" value={t("register")} />
           </form>
-          <p className="login-info">
+          <div className="login-info">
             <Link to="/login" className="info-link">{t("back-to-login")}</Link>
-          </p>
-          <p className="hint">{hint}</p>
+          </div>
+          <div className="hint">{hint}</div>
         </div>
       </div>
     </div>

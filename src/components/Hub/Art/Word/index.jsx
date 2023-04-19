@@ -1,24 +1,26 @@
-import React from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
 import './index.scss';
 
 export default function Word({ id, no = 0 }) {
-  let k = 0;//所有node的key
-  const { cont: { word } } = useSelector(state => ({
-    cont: state.post.get(id).contList[no]
+  let k = 0;
+  const { word } = useSelector(state => ({
+    word: state.post.get(id).contList[no].word
   }), shallowEqual);
 
   const createWord = (word) => {//建構內文
     const row = word.split("\n");
     const allLine = [];
-    row.forEach((line, i) => allLine.push(
-      <div key={i}>{createLine(line)}</div>
-    ));
+    row.forEach((line, i) => {
+      const nodes = createLine(line);
+      allLine.push(
+        <div key={i} className={nodes[0].type == "img" ? "no-padding" : ""}>{nodes}</div>
+      )
+    });
     return allLine;
   }
 
   const createLine = (line) => {//建構每一行
-    if (line.trim() === "") return createBr();
+    if (line.trim() === "") return [createBr()];
 
     //url = protocol(https) + domain/port(1~256) + country-code(0~6) + path
     const urlExp = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.?[a-zA-Z0-9()]{0,6}\b[-a-zA-Z0-9@:%_\+.~#=?&\/()]*/gi;
@@ -55,19 +57,20 @@ export default function Word({ id, no = 0 }) {
     if (last < line.length) {//加入最後
       allNode.push(createSpan(line.substring(last, line.length)));
     }
-    
-        //加入key, key為const故Object.assign
-        allNode = allNode.map((node, i) => Object.assign({}, node, { 
-          key : i, 
-        }));
+
+    //加入key, key為const故Object.assign
+    // allNode = allNode.map((node, i) => Object.assign({}, node, { 
+    //   key : i
+    // }));
+
     return allNode;
   }
 
-  const createImg = (imgUrl) => <img src={imgUrl} alt={imgUrl} />;
-  const createA =      (url) => <a href={url} target="_blank">{url}</a>;
-  const createBx =  (id, bx) => <span className="bx" onClick={goToBx(id, bx.substr(1))}>{bx}</span>;
-  const createSpan =   (str) => <span>{str}</span>;
-  const createBr =        () => <br></br>;
+  const createImg = (imgUrl) => <img key={k++} src={imgUrl} alt={imgUrl} />;
+  const createA =      (url) => <a key={k++} href={url} target="_blank">{url}</a>;
+  const createBx =  (id, bx) => <span key={k++} className="bx" onClick={goToBx(id, bx.substr(1))}>{bx}</span>;
+  const createSpan =   (str) => <span key={k++}>{str}</span>;
+  const createBr =        () => <br key={k++}></br>;
 
   const goToBx = (id, no) => {
     return () => {

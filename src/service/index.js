@@ -1,7 +1,7 @@
 import axios from "axios";
-import { locationLocalTo } from "../utli/reolad";
 import { deleteJwt, getJwt, setJwt } from "./jwt";
 import { addPending, removePending } from "./pending";
+import { locationLocalTo } from "../utli/reolad";
 import { BACKEND_API_URL } from "../utli/constant";
 
 const service = axios.create({
@@ -18,8 +18,8 @@ const service = axios.create({
 service.interceptors.request.use(config => {
   removePending(config);//先刪除舊的request
   addPending(config);//再加入新的
-
   config.headers["Authorization"] = `Bearer ${getJwt()}`;//add Jwt
+  config.headers["startTime"] = new Date().getTime();
   return config;
 }, error => {
   Promise.reject(error);
@@ -28,31 +28,32 @@ service.interceptors.request.use(config => {
 service.interceptors.response.use(res => {
   removePending(res.config);
 
-  if (res.status === 403  /* &&//if(...jwt失效)*/) {
-    //if(...jwt失效)
-    console.log("Jwt is expired, location to /login");
-    deleteJwt();
-    return locationLocalTo("/login");
-  }
-
-  if (res.status !== 200) {
-    return Promise.reject(res.status);//返回错误码
-  }
-
   if (res.config.url === "auth/login" || res.config.url === "auth/anony") {
     const jwt = res.data.result.token;
     setJwt(jwt);
-    console.log("Login get jwt", jwt);
   }
+
+  const startTime = res.config.headers["startTime"];
+  const endTime = new Date().getTime();
+  console.log(`>> Request in ${endTime - startTime}ms for ${res.config.url}`);
 
   return res;
 }, error => {
   if (axios.isCancel(error)) {
-    console.log(`Repeated request cancel: ${error.config.url}`)
-  } else {
-    console.error(`Response error: ${error.config.url}`, 
-      error.response?.data?.result || error.message || error);
+    console.log(`Repeated request cancel: ${error.config.url}`);
+    return Promise.reject(error);
+  } 
+  
+  if (error?.response?.status === 403) {
+    console.log("Jwt is expired, location to /login");
+    deleteJwt();
+    locationLocalTo("/login");
+    return;
   }
+
+  console.error(`Response error: ${error.config.url}`, 
+    error.response?.data?.result || error.message || error);
+
   return Promise.reject(error);
 })
 

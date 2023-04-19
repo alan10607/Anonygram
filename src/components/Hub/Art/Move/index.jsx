@@ -7,27 +7,24 @@ import './index.scss';
 
 export default function Move({ id }) {
   const { contNum, contList } = useSelector(state => ({
-    contNum : state.post.get(id).contNum,
+    contNum: state.post.get(id).contNum,
     contList: state.post.get(id).contList
   }), shallowEqual);
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const getStartNo = () => {
-    let i = 0;
-    while(i < contList.length) {
-      if(contList[i] == null) break;
-      ++i;
-    }
-    return i;
-  }
-  const startNo = getStartNo();
+  const firstNotNull = contList.findIndex(cont => !cont);
+  const start = firstNotNull == -1 ? contList.length : firstNotNull;
+  const remain = contNum - contList.filter(cont => cont).length;
 
-  const getOpenStr = (contNum, startNo) => {
-    const remain = contNum - startNo;
+  const getOpenStr = () => {
     if (contNum == 1) return t("open-none");//只有本文
     if (remain == 0) return "";//已展開全部留言
-    if (startNo == 1) return t("open-all", {remain});//尚未展開
-    return t("open-remain", {remain});
+    if (start == 1) return t("open-all", { remain });//尚未展開
+    return t("open-remain", { remain });//展開剩餘
+  }
+
+  const doFindTopCont = () => {
+    if (remain) dispatch(findTopCont({ id, no: start }));
   }
 
   const openReply = () => {
@@ -37,10 +34,8 @@ export default function Move({ id }) {
 
   return (
     <div className="move">
-      <div className={"open " + (contNum == 1 ? "not-open" : "")} onClick={() => {
-        dispatch(startNo == contNum ? null : findTopCont({ id, no : startNo }));
-      }}>
-        {getOpenStr(contNum, startNo)}
+      <div className={"open " + (contNum == 1 ? "not-open" : "")} onClick={doFindTopCont}>
+        {getOpenStr(contNum, start)}
       </div>
       <div className="flex-empty"></div>
       <div className="reply-btn" onClick={openReply} {...REPLY_BOX_ATTR}>{t("add-cont")}</div>

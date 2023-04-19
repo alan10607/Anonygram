@@ -1,4 +1,3 @@
-import React from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { closeBigBox } from '../../../redux/actions/common';
 import { ICON_CLOSE } from '../../../utli/constant';
@@ -25,5 +24,4 @@ export default function Bigbox({ bigBoxId, title = "",
       </div>
     </div>
   )
-
 }

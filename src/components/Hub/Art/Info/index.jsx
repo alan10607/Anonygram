@@ -5,8 +5,9 @@ import { getTimeFromStr } from '../../../../utli/time';
 import './index.scss';
 
 export default function Info({ id, no = 0 }) {
-  const { cont: { author, createDate }, userId, username } = useSelector(state => ({
-    cont: state.post.get(id).contList[no],
+  const { author, createDate, userId, username } = useSelector(state => ({
+    author: state.post.get(id).contList[no].author,
+    createDate: state.post.get(id).contList[no].createDate,
     userId: state.user.userId,
     username: state.user.username
   }), shallowEqual);

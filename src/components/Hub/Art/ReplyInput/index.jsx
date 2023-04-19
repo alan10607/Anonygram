@@ -1,8 +1,7 @@
-import { useEffect, useRef } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { uploadImg } from '../../../../redux/actions/post';
-import { replySetId, replySetElement, replySetHtml } from '../../../../redux/actions/reply';
+import { replySetHtml } from '../../../../redux/actions/reply';
 import { pasteAsPlain } from '../../../../utli/inputControll';
 import { getBase64FromFile } from '../../../../utli/image';
 import { ICON_UPLOAD_IMG } from '../../../../utli/constant';

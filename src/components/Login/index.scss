@@ -46,6 +46,7 @@
 		font-size: 16px;
 		color: #ff1616;
 		margin-bottom: 24px;
+		height: 22px;
 	}
 
 	.info-link {
@@ -79,6 +80,10 @@
 		position: fixed;
 		right: 0;
 		bottom: 0;
-		color: var(--color-normal);
+		color: var(--bg-body);
+
+		&:hover{
+			color: var(--color-normal);
+		}
 	}
 }

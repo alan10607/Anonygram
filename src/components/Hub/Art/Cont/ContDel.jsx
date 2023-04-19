@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { ICON_USER } from '../../../../utli/constant';
 import './index.scss';

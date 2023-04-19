@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { createPost } from '../../../redux/actions/post';
@@ -8,8 +8,8 @@ import { getContentWord } from '../../../utli/inputControll';
 import { ICON_USER, BIG_BOX_ID } from '../../../utli/constant';
 import useConsole from '../../../utli/useConsole';
 import Bigbox from '../BigBox';
-import './index.scss';
 import ReplyInput from '../Art/ReplyInput';
+import './index.scss';
 
 export default function New() {
   const id = "new";
@@ -60,5 +60,4 @@ export default function New() {
       boxRender={boxRender}
     />
   )
-
 }

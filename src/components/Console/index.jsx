@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { closeConsole } from '../../redux/actions/common';
 import './index.scss';
 
 export default function Console() {
   const { consoleStr, isLoading } = useSelector(state => ({
-    consoleStr : state.common.consoleStr,
-    isLoading : state.common.isLoading,
+    consoleStr: state.common.consoleStr,
+    isLoading: state.common.isLoading
   }), shallowEqual);
   const dispatch = useDispatch();
 
@@ -35,5 +35,4 @@ export default function Console() {
       </div>
     </div>
   )
-
 }

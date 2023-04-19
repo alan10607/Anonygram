@@ -4,8 +4,10 @@ import { ICON_USER, ICON_LIKE } from '../../../../utli/constant';
 import './index.scss';
 
 export default function Bar({ id, no = 0 }) {
-  const { cont: { authorName, isUserLike, likes } } = useSelector(state => ({
-    cont: state.post.get(id).contList[no],
+  const { authorName, isUserLike, likes } = useSelector(state => ({
+    authorName: state.post.get(id).contList[no].authorName,
+    isUserLike: state.post.get(id).contList[no].isUserLike,
+    likes:      state.post.get(id).contList[no].likes
   }), shallowEqual);
   const dispatch = useDispatch();
   const toggleLike = () => {

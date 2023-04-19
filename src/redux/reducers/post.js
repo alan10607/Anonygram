@@ -31,11 +31,15 @@ export default function postReducer(preState = initState, action) {
       return newState;
 
     case FIND_TOP_CONT:
-      data.forEach(cont => newState.get(cont.id).contList[cont.no] = cont);
+      for(let cont of data){
+        const { id, no } = cont;
+        newState.get(id).contNum = Math.max(newState.get(id).contNum, no);
+        newState.get(id).contList[no] = cont;
+      }
       return newState;
 
     case REPLY_POST:
-      newState.get(data.id).contNum++;
+      newState.get(data.id).contNum = Math.max(newState.get(data.id).contNum + 1, data.no);
       newState.get(data.id).contList[data.no] = data;
       return newState;
 

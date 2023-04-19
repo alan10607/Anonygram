@@ -5,7 +5,6 @@ const getMethod = async (url, params = {}) => {
     const res = await service.get(url, { params })
     return Promise.resolve(res.data);
   }catch(e){
-    console.log(e);
     return Promise.reject(e);
   }
 }
@@ -13,10 +12,13 @@ const getMethod = async (url, params = {}) => {
 const postMethod = async (url, data = {}) => {
   try{
     const res = await service.post(url, data);
-    if(!res.data) throw `Post format error: ${url}`;
+    if(!res.data) {
+      const err = new Error(`Post format error: ${url}`);
+      console.log(err);
+      throw err;
+    }
     return Promise.resolve(res.data.result);
   }catch(e){
-    console.log(e);
     return Promise.reject(e);
   }
 }

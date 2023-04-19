@@ -1,4 +1,3 @@
-import React from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
 import Bar from '../Bar';
 import Word from '../Word';
@@ -6,8 +5,8 @@ import Info from '../Info';
 import './index.scss';
 
 export default function ArtCont({ id, no = 0 }) {
-  const { art: { title } } = useSelector(state => ({
-    art: state.post.get(id),
+  const { title } = useSelector(state => ({
+    title: state.post.get(id).title
   }), shallowEqual);
 
   return (
