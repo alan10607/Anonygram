@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { ICON_USER } from '../../../../utli/constant';
+import { ICON_USER } from '../../../../util/constant';
 import './index.scss';
 
 export default function ContDel({ id, no }) {

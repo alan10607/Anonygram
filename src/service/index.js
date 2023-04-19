@@ -1,8 +1,8 @@
 import axios from "axios";
 import { deleteJwt, getJwt, setJwt } from "./jwt";
 import { addPending, removePending } from "./pending";
-import { locationLocalTo } from "../utli/reolad";
-import { BACKEND_API_URL } from "../utli/constant";
+import { locationLocalTo } from "../util/reolad";
+import { BACKEND_API_URL } from "../util/constant";
 
 const service = axios.create({
   baseURL: BACKEND_API_URL,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ICON_LOGO } from "../../utli/constant";
+import { ICON_LOGO } from "../../util/constant";
 import "./index.scss";
 
 export default function Error() {

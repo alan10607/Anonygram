@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { resetAllData } from '../../../redux/actions/post';
 import { deleteJwt } from '../../../service/jwt';
-import { useLang, useTheme } from '../../../utli/localSetting';
-import { BIG_BOX_ID } from '../../../utli/constant';
+import { useLang, useTheme } from '../../../util/localSetting';
+import { BIG_BOX_ID } from '../../../util/constant';
 import Bigbox from '../BigBox';
 import './index.scss';
 

@@ -2,10 +2,10 @@ import { useRef } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { replyPost } from '../../../../redux/actions/post';
-import { getNowTime } from '../../../../utli/time';
-import { getContentWord } from '../../../../utli/inputControll';
-import { ICON_USER, REPLY_BOX_ATTR } from '../../../../utli/constant';
-import useConsole from '../../../../utli/useConsole';
+import { getNowTime } from '../../../../util/time';
+import { getContentWord } from '../../../../util/inputControll';
+import { ICON_USER, REPLY_BOX_ATTR } from '../../../../util/constant';
+import useConsole from '../../../../util/useConsole';
 import ReplyInput from '../ReplyInput';
 import './index.scss';
 

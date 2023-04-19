@@ -2,8 +2,8 @@ import { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import { isJwtValid } from '../../service/jwt';
-import { locationTo } from '../../utli/reolad';
-import { ICON_LOGO, VERSION, BACKEND_API_URL } from '../../utli/constant';
+import { locationTo } from '../../util/reolad';
+import { ICON_LOGO, VERSION, BACKEND_API_URL } from '../../util/constant';
 import authService from '../../service/request/authService';
 import './index.scss'
 

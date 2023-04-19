@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
-import { ICON_LOGO } from '../../utli/constant';
+import { ICON_LOGO } from '../../util/constant';
 import authService from '../../service/request/authService';
 import '../Login/index.scss'
 

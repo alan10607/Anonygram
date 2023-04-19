@@ -1,7 +1,7 @@
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { showBigBox } from '../../../redux/actions/common';
 import { replySetId } from '../../../redux/actions/reply';
-import { ICON_ADD, BIG_BOX_ID, ICON_OPTION } from '../../../utli/constant';
+import { ICON_ADD, BIG_BOX_ID, ICON_OPTION } from '../../../util/constant';
 import "./index.scss";
 
 export default function Header() {

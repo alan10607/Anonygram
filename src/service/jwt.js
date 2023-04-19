@@ -1,5 +1,5 @@
-import { getLocalStorage, setLocalStorage } from "../utli/localStorage";
-import { JWT_TOKEN } from "../utli/constant";
+import { getLocalStorage, setLocalStorage } from "../util/localStorage";
+import { JWT_TOKEN } from "../util/constant";
 
 export const getJwt = () => {
   return getLocalStorage(JWT_TOKEN);

@@ -1,6 +1,6 @@
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { likeContent, unlikeContent } from '../../../../redux/actions/post';
-import { ICON_USER, ICON_LIKE } from '../../../../utli/constant';
+import { ICON_USER, ICON_LIKE } from '../../../../util/constant';
 import './index.scss';
 
 export default function Bar({ id, no = 0 }) {

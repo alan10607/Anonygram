@@ -1,6 +1,6 @@
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { closeBigBox } from '../../../redux/actions/common';
-import { ICON_CLOSE } from '../../../utli/constant';
+import { ICON_CLOSE } from '../../../util/constant';
 import './index.scss';
 
 export default function Bigbox({ bigBoxId, title = "",

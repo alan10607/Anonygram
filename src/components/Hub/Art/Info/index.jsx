@@ -1,7 +1,7 @@
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { deleteCont, deletePost } from '../../../../redux/actions/post';
-import { getTimeFromStr } from '../../../../utli/time';
+import { getTimeFromStr } from '../../../../util/time';
 import './index.scss';
 
 export default function Info({ id, no = 0 }) {

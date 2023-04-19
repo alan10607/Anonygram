@@ -1,4 +1,4 @@
-import { CONT_STATUS_TYPE } from "../../utli/constant";
+import { CONT_STATUS_TYPE } from "../../util/constant";
 import {
   FIND_ID_SET,
   FIND_POST,

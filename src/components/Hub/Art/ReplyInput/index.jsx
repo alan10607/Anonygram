@@ -2,10 +2,10 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { uploadImg } from '../../../../redux/actions/post';
 import { replySetHtml } from '../../../../redux/actions/reply';
-import { pasteAsPlain } from '../../../../utli/inputControll';
-import { getBase64FromFile } from '../../../../utli/image';
-import { ICON_UPLOAD_IMG } from '../../../../utli/constant';
-import useConsole from '../../../../utli/useConsole';
+import { pasteAsPlain } from '../../../../util/inputControll';
+import { getBase64FromFile } from '../../../../util/image';
+import { ICON_UPLOAD_IMG } from '../../../../util/constant';
+import useConsole from '../../../../util/useConsole';
 import './index.scss';
 
 export default function ReplyInput({ id, inputRef, render = () => <div></div>}) {

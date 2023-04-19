@@ -5,7 +5,7 @@ import { findIdSet, findPost } from '../../../redux/actions/post';
 import { saveUserData } from '../../../redux/actions/user';
 import { replySetOpen } from '../../../redux/actions/reply';
 import { getJwt, getJwtPayload, isJwtValid } from '../../../service/jwt';
-import { CONT_STATUS_TYPE, REPLY_BOX } from '../../../utli/constant';
+import { CONT_STATUS_TYPE, REPLY_BOX } from '../../../util/constant';
 import ArtCont from './ArtCont';
 import Cont from './Cont';
 import ContDel from './Cont/ContDel';
