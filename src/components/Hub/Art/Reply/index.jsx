@@ -6,6 +6,7 @@ import { getNowTime } from '../../../../util/time';
 import { getContentWord } from '../../../../util/inputControll';
 import { ICON_USER, REPLY_BOX_ATTR } from '../../../../util/constant';
 import useConsole from '../../../../util/useConsole';
+import useThrottle from '../../../../util/useThrottle';
 import ReplyInput from '../ReplyInput';
 import './index.scss';
 
@@ -20,11 +21,11 @@ export default function Reply({ id }) {
   const showConsole = useConsole();
   const { t } = useTranslation();
 
-  const doReplyPost = () => {
+  const doReplyPost = useThrottle(() => {
     const word = getContentWord(inputRef.current);
     if (word.trim() === "") return showConsole(t("empty-word"));
     dispatch(replyPost({ id, word }));
-  };
+  });
 
   const submitRender = () => {
     return (

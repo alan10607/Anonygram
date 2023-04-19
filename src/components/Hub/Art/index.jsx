@@ -67,7 +67,7 @@ export default function Art() {
       doFindPost();//初始化時載入, 載入完後有仍有空位則繼續載入
     } else {
       findPostLock.current = false;
-      console.log("Load posts done");
+      // console.log("Load posts done");
     }
 
     window.addEventListener("scroll", scrollDown);

@@ -10,6 +10,8 @@ export default function useThrottle(func, time = 500) {
 
     isRunningRef.current = true;
     func(...args);
-    setTimeout(() => { isRunningRef.current = false }, time);
+    setTimeout(() => { 
+      isRunningRef.current = false 
+    }, time);
   }
 }

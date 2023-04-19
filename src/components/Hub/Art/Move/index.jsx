@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { findTopCont } from '../../../../redux/actions/post';
 import { replySetId, replySetOpen } from '../../../../redux/actions/reply';
 import { REPLY_BOX_ATTR } from '../../../../util/constant';
+import useThrottle from '../../../../util/useThrottle';
 import './index.scss';
 
 export default function Move({ id }) {
@@ -23,9 +24,9 @@ export default function Move({ id }) {
     return t("open-remain", { remain });//展開剩餘
   }
 
-  const doFindTopCont = () => {
+  const doFindTopCont = useThrottle(() => {
     if (remain) dispatch(findTopCont({ id, no: start }));
-  }
+  })
 
   const openReply = () => {
     dispatch(replySetId(id));

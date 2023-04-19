@@ -9,7 +9,7 @@ console.log(String.raw`
 `);
 
 /* --- Backend url --- */
-export const VERSION = "v0418";
+export const VERSION = "v0419";
 
 /* --- Backend url --- */
 const CLOUD_URL = "https://13.112.45.117/";

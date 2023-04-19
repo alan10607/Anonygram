@@ -7,6 +7,7 @@ import { getNowTime } from '../../../util/time';
 import { getContentWord } from '../../../util/inputControll';
 import { ICON_USER, BIG_BOX_ID } from '../../../util/constant';
 import useConsole from '../../../util/useConsole';
+import useThrottle from '../../../util/useThrottle';
 import Bigbox from '../BigBox';
 import ReplyInput from '../Art/ReplyInput';
 import './index.scss';
@@ -27,14 +28,14 @@ export default function New() {
     titleRef.current.value = title;
   }, [title])
 
-  const doCreatePost = () => {
+  const doCreatePost = useThrottle(() => {
     if (title === "") return showConsole(t("empty-title"));
 
     const word = getContentWord(inputRef.current);
     if (word.trim() === "") return showConsole(t("empty-word"));
 
     dispatch(createPost({ title, word }));
-  };
+  });
 
   const boxRender = () => (
     <div id="new">

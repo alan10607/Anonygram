@@ -6,6 +6,7 @@ import { pasteAsPlain } from '../../../../util/inputControll';
 import { getBase64FromFile } from '../../../../util/image';
 import { ICON_UPLOAD_IMG } from '../../../../util/constant';
 import useConsole from '../../../../util/useConsole';
+import useThrottle from '../../../../util/useThrottle';
 import './index.scss';
 
 export default function ReplyInput({ id, inputRef, render = () => <div></div>}) {
@@ -16,7 +17,7 @@ export default function ReplyInput({ id, inputRef, render = () => <div></div>}) 
   const { t } = useTranslation();
   const showConsole = useConsole();
 
-  const doUploadImg = async (event) => {
+  const doUploadImg = useThrottle(async (event) => {
     const files = event.target.files;
     if (!files || files.length === 0 || !files[0])
       return showConsole(t("empty-img"));
@@ -34,7 +35,7 @@ export default function ReplyInput({ id, inputRef, render = () => <div></div>}) 
       id,
       imgBase64 : base64.replace(/^data:image\/\w+;base64,/g, "")
     }));
-  }
+  })
 
   return (
     <div className="reply-input">

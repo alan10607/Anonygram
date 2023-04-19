@@ -2,6 +2,7 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { deleteCont, deletePost } from '../../../../redux/actions/post';
 import { getTimeFromStr } from '../../../../util/time';
+import useThrottle from '../../../../util/useThrottle';
 import './index.scss';
 
 export default function Info({ id, no = 0 }) {
@@ -14,9 +15,9 @@ export default function Info({ id, no = 0 }) {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const canDel = userId.toString() === author || (userId === -1 && username === author);
-  const deletePostOrCont = () => {
+  const deletePostOrCont = useThrottle(() => {
     dispatch(no === 0 ? deletePost({ id, no }) : deleteCont({ id, no }));
-  };
+  });
 
   return (
     <div className="info">

@@ -1,6 +1,7 @@
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { likeContent, unlikeContent } from '../../../../redux/actions/post';
 import { ICON_USER, ICON_LIKE } from '../../../../util/constant';
+import useThrottle from '../../../../util/useThrottle';
 import './index.scss';
 
 export default function Bar({ id, no = 0 }) {
@@ -10,9 +11,9 @@ export default function Bar({ id, no = 0 }) {
     likes:      state.post.get(id).contList[no].likes
   }), shallowEqual);
   const dispatch = useDispatch();
-  const toggleLike = () => {
+  const toggleLike = useThrottle(() => {
     dispatch(isUserLike ? unlikeContent({ id, no }) : likeContent({ id, no }));
-  }
+  })
 
   return (
     <div className="bar">
