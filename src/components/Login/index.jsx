@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { isJwtValid } from '../../service/jwt';
 import { locationTo } from '../../util/locationTo';
 import { ICON_LOGO, VERSION, BACKEND_API_URL } from '../../util/constant';
-import { useLang, useTheme } from '../../util/localSetting';
 import authService from '../../service/request/authService';
 import './index.scss'
 
@@ -15,8 +14,6 @@ export default function Login() {
   const [done, setDone] = useState(false);
   const navigate = useNavigate();
   const { t } = useTranslation();
-  useLang();
-  useTheme();
 
   useEffect(() => {//測試用, 確認後台ssl
     authService.testSsl().then((res) => { })

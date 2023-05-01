@@ -1,4 +1,4 @@
-import { SAVE_USER_DATA, DELETE_USER_DATA } from "../actions/user";
+import { SAVE_USER_DATA, RESET_USER_DATA } from "../actions/user";
 
 const initState = {
   userId: "",
@@ -11,10 +11,10 @@ export default function userReducer(preState = initState, action) {
 
   switch (type) {
     case SAVE_USER_DATA:
-      const {id: userId, sub: username, isAnonymous: isAnonyUser} = data;
+      const { id: userId, sub: username, isAnonymous: isAnonyUser } = data;
       return Object.assign({}, preState, { userId, username, isAnonyUser });
 
-    case DELETE_USER_DATA:
+    case RESET_USER_DATA:
       return initState;
 
     default:

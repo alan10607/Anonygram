@@ -1,6 +1,6 @@
 import i18next from "i18next";
 import postService from "../../service/request/postService";
-import { deleteUserData } from "./user";
+import { resetUserData } from "./user";
 import { resetReplyData, replyAddImg } from "./reply";
 import { 
   showConsole, 
@@ -126,6 +126,6 @@ export const resetPostData = () => (dispatch) => {
 
 export const resetAllData = () => (dispatch) => {
   dispatch(resetPostData());
-  dispatch(deleteUserData());
+  dispatch(resetUserData());
   dispatch(resetReplyData());
 }

@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { closeConsole } from '../../redux/actions/common';
+import { useLang, useTheme } from '../../util/localSetting';
 import './index.scss';
 
 export default function Console() {
@@ -9,6 +10,8 @@ export default function Console() {
     isLoading: state.common.isLoading
   }), shallowEqual);
   const dispatch = useDispatch();
+  useLang();
+  useTheme();
 
   useEffect(() => {
     if (!consoleStr) return;
@@ -22,7 +25,7 @@ export default function Console() {
   return (
     <div>
       <div id="console" className={consoleStr ? "console-open" : "console-close"}>
-        {consoleStr}
+        <div>{consoleStr}</div>
       </div>
       <div id="loading" className={"full-screan center " + (isLoading ? "" : "disable")}>
         <div>

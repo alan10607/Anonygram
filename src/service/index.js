@@ -7,7 +7,7 @@ import { BACKEND_API_URL } from "../util/constant";
 const service = axios.create({
   baseURL: BACKEND_API_URL,
   headers: { "Content-Type": "application/json" },
-  rejectUnauthorized: false, //for test disable ssl
+  rejectUnauthorized: true, //false for test disable ssl
   timeout: 5000
   // responseEncoding: 'utf8',
   // withCredentials: false, // default

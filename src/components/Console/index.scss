@@ -4,16 +4,26 @@
 	position: fixed;
 	left: 0;
 	right: 0;
-	background-color: var(--color-light);
-	transition-timing-function: ease-in-out;
-	transition-duration: 0.2s;
-	padding: 30px;
-	text-align: center;
+	transition-timing-function: ease-out;
+	transition-duration: 0.5s;
 	z-index: 99999;
+
+	> div{
+		height: 100%;
+    margin: 0 auto;
+    max-width: 370px;
+    width: 85%;
+    background-color: hsl(0deg 0% 55% / 49%);
+    text-align: center;
+    padding: 30px 15px;
+    font-size: 15px;
+    border: 0.5px solid #d1d1d1;
+    border-radius: 5px;
+	}
 }
 
 #console.console-open {
-	top: 17vh;
+	top: 30vh;
 }
 
 #console.console-close {
