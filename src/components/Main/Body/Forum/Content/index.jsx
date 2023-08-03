@@ -1,9 +1,9 @@
-import Bar from '../Bar';
-import Word from '../Word';
-import Info from '../Info';
+import Bar from './Bar';
+import Word from './Word';
+import Info from './Info';
 import './index.scss';
 
-export default function Cont({ id, no }) {
+export default function Content({ id, no }) {
   return (
     <div id={`${id}_${no}`} className="cont">
       <Bar id={id} no={no} />

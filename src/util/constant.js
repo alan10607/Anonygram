@@ -12,12 +12,13 @@ console.log(String.raw`
 export const VERSION = "v0501";
 
 /* --- Backend url --- */
-const CLOUD_URL = "https://13.112.45.117/";
-const TEST_URL = "https://localhost/";
+const CLOUD_URL = "https://13.112.45.117";
+const TEST_URL = "https://localhost";
 export const BACKEND_API_URL = window.location.host.indexOf("localhost") === -1 ? CLOUD_URL : TEST_URL;
 console.log("BACKEND_API_URL:", BACKEND_API_URL);
 
 /* --- LocalStorage --- */
+export const LOCAL_SETTING = "ag-local";
 export const JWT_TOKEN = "ag-jwt";
 export const LANG = "ag-lang";
 export const THEME = "ag-theme";

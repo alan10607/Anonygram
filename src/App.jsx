@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import Hub from './components/Hub';
+import Main from './components/Main';
 import Login from './components/Login';
 import Register from './components/Register';
 import Error from './components/Error'
@@ -11,9 +11,9 @@ export default function App() {
     <div>
       <Routes>
         <Route path='/' element={<Login />} />
+        <Route path='/forum' element={<Main />} />
         <Route path='/login' element={<Login />} />
-        <Route path='/register/' element={<Register />} />
-        <Route path='/hub/' element={<Hub />} />
+        <Route path='/register' element={<Register />} />
         <Route path='/error' element={<Error />} />
         <Route path='*' element={<Navigate to='/login' />} />
       </Routes>

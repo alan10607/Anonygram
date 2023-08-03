@@ -1,14 +1,14 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
-import { ICON_LOGO } from '../../util/constant';
-import authService from '../../service/request/authService';
+import { ICON_LOGO } from 'util/constant';
+import authRequest from 'service/request/authRequest';
 import '../Login/index.scss'
 
 export default function Register() {
-  const emailRef = useRef();
-  const userNameRef = useRef();
-  const pwRef = useRef();
+  const [email, setEmail] = useState();
+  const [username, setUsername] = useState();
+  const [password, setPassword] = useState();
   const [hint, setHint] = useState("");
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -16,14 +16,12 @@ export default function Register() {
   const register = (event) => {
     event.preventDefault();
 
-    const email = emailRef.current.value;
-    const userName = userNameRef.current.value;
-    const pw = pwRef.current.value;
-    const errorStr = checkUserData(email, userName, pw);
-    if (errorStr !== "") return setHint(errorStr);
+    const errorStr = checkUserData(email, username, password);
+    if (errorStr !== "") {
+      return setHint(errorStr);
+    }
 
-    const data = { email, userName, pw };
-    authService.register(data).then((res) => {
+    authRequest.register(email, username, password).then((res) => {
       waitThenGo(3);
     }).catch((e) => {
       setHint(t("register-err"));
@@ -51,13 +49,29 @@ export default function Register() {
   return (
     <div className="login center">
       <div>
-        <img className="logo icon" src={ICON_LOGO} alt="ICON_LOGO"/>
+        <img className="logo icon" src={ICON_LOGO} alt="ICON_LOGO" />
         <div className="col-flex">
           <form onSubmit={register}>
             <h2>{t("user-register")}</h2>
-            <input ref={emailRef} type="text" placeholder="Email" autoComplete="off" required autoFocus />
-            <input ref={userNameRef} type="text" placeholder={t("username")} autoComplete="off" required />
-            <input ref={pwRef} type="password" placeholder={t("pw")} autoComplete="off" required />
+            <input value={email}
+              onChange={(event) => { setEmail(event.target.value) }}
+              type="text"
+              placeholder="Email"
+              autoComplete="off"
+              required
+              autoFocus />
+            <input value={username}
+              onChange={(event) => { setUsername(event.target.value) }}
+              type="text"
+              placeholder={t("username")}
+              autoComplete="off"
+              required />
+            <input value={password}
+              onChange={(event) => { setPassword(event.target.value) }}
+              type="password"
+              placeholder={t("pw")}
+              autoComplete="off"
+              required />
             <input type="submit" value={t("register")} />
           </form>
           <div className="login-info">

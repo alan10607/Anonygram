@@ -21,3 +21,13 @@ export const setJwt = (value) => {
 export const deleteJwt = () => {
   setJwt(null);
 }
+
+export const parseTokenToJwt = (token) => {
+  if(!token) throw new Error("No jwt token!");
+  
+  const jwt = token ? JSON.parse(window.atob(jwt.split('.')[1])) : {};
+  jwt.token = token;
+  jwt.isAnonymous = !jwt.email || jwt.email.trim() === "";
+  jwt.isVaild = () => this.exp > Math.floor(Date.now() / 1000);
+  return jwt;
+}

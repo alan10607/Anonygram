@@ -1,4 +1,4 @@
-const pending = new Map();//存放累積的request
+const pending = new Map();//to store accumulated requests
 
 const getHash = (config) => {
   const stringify = (obj) => typeof obj === "string" ? obj : JSON.stringify(obj);

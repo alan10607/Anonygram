@@ -1,60 +1,66 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
-import { isJwtValid } from '../../service/jwt';
-import { locationTo } from '../../util/locationTo';
-import { ICON_LOGO, VERSION, BACKEND_API_URL } from '../../util/constant';
-import authService from '../../service/request/authService';
+import { setUser } from 'redux/actions/user';
+import { ICON_LOGO, VERSION, BACKEND_API_URL } from 'util/constant';
+import { locationTo } from 'util/locationTo';
+import authRequest from 'service/request/authRequest';
 import './index.scss'
 
 export default function Login() {
-  const emailRef = useRef();
-  const pwRef = useRef();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
   const [hint, setHint] = useState("");
-  const [done, setDone] = useState(false);
+  const [logged, setlogged] = useState(false);
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const { userId } = useSelector(state => ({
+    userId: state.user.id
+  }), shallowEqual);
 
-  useEffect(() => {//測試用, 確認後台ssl
-    authService.testSsl().then((res) => { })
-      .catch((e) => {//跳轉到後台後再返回
-        const sslUrl = `${BACKEND_API_URL}ssl?callbackUrl=${window.location.href}`;
-        console.log("Check ssl move to:", sslUrl)
+  useEffect(() => {//For testing, check user SSL confirmation
+    authRequest.ssl().then((res) => { })
+      .catch((e) => {//If does not conform SSL then redirect to the backend
+        const sslUrl = `${BACKEND_API_URL}/ssl?callbackUrl=${window.location.href}`;
+        console.log("Redirect backend for ssl", sslUrl)
         locationTo(sslUrl);
       });
   }, []);
 
   useEffect(() => {//取得新的jwt後跳轉
-    if (done) {
+    if (logged) {
       navigate("/hub");
     }
-  }, [done]);
+  }, [logged]);
 
   const login = (event) => {
     event.preventDefault();
 
-    authService.login({
-      email: emailRef.current.value,
-      pw: pwRef.current.value,
-    }).then((res) => {
-      setDone(true);
+    authRequest.login(email, password).then((res) => {
+      dispatch(setUser(res.id, res.username, false, res.tokenMaxAge));
+      navigate("/hub");
     }).catch((e) => {
       setHint(t("login-err"));
     });
   }
 
-  const loginAnony = (event) => {
+  const loginAnonymous = (event) => {
     event.preventDefault();
 
-    if (isJwtValid()) {
-      setDone(true);
-    } else {
-      authService.anony().then((res) => {
-        setDone(true);
-      }).catch((e) => {
-        setHint(t("login-anony-err"));
-      });
+    if (userId) {
+      navigate("/hub");
+      return;
     }
+
+    authRequest.anonymous().then((res) => {
+      dispatch(setUser(res.id, res.username, true, res.tokenMaxAge));
+      navigate("/hub");
+    }).catch((e) => {
+      setHint(t("login-anony-err"));
+    });
+
   }
 
   return (
@@ -63,9 +69,19 @@ export default function Login() {
         <img className="icon logo" src={ICON_LOGO} alt="ICON_LOGO" />
         <div className="col-flex">
           <form onSubmit={login}>
-            <input ref={emailRef} type="text" placeholder="Email" autoComplete="on" required autoFocus />
-            <input ref={pwRef} type="password" placeholder={t("pw")} autoComplete="on" required />
-            {/* <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> */}
+            <input value={email}
+              onChange={(event) => { setEmail(event.target.value) }}
+              type="text"
+              placeholder="Email"
+              autoComplete="on"
+              required
+              autoFocus />
+            <input value={password}
+              onChange={(event) => { setPassword(event.target.value) }}
+              type="password"
+              placeholder={t("pw")}
+              autoComplete="on"
+              required />
             <input type="submit" value={t("login")} />
           </form>
           <div className="login-info">
@@ -74,7 +90,7 @@ export default function Login() {
           </div>
           <div className="hint">{hint}</div>
           <div className="line-word">{t("or")}</div>
-          <input type="button" value={t("as-anony")} onClick={loginAnony} />
+          <input type="button" value={t("as-anony")} onClick={loginAnonymous} />
         </div>
         <div className="version">{VERSION}</div>
       </div>

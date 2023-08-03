@@ -1,12 +1,16 @@
+import Cookies from 'universal-cookie'
+
+const cookies = new Cookies();
+
 export const getCookie = (key) => {
-  return document.cookie
-          .split("; ")
-          .find((row) => row.startsWith(key))
-          ?.split("=")[1];
+  return cookies.get(key);
 }
 
-export const setCookie = (key, value, expdays) => {
-  const expTime = new Date();
-  expTime.setTime(expTime.getTime() + (expdays * 24 * 60 * 60 * 1000));
-  document.cookie = `${key}=${value}; expires=${expTime.toUTCString()};`;
+export const setCookie = (key, value, expiredDays) => {
+  cookies.set(key, value, {
+    path: "/",
+    maxAge: 60 * 60 * 24 * expiredHour,
+    secure: true,
+    sameSite: true
+  });
 }
