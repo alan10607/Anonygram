@@ -1,9 +1,0 @@
-@import '../../../../root.scss';
-
-.cont {
-	padding: 0;
-
-	&:after {
-		@include line;
-	}
-}

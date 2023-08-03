@@ -5,6 +5,7 @@ export default function useThrottle(func, time = 500) {
 
   return (...args) => {
     if (isRunningRef.current){
+      console.log("Throttle skip function");
       return;
     } 
 

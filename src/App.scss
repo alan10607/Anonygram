@@ -1,5 +1,61 @@
-@import './root.scss';
+:root {
+  --bg-body-light: #e0e0e0;
+  --bg-heavy-light: #ffffff;
+  --bg-normal-light: #f2f2f2;
+  --bg-mid-light: #ececec;
+  --bg-light-light:#a4a4a4;
+  --bg-loginBtn-light: #0095f6;
+  --color-normal-light: #262626;
+  --color-mid-light: #545454;
+  --color-light-light: #8e8e8e;
+  --icon-filter-light: invert(0%) sepia(93%) saturate(0%) hue-rotate(229deg) brightness(93%) contrast(107%);
 
+  --bg-body-dark: #000000;
+  --bg-heavy-dark: #111111;
+  --bg-normal-dark: #131313;
+  --bg-mid-dark: #1a1a1a;
+  --bg-light-dark:#545454;
+  --bg-loginBtn-dark: #111111;
+  --color-normal-dark: #ececec;
+  --color-mid-dark: #efefef;
+  --color-light-dark: #aaaaaa;
+  --icon-filter-dark: invert(100%) sepia(57%) saturate(41%) hue-rotate(308deg) brightness(113%) contrast(87%);
+
+  --bg-body: var(--bg-body-dark);
+  --bg-heavy: var(--bg-heavy-dark);
+  --bg-normal: var(--bg-normal-dark);
+  --bg-mid: var(--bg-mid-dark);
+  --bg-light: var(--bg-light-dark);
+  --bg-loginBtn: var(--bg-loginBtn-dark);
+  --color-normal: var(--color-normal-dark);
+  --color-mid: var(--color-mid-dark);
+  --color-light: var(--color-light-dark);
+  --icon-filter: var(--icon-filter-dark);
+}
+
+$color-word-a: #639cf9;
+$color-word-bx: #639cf9;
+$border-light: 0.5px solid #8e8e8e;
+$border-btn: 0.5px solid #d1d1d1;
+$nav-height: 60px;
+
+@mixin line {
+  display: block;
+  width: calc(100% - 30px);
+  height: 0;
+  margin: 0 auto;
+  content: "";
+  border-bottom: $border-light;
+}
+
+@mixin login-btn {
+  background-color: var(--bg-loginBtn);
+  color: #ffffff;
+  cursor: pointer;
+}
+
+
+/* --- Common elements--- */
 body {
 	font-family: Microsoft JhengHei;
 	background-color: var(--bg-body);
@@ -22,7 +78,7 @@ textarea {
 	font-size: 18px;
 	line-height: 28px;
 	color: var(--color-normal);
-	background-color: var(--bg-btn);
+	background-color: var(--bg-normal);
 	border: 0;
 	padding: 4px 5px 3px 5px;
 	font-family: Microsoft JhengHei;
@@ -35,7 +91,7 @@ button {
 	padding: 4px 10px 4px 10px;
 	border: $border-btn;
 	color: var(--color-normal);
-	background-color: var(--bg-btn);
+	background-color: var(--bg-normal);
 	cursor: pointer;
 }
 
@@ -44,8 +100,8 @@ input {
 	line-height: 34px;
 	font-family: Microsoft JhengHei;
 	color: var(--color-normal);
-	background-color: var(--bg-btn);
-	border: $border-btn;
+	background-color: var(--bg-normal);
+	border: $border-light;
 	outline-width: 0px;
 	padding: 4px 10px 4px 10px;
 	-webkit-appearance: none;
@@ -63,12 +119,17 @@ table {
 	}
 }
 
+input[type="button"],
+input[type="submit"] {
+	@include login-btn;
+}
+
 select {
 	font-size: 20px;
 	line-height: 34px;
 	font-family: Microsoft JhengHei;
 	color: var(--color-normal);
-	background-color: var(--bg-btn);
+	background-color: var(--bg-normal);
 	border: $border-btn;
 	outline-width: 0px;
 	padding: 4px 10px 4px 10px;
@@ -76,6 +137,11 @@ select {
 	-moz-appearance: none;
 	appearance: none;
 	cursor: pointer;
+
+	&:disabled {
+		background: var(--bg-light);
+		cursor: initial;
+	}
 }
 
 .full-screan {
@@ -89,14 +155,14 @@ select {
 .center {
 	display: table;
 
-	> div {
+	>div {
 		display: table-cell;
 		vertical-align: middle;
 		text-align: center;
 	}
 }
 
-.icon{
+.icon {
 	filter: var(--icon-filter)
 }
 

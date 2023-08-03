@@ -1,60 +1,71 @@
 import axios from "axios";
-import { deleteJwt, getJwt, setJwt } from "./jwt";
+import { setCookie } from "util/cookieUtil";
+import { BACKEND_API_URL } from "config/constant";
+import { locationLocalTo } from "util/locationUtil";
 import { addPending, removePending } from "./pending";
-import { locationLocalTo } from "../util/locationTo";
-import { BACKEND_API_URL } from "../util/constant";
 
-const service = axios.create({
+const axiosInstance = axios.create({
   baseURL: BACKEND_API_URL,
   headers: { "Content-Type": "application/json" },
   rejectUnauthorized: true, //false for test disable ssl
-  timeout: 5000
+  timeout: 30000,
+  withCredentials: true //for cors
+  // xsrfCookieName: 'your_csrf_cookie_name_here',
+  // xsrfHeaderName: 'X-CSRF-TOKEN'// name of the csrf http header
   // responseEncoding: 'utf8',
-  // withCredentials: false, // default
-  // xsrfCookieName: 'XSRF-TOKEN', // default
-  // xsrfHeaderName: 'X-XSRF-TOKEN', // default
 })
 
-service.interceptors.request.use(config => {
-  removePending(config);//先刪除舊的request
-  addPending(config);//再加入新的
-  config.headers["Authorization"] = `Bearer ${getJwt()}`;//add Jwt
+const cancelRepeatedRequest = (config) => {
+  removePending(config);//remove older 
+  addPending(config);//then add new one
+}
+
+const setDoubleSubmitCsrf = (config) => {
+  const csrfToken = crypto.randomUUID();
+  setCookie("X-CSRF-TOKEN", csrfToken, 1);
+  config.headers["X-CSRF-TOKEN"] = csrfToken;
+}
+
+const setStartTime = (config) => {
   config.headers["startTime"] = new Date().getTime();
+}
+
+const getDurationTime = (config) => {
+  const startTime = config.headers["startTime"];
+  const endTime = new Date().getTime();
+  return endTime - startTime;
+}
+
+axiosInstance.interceptors.request.use(config => {
+  cancelRepeatedRequest(config);
+  setDoubleSubmitCsrf(config);
+  setStartTime(config);
   return config;
 }, error => {
   Promise.reject(error);
 })
 
-service.interceptors.response.use(res => {
+axiosInstance.interceptors.response.use(res => {
   removePending(res.config);
 
-  if (res.config.url === "auth/login" || res.config.url === "auth/anony") {
-    const jwt = res.data.result.token;
-    setJwt(jwt);
-  }
-
-  const startTime = res.config.headers["startTime"];
-  const endTime = new Date().getTime();
-  console.log(`>> Request in ${endTime - startTime}ms for ${res.config.url}`);
-
-  return res;
+  console.log(`>> Request in ${getDurationTime(res.config)}ms for ${res.config.url}`);
+  return res.data;
 }, error => {
   if (axios.isCancel(error)) {
-    console.log(`Repeated request cancel: ${error.config.url}`);
+    console.log(`Repeated request is canceled: ${error.config.url}`);
     return Promise.reject(error);
-  } 
-  
-  if (error?.response?.status === 403) {
-    console.log("Jwt is expired, location to /login");
-    deleteJwt();
-    locationLocalTo("/login");
-    return;
   }
 
-  console.error(`Response error: ${error.config.url}`, 
-    error.response?.data?.result || error.message || error);
+  if (error?.response?.status === 403) {
+    console.log("Authentication is expired, redirect to /login");
+    locationLocalTo("/login");
+    return Promise.reject(error);
+  }
+
+  console.error(`Response error: ${error.config.url}`,
+    error.response?.data?.error || error.response?.data || error.message || error);
 
   return Promise.reject(error);
 })
 
-export default service;
+export default axiosInstance;

@@ -1,0 +1,35 @@
+@import 'App.scss';
+
+.word {
+	margin: 3px 0;
+
+	>div:not(.no-padding) {
+		padding: 0 15px;
+	}
+
+	span {
+		white-space: pre-wrap;
+		word-break: break-word;
+		display: inline;
+	}
+
+	a {
+		white-space: pre-wrap;
+		word-break: break-word;
+		display: inline;
+		cursor: pointer;
+		text-decoration: underline;
+		color: $color-word-a;
+	}
+
+	.bx {
+		cursor: pointer;
+		color: $color-word-bx;
+	}
+
+	img {
+		max-width: 100%;
+		display: block;
+    margin: 0 auto;
+	}
+}

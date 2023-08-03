@@ -1,0 +1,16 @@
+@import 'App.scss';
+
+#new {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  background-color: var(--bg-heavy);
+
+  .reply {
+    flex: 1 1 auto;
+    
+    &:before{
+      border: 0px;
+    }
+  }
+}

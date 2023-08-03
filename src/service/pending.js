@@ -1,4 +1,4 @@
-const pending = new Map();//存放累積的request
+const pending = new Map();//to store accumulated requests
 
 const getHash = (config) => {
   const stringify = (obj) => typeof obj === "string" ? obj : JSON.stringify(obj);
@@ -21,7 +21,7 @@ export const addPending = (config) => {
 
 export const removePending = (config) => {
   const hash = getHash(config);
-  if (pending.has(hash)) { 
+  if (pending.has(hash)) {
     const controller = pending.get(hash)
     controller.abort();
     pending.delete(hash);

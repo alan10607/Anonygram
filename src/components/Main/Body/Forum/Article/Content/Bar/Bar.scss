@@ -1,0 +1,50 @@
+@import 'App.scss';
+
+.bar {
+  display: flex;
+  align-items: center;
+  padding: 10px 13px;
+
+  .head {
+    flex: 0 1 auto;
+    width: 50px;
+    height: 50px;
+    margin-right: 8px;
+    border-radius: 100%;
+    object-fit: cover;
+  }
+
+  .author {
+    flex: 0 1 auto;
+    font-size: 16px;
+  }
+
+  .like-icon {
+    flex: 0 1 auto;
+    display: flex;
+    align-items: center;
+
+    &:not([disabled]) {
+      img {
+        filter: invert(15%) sepia(55%) saturate(6826%) hue-rotate(0deg) brightness(103%) contrast(95%);
+      }
+    }
+
+    img {
+      flex: 0 1 auto;
+      width: 14px;
+      height: 14px;
+      padding: 7px 6px 6px 0;
+      cursor: pointer;
+      filter: invert(61%) sepia(2%) saturate(184%) hue-rotate(19deg) brightness(93%) contrast(77%);
+    }
+
+    div {
+      flex: 0 1 auto;
+      font-size: 14px;
+      color: var(--color-light);
+      min-width: 10px;
+      text-align: right;
+    }
+  }
+}

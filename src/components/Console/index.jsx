@@ -1,33 +1,40 @@
-import { useEffect } from 'react';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import { closeConsole } from '../../redux/actions/common';
-import { useLang, useTheme } from '../../util/localSetting';
-import './index.scss';
+import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { setConsole } from "redux/actions/common";
+import './Console.scss';
 
 export default function Console() {
-  const { consoleStr, isLoading } = useSelector(state => ({
-    consoleStr: state.common.consoleStr,
-    isLoading: state.common.isLoading
+  const { console, loading } = useSelector(state => ({
+    console: state.common.console,
+    loading: state.common.loading
   }), shallowEqual);
   const dispatch = useDispatch();
-  useLang();
-  useTheme();
+  const { t } = useTranslation();
+  const consoleShowSec = 3;
 
   useEffect(() => {
-    if (!consoleStr) return;
+    if (!console) return;
 
-    const closeTimeout = setTimeout(() => { dispatch(closeConsole()) }, 2000);
+    const closeTimeout = setTimeout(() => {
+      dispatch(setConsole(""));
+    }, consoleShowSec * 1000);
+
     return () => {
       clearTimeout(closeTimeout);
     }
-  })
+  }, [console])
 
   return (
     <div>
-      <div id="console" className={consoleStr ? "console-open" : "console-close"}>
-        <div>{consoleStr}</div>
+      <div id="console" disabled={console === ""}>
+        <div>
+          <div className="console-title">{t("text.console.title")}</div>
+          <div className="line"></div>
+          <div>{console}</div>
+        </div>
       </div>
-      <div id="loading" className={"full-screan center " + (isLoading ? "" : "disable")}>
+      <div id="loading" className="full-screan center" disabled={!loading}>
         <div>
           <div className="loading-icon">
             <div></div>

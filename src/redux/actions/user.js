@@ -1,5 +1,11 @@
-export const SAVE_USER_DATA = "saveUserData";
-export const RESET_USER_DATA = "resetUserData";
+export const SET_USER = "setUser";
+export const DELETE_USER = "deleteUser";
 
-export const saveUserData = (jwtPayload) => ({ type: SAVE_USER_DATA, data : jwtPayload });
-export const resetUserData = () => ({ type: RESET_USER_DATA });
+export const setUser = (user) => ({
+  type: SET_USER,
+  data: user
+});
+
+export const deleteUser = () => ({
+  type: DELETE_USER
+});

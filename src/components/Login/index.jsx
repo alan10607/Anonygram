@@ -1,61 +1,58 @@
-import { useState, useRef, useEffect } from 'react';
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { useTranslation } from 'react-i18next';
-import { isJwtValid } from '../../service/jwt';
-import { locationTo } from '../../util/locationTo';
-import { ICON_LOGO, VERSION, BACKEND_API_URL } from '../../util/constant';
-import authService from '../../service/request/authService';
-import './index.scss'
+import { setUser } from "redux/actions/user";
+import authRequest from "service/request/authRequest";
+import otherRequest from "service/request/otherRequest";
+import { BACKEND_API_URL, ICON_LOGO, VERSION, WELCOME_PAGE } from "config/constant";
+import { locationTo } from "util/locationUtil";
+import { isAnonygramUser } from "util/authUtil";
+import './Login.scss';
 
 export default function Login() {
-  const emailRef = useRef();
-  const pwRef = useRef();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [hint, setHint] = useState("");
-  const [done, setDone] = useState(false);
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const dispatch = useDispatch();
 
-  useEffect(() => {//測試用, 確認後台ssl
-    authService.testSsl().then((res) => { })
-      .catch((e) => {//跳轉到後台後再返回
-        const sslUrl = `${BACKEND_API_URL}ssl?callbackUrl=${window.location.href}`;
-        console.log("Check ssl move to:", sslUrl)
+  useEffect(() => {//For testing, check user SSL confirmation
+    otherRequest.ssl()
+      .then(() => { })
+      .catch(e => {//If does not conform SSL then redirect to the backend
+        const sslUrl = `${BACKEND_API_URL}/ssl?callbackUrl=${window.location.href}`;
+        console.log("Redirect backend for ssl", sslUrl)
         locationTo(sslUrl);
       });
   }, []);
 
-  useEffect(() => {//取得新的jwt後跳轉
-    if (done) {
-      navigate("/hub");
-    }
-  }, [done]);
-
   const login = (event) => {
     event.preventDefault();
 
-    authService.login({
-      email: emailRef.current.value,
-      pw: pwRef.current.value,
-    }).then((res) => {
-      setDone(true);
-    }).catch((e) => {
-      setHint(t("login-err"));
-    });
+    authRequest.login(email, password)
+      .then(user => {
+        dispatch(setUser(user));
+        navigate(WELCOME_PAGE);
+      })
+      .catch(e => setHint(t("tip.login.error")));
   }
 
-  const loginAnony = (event) => {
-    event.preventDefault();
-
-    if (isJwtValid()) {
-      setDone(true);
-    } else {
-      authService.anony().then((res) => {
-        setDone(true);
-      }).catch((e) => {
-        setHint(t("login-anony-err"));
-      });
+  const anonymousLogin = async (event) => {
+    try {
+      const oldUser = await authRequest.test();
+      if (isAnonygramUser(oldUser)) {
+        dispatch(setUser(oldUser));
+      } else {
+        const user = await authRequest.anonymous();
+        dispatch(setUser(user));
+      }
+      navigate(WELCOME_PAGE);
+    } catch (e) {
+      setHint(t("tip.login.anonymous.error"));
     }
-  }
+  };
 
   return (
     <div className="login center">
@@ -63,18 +60,28 @@ export default function Login() {
         <img className="icon logo" src={ICON_LOGO} alt="ICON_LOGO" />
         <div className="col-flex">
           <form onSubmit={login}>
-            <input ref={emailRef} type="text" placeholder="Email" autoComplete="on" required autoFocus />
-            <input ref={pwRef} type="password" placeholder={t("pw")} autoComplete="on" required />
-            {/* <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> */}
-            <input type="submit" value={t("login")} />
+            <input value={email}
+              onChange={(event) => { setEmail(event.target.value) }}
+              type="text"
+              placeholder={t("common.email")}
+              autoComplete="on"
+              required
+              autoFocus />
+            <input value={password}
+              onChange={(event) => { setPassword(event.target.value) }}
+              type="password"
+              placeholder={t("common.password")}
+              autoComplete="on"
+              required />
+            <input type="submit" value={t("common.login")} />
           </form>
           <div className="login-info">
-            <span>{t("no-account?")} </span>
-            <Link to="/register" className="info-link">{t("register")}</Link>
+            <span>{t("text.login.noAccountYet")} </span>
+            <Link to="/register" className="info-link">{t("common.register")}</Link>
           </div>
           <div className="hint">{hint}</div>
-          <div className="line-word">{t("or")}</div>
-          <input type="button" value={t("as-anony")} onClick={loginAnony} />
+          <div className="line-word">{t("text.login.or")}</div>
+          <input type="button" value={t("common.anonymousLogin")} onClick={anonymousLogin} />
         </div>
         <div className="version">{VERSION}</div>
       </div>

@@ -1,0 +1,30 @@
+@import 'App.scss';
+
+#header {
+	background-color: var(--bg-heavy);
+	border-bottom: $border-light;
+	display: flex;
+	align-items: center;
+
+	>:last-child {
+		margin-right: 30px;
+	}
+
+	.logo {
+		flex: 0 1 auto;
+		height: 100%;
+	}
+
+	>a {
+		+a {
+			margin-left: 30px;
+		}
+
+		img {
+			flex: 0 1 auto;
+			width: 28px;
+			height: 28px;
+			cursor: pointer;
+		}
+	}
+}

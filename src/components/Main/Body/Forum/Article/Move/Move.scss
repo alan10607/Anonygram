@@ -1,0 +1,23 @@
+@import 'App.scss';
+
+.move {
+	display: flex;
+	align-items: center;
+	font-size: 14px;
+	padding: 12px 17px;
+
+	.open {
+		flex: 0 1 auto;
+		cursor: pointer;
+
+		&[disabled] {
+			cursor: initial;
+			color: var(--color-light);
+		}
+	}
+
+	.text-btn {
+		flex: 0 1 auto;
+		cursor: pointer;
+	}
+}
