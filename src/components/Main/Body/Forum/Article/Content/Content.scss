@@ -1,0 +1,9 @@
+@import 'App.scss';
+
+.cont {
+	
+	&:after {
+		@include line;
+	}
+
+}

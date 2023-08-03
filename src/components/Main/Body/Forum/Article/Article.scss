@@ -1,0 +1,21 @@
+@import 'App.scss';
+
+.art {
+	background-color: var(--bg-heavy);
+	font-size: 16px;
+
+	+ {
+		.art {
+			margin-top: 25px;
+		}
+	}
+
+	.title {
+		padding: 15px 15px 0 15px;
+		font-size: 22px;
+		font-weight: 600;
+		white-space: pre-wrap;
+		word-break: break-word;
+	}
+
+}

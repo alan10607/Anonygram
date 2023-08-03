@@ -1,0 +1,16 @@
+@import 'App.scss';
+
+.upload-img-btn {
+  flex: 0 1 auto;
+  height: 28px;
+      
+  img {
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
+  }
+
+  input {
+    display: none;
+  }
+}

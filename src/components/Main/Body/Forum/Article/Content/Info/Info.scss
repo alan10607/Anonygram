@@ -1,0 +1,17 @@
+@import 'App.scss';
+
+.info {
+  display: flex;
+  align-items: center;
+  padding: 8px 17px;
+  font-size: 14px;
+  color: var(--color-light);
+
+  .info-btn {
+    flex: 0 1 auto;
+    color: var(--color-mid);
+    margin-left: 10px;
+    font-weight: normal;
+    cursor: pointer;
+  }
+}

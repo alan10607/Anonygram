@@ -1,23 +1,37 @@
-import { SAVE_USER_DATA, RESET_USER_DATA } from "../actions/user";
+import i18n from 'i18next';
+import { isAnonygramUser } from 'util/authUtil';
+import { setTheme } from 'util/themeUtil';
+import { DELETE_USER, SET_USER } from "../actions/user";
 
-const initState = {
-  userId: "",
+const initUserState = {
+  id: null,
   username: "",
-  isAnonyUser: true
+  isAnonymous: null,
+  headUrl: "",
+  language: "en",
+  theme: "d"
 };
 
-export default function userReducer(preState = initState, action) {
+export default function userReducer(preState = initUserState, action) {
   const { type, data } = action;
 
   switch (type) {
-    case SAVE_USER_DATA:
-      const { id: userId, sub: username, isAnonymous: isAnonyUser } = data;
-      return Object.assign({}, preState, { userId, username, isAnonyUser });
+    case SET_USER:
+      const newState = Object.assign({}, preState, data);
+      newState.isAnonymous = isAnonygramUser(newState);
+      setLocalEnvironment(newState);
+      return newState;
 
-    case RESET_USER_DATA:
-      return initState;
+    case DELETE_USER:
+      setLocalEnvironment(initUserState);
+      return initUserState;
 
     default:
       return preState;
   }
+}
+
+const setLocalEnvironment = (state) => {
+  i18n.changeLanguage(state.language);
+  setTheme(state.theme);
 }

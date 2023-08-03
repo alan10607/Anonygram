@@ -1,0 +1,6 @@
+  // "tip.forum.article.delete.error": "Failed to delete article.",
+  // "tip.forum.article.set.error": "Failed to publish the article. Please try again later.",
+  // "tip.forum.content.get.error": "Looks like some comments are not loading. Please try again.",
+   // "tip.forum.content.delete.error": "Failed to delete comment.",
+  // "tip.forum.content.set.error": "Failed to leave a comment. Please try again later.",
+  "text.word.deleted": "- This comment has been deleted -",

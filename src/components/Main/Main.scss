@@ -1,0 +1,19 @@
+@import 'App.scss';
+
+.main {	
+	font-size: 16px;
+
+	> :first-child {
+		position: sticky;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: $nav-height;
+		z-index: 999;
+	}
+
+	> :last-child {
+		height: calc(100vh - $nav-height);
+    padding-bottom: 20px;
+	}
+}

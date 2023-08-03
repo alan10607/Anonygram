@@ -1,0 +1,90 @@
+@import 'App.scss';
+
+#setting {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	background-color: var(--bg-heavy);
+
+	select {
+		padding: 2px 8px;
+		font-size: 15px;
+		height: 35px;
+	}
+
+	.user-info {
+		flex: 0 1 auto;
+		display: flex;
+		align-items: center;
+		margin: 25px 15px 15px 15px;
+
+		.upload-head-btn {
+			flex: 0 1 auto;
+
+			&[disabled] {
+				img {
+					cursor: initial;
+				}
+			}
+
+			img {
+				width: 110px;
+				height: 110px;
+				margin-right: 12px;
+				border-radius: 100%;
+				cursor: pointer;
+				object-fit: cover;
+			}
+
+			input {
+				display: none;
+			}
+		}
+
+		>div {
+			flex: 1 1 auto;
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+
+			.username {
+				flex: 0 1 auto;
+				font-size: 26px;
+			}
+
+			.email {
+				flex: 1 1 auto;
+				font-size: 16px;
+			}
+
+			.user-id {
+				flex: 0 1 auto;
+				font-size: 14px;
+				color: var(--color-light);
+			}
+		}
+	}
+
+	.setting-option {
+		flex: 0 1 auto;
+		display: flex;
+		align-items: center;
+		margin: 8px 15px;
+		padding: 8px 15px;
+		background-color: var(--bg-mid);
+
+		> :first-child {
+			flex: 0 1 100px;
+			margin-right: 15px;
+		}
+
+		> :last-child {
+			flex: 1 1 auto;
+		}
+	}
+
+	.logout {
+		flex: 0 1 auto;
+		margin: 15px;
+	}
+}

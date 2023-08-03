@@ -1,29 +1,29 @@
-import service from "..";
+import axiosInstance from "..";
 
-const getMethod = async (url, params = {}) => {
-  try{
-    const res = await service.get(url, { params })
-    return Promise.resolve(res.data);
-  }catch(e){
-    return Promise.reject(e);
-  }
+const getMethod = (url, parameter = {}) => {
+  return axiosInstance.get(url, { parameter });
 }
 
-const postMethod = async (url, data = {}) => {
-  try{
-    const res = await service.post(url, data);
-    if(!res.data) {
-      const err = new Error(`Post format error: ${url}`);
-      console.log(err);
-      throw err;
-    }
-    return Promise.resolve(res.data.result);
-  }catch(e){
-    return Promise.reject(e);
-  }
+const postMethod = (url, payload = {}) => {
+  return axiosInstance.post(url, payload);
+}
+
+const putMethod = (url, payload = {}) => {
+  return axiosInstance.put(url, payload);
+}
+
+const patchMethod = (url, payload = {}) => {
+  return axiosInstance.patch(url, payload);
+}
+
+const deleteMethod = (url, payload = {}) => {
+  return axiosInstance.delete(url, { data: payload });
 }
 
 export default {
   getMethod,
-  postMethod
+  postMethod,
+  putMethod,
+  patchMethod,
+  deleteMethod
 };
