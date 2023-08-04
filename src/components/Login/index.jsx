@@ -9,24 +9,24 @@ import authRequest from 'service/request/authRequest';
 import './index.scss'
 
 export default function Login() {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const welcomePage = "/forum";
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [hint, setHint] = useState("");
   const [logged, setlogged] = useState(false);
   const navigate = useNavigate();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { userId } = useSelector(state => ({
-    userId: state.user.id
+    userId: state.user.userId
   }), shallowEqual);
-
   useEffect(() => {//For testing, check user SSL confirmation
-    authRequest.ssl().then((res) => { })
-      .catch((e) => {//If does not conform SSL then redirect to the backend
-        const sslUrl = `${BACKEND_API_URL}/ssl?callbackUrl=${window.location.href}`;
-        console.log("Redirect backend for ssl", sslUrl)
-        locationTo(sslUrl);
-      });
+    // authRequest.ssl().then((res) => { })
+    //   .catch((e) => {//If does not conform SSL then redirect to the backend
+    //     const sslUrl = `${BACKEND_API_URL}/ssl?callbackUrl=${window.location.href}`;
+    //     console.log("Redirect backend for ssl", sslUrl)
+    //     locationTo(sslUrl);
+    //   });
   }, []);
 
   useEffect(() => {//取得新的jwt後跳轉
@@ -39,8 +39,8 @@ export default function Login() {
     event.preventDefault();
 
     authRequest.login(email, password).then((res) => {
-      dispatch(setUser(res.id, res.username, false, res.tokenMaxAge));
-      navigate("/hub");
+      dispatch(setUser(res.id, res.username, false));
+      navigate(welcomePage);
     }).catch((e) => {
       setHint(t("login-err"));
     });
@@ -49,14 +49,14 @@ export default function Login() {
   const loginAnonymous = (event) => {
     event.preventDefault();
 
-    if (userId) {
-      navigate("/hub");
-      return;
-    }
+    // if (userId) {
+    //   navigate(welcomePage);
+    //   return;
+    // }
 
     authRequest.anonymous().then((res) => {
-      dispatch(setUser(res.id, res.username, true, res.tokenMaxAge));
-      navigate("/hub");
+      dispatch(setUser(res.id, res.username, true));
+      navigate(welcomePage);
     }).catch((e) => {
       setHint(t("login-anony-err"));
     });

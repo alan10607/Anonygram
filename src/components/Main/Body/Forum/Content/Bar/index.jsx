@@ -2,7 +2,7 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { likeContent, unlikeContent, updateContentLike } from 'redux/actions/forum';
 import forumRequest from 'service/request/forumRequest';
 import { ICON_USER, ICON_LIKE } from 'util/constant';
-import useThrottle from '/util/useThrottle';
+import useThrottle from 'util/useThrottle';
 import './index.scss';
 
 export default function Bar({ id, no }) {

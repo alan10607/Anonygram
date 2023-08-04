@@ -1,6 +1,6 @@
 import { Fragment, useState, useEffect, useRef, useMemo } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { setAllId, setArticle } from 'redux/actions/forum';
+import { setAllArticle, setAllId, setArticle } from 'redux/actions/forum';
 import { replySetOpen } from 'redux/actions/reply';
 import { CONT_STATUS_TYPE, REPLY_BOX } from 'util/constant';
 import forumRequest from 'service/request/forumRequest';
@@ -10,6 +10,8 @@ import ContDel from './Content/ContDel';
 import Reply from './Reply';
 import Move from './Move';
 import './index.scss';
+import { showConsole } from 'redux/actions/common';
+import i18next from "i18next";
 
 export default function Forum() {
   const { forum, replyIsOpen } = useSelector(state => ({
@@ -17,7 +19,7 @@ export default function Forum() {
     replyIsOpen: state.reply.isOpen
   }), shallowEqual);
   const dispatch = useDispatch();
-  const idList = useMemo(() => [...forum.keys()], [id]);
+  const idList = useMemo(() => [...forum.keys()], [forum]);
   const querySize = 10;
   const queryPendingId = useRef(new Set());
 
@@ -25,14 +27,16 @@ export default function Forum() {
   useEffect(() => {
     if (idList.length === 0) {
       forumRequest.getId().then(res => {
-        dispatch(setAllId(res.idList));
+        dispatch(setAllId(res));
       }).catch((e) => {
         dispatch(showConsole(i18next.t("findIdSet-err")));
       });
     }
   }, [])
-
+const i = useRef(0);
   useEffect(() => {//dynamic loading article
+    debugger
+    console.log("++++++++++++++++",i.current++);
     queryArticle();
 
     window.addEventListener("scroll", scrollDownQuery);
@@ -50,7 +54,9 @@ export default function Forum() {
     if (!canQueryArticle()) return;
 
     const queryIdList = getQueryIdList();
-    queryIdList.forEach(id => queryPendingId.add(id));
+    queryIdList.forEach(id => {
+      queryPendingId.current.add(id);
+    });
     queryIdList.forEach(id => httpGetArticle(id));
   }
 
@@ -83,13 +89,14 @@ export default function Forum() {
     return idList.filter(id => !forum.get(id)).slice(0, querySize);
   }
 
-  const httpGetArticle = () => {
-    forumRequest.getArticle(id).then(article => {
-      dispatch(setArticle(article));
+  const httpGetArticle = (id) => {
+    forumRequest.getArticles(id).then(article => {
+      debugger
+      dispatch(setAllArticle(article));
     }).catch((e) => {
       dispatch(showConsole(i18next.t("findPost-err")));
     }).finally(() => {
-      queryPendingId.delete(id);
+      queryPendingId.current.delete(id);
       console.log("Query article finishe", id);
     });
   }
@@ -113,15 +120,15 @@ export default function Forum() {
   /* --- Create view --- */
   const getAllArticles = () => {
     const allArticle = [];
-    for (let [id, article] of post) {
+    for (let [id, article] of forum) {
       if (!article) continue;//未讀取, 就跳過
 
       allArticle.push(
         <div key={id} id={id} className="art">
           <Article id={id} />
-          <Fragment>{getAllContents(article.contList)}</Fragment>
+          {/* <Fragment>{getAllContents(article.contList)}</Fragment>
           <Move id={id} />
-          {id === replyId && <Reply id={id} />}
+          <Reply id={id} /> */}
         </div>
       );
     }
@@ -146,6 +153,8 @@ export default function Forum() {
 
   return (
     <div>
+      <div>1{queryPendingId.current.size}</div>
+      <div>2{idList.filter(id => forum.get(id))}</div>
       {getAllArticles()}
     </div>
   )

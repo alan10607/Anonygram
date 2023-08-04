@@ -10,7 +10,7 @@ export default function Article({ id, no = 0 }) {
   return (
     <div id={`${id}_${no}`} className="art-cont">
       <div className="title">{title}</div>
-      <Content id={id} no={no} />
+      {/* <Content id={id} no={no} /> */}
     </div>
   )
 }

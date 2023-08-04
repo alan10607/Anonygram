@@ -23,7 +23,7 @@ export default function forumReducer(preState = initForumMap, action) {
       return newState;
 
     case DELETE_ALL_ID:
-      return initState;
+      return initForumMap;
 
     case SET_ALL_ARTICLE:
       data.forEach(art => newState.set(art.id, art));
@@ -31,7 +31,7 @@ export default function forumReducer(preState = initForumMap, action) {
     
     case SET_ARTICLE:
       // newState.get(data.id).contNum = Math.max(newState.get(data.id).contNum + 1, data.no);
-      newState.get(data.id).contList[data.no] = data;
+      newState.set(data.id, data);
       return newState;
 
     case DELETE_ARTICLE:

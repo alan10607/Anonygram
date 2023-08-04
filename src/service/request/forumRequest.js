@@ -4,11 +4,11 @@ const getId = () => request.getMethod(
   `/forum/id`
 );
 
-const getArticle = (id) => request.getMethod(
-  `/forum/article/${id}`
+const getArticles = (idList) => request.getMethod(
+  `/forum/articles/${idList.join(",")}`
 );
 
-const setArticle = (id, title, word) => request.postMethod(
+const setArticle = (title, word) => request.postMethod(
   `/forum/article/`,
   { title, word }
 );
@@ -17,8 +17,8 @@ const deleteArticle = (id) => request.deleteMethod(
   `/forum/article/${id}`
 );
 
-const getContent = (id, no) => request.getMethod(
-  `/forum/content/${id}/${no}`
+const getContents = (id, noList) => request.getMethod(
+  `/forum/contents/${id}/${noList.join(",")}`
 );
 
 const setContent = (id, word) => request.postMethod(
@@ -43,10 +43,10 @@ const uploadImg = (id, imgBase64) => request.postMethod(
 
 export default {
   getId,
-  getArticle,
+  getArticles,
   setArticle,
   deleteArticle,
-  getContent,
+  getContents,
   setContent,
   deleteContent,
   likeContent,
