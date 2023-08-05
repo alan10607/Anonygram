@@ -1,7 +1,9 @@
 let k = 0;
+let id = "";
 
-const createWord = (word) => {
+const createWord = (inputId, word) => {
   k = 0;
+  id = inputId;
   const allLine = [];
   word.split("\n").forEach((row, i) => {
     const lineNodes = createLine(row);
@@ -39,7 +41,7 @@ const replaceTargetToMark = (line, m) => {
   //url = protocol(https) + domain/port(1~256) + country-code(0~6) + path
   const urlExp = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.?[a-zA-Z0-9()]{0,6}\b[-a-zA-Z0-9@:%_+.~#=?&/()]*/gi;
   const imgExp = /https?:[/|.|\w|\s|-]*\.(?:jpeg|jpg|gif|png)/gi;
-  const bxExp = /\b#\d+\b/gi;
+  const bxExp = /(?<=^|\s)@\d+(?=\s|$)/gi;
   let mark = 0xf490;//private in UTF-16, unlikely to occur
 
   return line.replace(imgExp, (imgUrl) => {//replace imgUrl before url
@@ -60,7 +62,7 @@ const replaceTargetToMark = (line, m) => {
 const createImg = (imgUrl) => <img key={k++} src={imgUrl} alt={imgUrl} />;
 const createA =      (url) => <a key={k++} href={url} target="_blank" rel="noreferrer">{url}</a>;
 const createBx =  (id, bx) => <span key={k++} className="bx" onClick={goToBx(id, bx.substr(1))}>{bx}</span>;
-const createSpan =   (str) => <span key={k++}>{str}</span>;
+const createSpan =   (str) => {console.log(k, id); return<span key={k++}>{str}</span>};
 const createBr =        () => <br key={k++}></br>;
 
 const goToBx = (id, no) => {

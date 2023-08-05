@@ -2,7 +2,7 @@ import { Fragment, useState, useEffect, useRef, useMemo } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { setAllArticle, setAllId, setArticle } from 'redux/actions/forum';
 import { replySetOpen } from 'redux/actions/reply';
-import { CONT_STATUS_TYPE, REPLY_BOX } from 'util/constant';
+import { STATUS_TYPE, REPLY_BOX } from 'util/constant';
 import forumRequest from 'service/request/forumRequest';
 import Article from './Article';
 import Content from './Content';
@@ -21,7 +21,8 @@ export default function Forum() {
   const dispatch = useDispatch();
   const idList = useMemo(() => [...forum.keys()], [forum]);
   const querySize = 10;
-  const queryPendingId = useRef(new Set());
+  const queryIdList = useMemo(() => idList.filter(id => !forum.get(id)).slice(0, querySize), [idList]);
+  const queryLock = useRef(false);
 
   /* --- Loading id & article --- */
   useEffect(() => {
@@ -33,17 +34,19 @@ export default function Forum() {
       });
     }
   }, [])
-const i = useRef(0);
+
+  useEffect(() => {
+    queryLock.current = false;
+  }, [queryIdList])
+
   useEffect(() => {//dynamic loading article
-    debugger
-    console.log("++++++++++++++++",i.current++);
     queryArticle();
 
     window.addEventListener("scroll", scrollDownQuery);
     return () => {
       window.removeEventListener("scroll", scrollDownQuery);
     }
-  }, [idList, queryPendingId])
+  }, [queryIdList, queryLock])
 
 
   const scrollDownQuery = (event) => {
@@ -53,11 +56,14 @@ const i = useRef(0);
   const queryArticle = () => {
     if (!canQueryArticle()) return;
 
-    const queryIdList = getQueryIdList();
-    queryIdList.forEach(id => {
-      queryPendingId.current.add(id);
-    });
-    queryIdList.forEach(id => httpGetArticle(id));
+    queryLock.current = true;
+
+    forumRequest.getArticles(queryIdList).then(articles => {
+      dispatch(setAllArticle(articles));
+    }).catch((e) => {
+      dispatch(showConsole(i18next.t("findPost-err")));
+      queryLock.current = false;
+    })
   }
 
   const canQueryArticle = () => {
@@ -65,13 +71,13 @@ const i = useRef(0);
       return false;
     }
 
-    if (getQueryIdList().length === 0) {
+    if (queryIdList.length === 0) {
       console.log("Already query all articles, skip query");
       return false;
     }
 
-    if (queryPendingId.current.size > 0) {
-      console.log("Skip query articles because have pending query");
+    if (queryLock.current) {
+      console.log("Skip query articles because query locked");
       return false;
     }
 
@@ -83,22 +89,6 @@ const i = useRef(0);
     const scrollTop = document.documentElement.scrollTop;
     const scrollHeight = document.documentElement.scrollHeight;
     return clientHeight + scrollTop + 100 > scrollHeight;
-  }
-
-  const getQueryIdList = () => {
-    return idList.filter(id => !forum.get(id)).slice(0, querySize);
-  }
-
-  const httpGetArticle = (id) => {
-    forumRequest.getArticles(id).then(article => {
-      debugger
-      dispatch(setAllArticle(article));
-    }).catch((e) => {
-      dispatch(showConsole(i18next.t("findPost-err")));
-    }).finally(() => {
-      queryPendingId.current.delete(id);
-      console.log("Query article finishe", id);
-    });
   }
 
 
@@ -121,14 +111,15 @@ const i = useRef(0);
   const getAllArticles = () => {
     const allArticle = [];
     for (let [id, article] of forum) {
-      if (!article) continue;//未讀取, 就跳過
+      if (!article) continue;//not load yet
+      if (article.status !== STATUS_TYPE.NORMAL) continue;
 
       allArticle.push(
         <div key={id} id={id} className="art">
           <Article id={id} />
-          {/* <Fragment>{getAllContents(article.contList)}</Fragment>
+          <Fragment>{getAllContents(article.contList)}</Fragment>
           <Move id={id} />
-          <Reply id={id} /> */}
+          {/* <Reply id={id} /> */}
         </div>
       );
     }
@@ -139,22 +130,22 @@ const i = useRef(0);
     const allContent = [];
     for (let i = 1; i < contList.length; ++i) {
       const content = contList[i];
-      if (!content) continue;//未讀取, 就跳過
-
+      if (!content) continue;//not load yet
       const key = `${content.id}_${content.no}`;
-      allContent.push(
-        content.status === CONT_STATUS_TYPE.DELETED ?
-          <ContDel key={key} id={content.id} no={content.no} /> :
-          <Content key={key} id={content.id} no={content.no} />
-      );
+      let node = null;
+      if (content.status === STATUS_TYPE.NORMAL) {
+        node = <ContDel key={key} id={content.id} no={content.no} />
+      } else if (content.status === STATUS_TYPE.DELETED) {
+        node = <ContDel key={key} id={content.id} no={content.no} />
+      }
+      allContent.push(node);
     }
     return allContent;
   }
 
   return (
     <div>
-      <div>1{queryPendingId.current.size}</div>
-      <div>2{idList.filter(id => forum.get(id))}</div>
+      <div>2{idList.filter(id => forum.get(id)).length}</div>
       {getAllArticles()}
     </div>
   )

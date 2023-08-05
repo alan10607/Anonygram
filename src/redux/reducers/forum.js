@@ -1,4 +1,4 @@
-import { CONT_STATUS_TYPE } from "../../util/constant";
+import { STATUS_TYPE } from "../../util/constant";
 import {
   SET_ALL_ID,
   DELETE_ALL_ID,
@@ -46,11 +46,11 @@ export default function forumReducer(preState = initForumMap, action) {
       return newState;
 
     case DELETE_CONTENT:
-      newState.get(data.id).contList[data.no].status = CONT_STATUS_TYPE.DELETED;
+      newState.get(data.id).contList[data.no].status = STATUS_TYPE.DELETED;
       return newState;
 
     case UPDATE_CONTENT_LIKE:
-      newState.get(data.id).contList[data.no].isUserLike = data.like;
+      newState.get(data.id).contList[data.no].like = data.like;
       newState.get(data.id).contList[data.no].likes += data.like ? 1 : -1;
       return newState;
 

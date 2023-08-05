@@ -34,7 +34,7 @@ export const ICON_CLOSE = `${PUBLIC_URL}/pic/close.svg`;
 export const ICON_LOGO = `${PUBLIC_URL}/pic/logo.svg`;
 
 /* --- Data static --- */
-export const CONT_STATUS_TYPE = { NORMAL : "NORMAL", DELETED : "DELETED" };
+export const STATUS_TYPE = { NORMAL : "NORMAL", DELETED : "DELETED", UNKNOWN: "UNKNOWN" };
 export const BIG_BOX_ID = { NEW : "NEW", SETTING : "SETTING" };
 export const REPLY_BOX = "data-reply-box";
 export const REPLY_BOX_ATTR = { [REPLY_BOX] : true };
