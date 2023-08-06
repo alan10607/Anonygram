@@ -4,11 +4,7 @@ import { setAllArticle, setAllId, setArticle } from 'redux/actions/forum';
 import { replySetOpen } from 'redux/actions/reply';
 import { STATUS_TYPE, REPLY_BOX } from 'util/constant';
 import forumRequest from 'service/request/forumRequest';
-import Article from './Article';
-import Content from './Content';
-import ContDel from './Content/ContDel';
-import Reply from './Reply';
-import Move from './Move';
+import Article from 'components/Main/Body/Forum/Article';
 import './index.scss';
 import { showConsole } from 'redux/actions/common';
 import i18next from "i18next";
@@ -108,45 +104,24 @@ export default function Forum() {
 
 
   /* --- Create view --- */
-  const getAllArticles = () => {
+  const getArticleNode = () => {
+    console.log("getAllArticles")
     const allArticle = [];
     for (let [id, article] of forum) {
       if (!article) continue;//not load yet
       if (article.status !== STATUS_TYPE.NORMAL) continue;
 
       allArticle.push(
-        <div key={id} id={id} className="art">
-          <Article id={id} />
-          <Fragment>{getAllContents(article.contList)}</Fragment>
-          <Move id={id} />
-          {/* <Reply id={id} /> */}
-        </div>
+        <Article key={id} id={id} />
       );
     }
     return allArticle;
   }
 
-  const getAllContents = (contList) => {
-    const allContent = [];
-    for (let i = 1; i < contList.length; ++i) {
-      const content = contList[i];
-      if (!content) continue;//not load yet
-      const key = `${content.id}_${content.no}`;
-      let node = null;
-      if (content.status === STATUS_TYPE.NORMAL) {
-        node = <ContDel key={key} id={content.id} no={content.no} />
-      } else if (content.status === STATUS_TYPE.DELETED) {
-        node = <ContDel key={key} id={content.id} no={content.no} />
-      }
-      allContent.push(node);
-    }
-    return allContent;
-  }
-
   return (
     <div>
       <div>2{idList.filter(id => forum.get(id)).length}</div>
-      {getAllArticles()}
+      <Fragment>{getArticleNode()}</Fragment>
     </div>
   )
 }

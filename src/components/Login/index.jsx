@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import { setUser } from 'redux/actions/user';
 import { ICON_LOGO, VERSION, BACKEND_API_URL } from 'util/constant';
-import { locationTo } from 'util/locationTo';
 import authRequest from 'service/request/authRequest';
 import './index.scss'
 
