@@ -1,7 +1,7 @@
 import Bar from './Bar';
 import Word from './Word';
 import Info from './Info';
-import './index.scss';
+import './content.scss';
 
 export default function Content({ id, no }) {
   return (

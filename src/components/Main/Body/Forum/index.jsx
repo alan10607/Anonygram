@@ -1,23 +1,22 @@
 import { Fragment, useState, useEffect, useRef, useMemo } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { setAllArticle, setAllId, setArticle } from 'redux/actions/forum';
+import { setAllArticles, setAllId, setArticle } from 'redux/actions/forum';
 import { replySetOpen } from 'redux/actions/reply';
 import { STATUS_TYPE, REPLY_BOX } from 'util/constant';
 import forumRequest from 'service/request/forumRequest';
 import Article from 'components/Main/Body/Forum/Article';
-import './index.scss';
-import { showConsole } from 'redux/actions/common';
+import './forum.scss';
+import { setReplyId, showConsole } from 'redux/actions/common';
 import i18next from "i18next";
 
 export default function Forum() {
-  const { forum, replyIsOpen } = useSelector(state => ({
-    forum: state.forum,
-    replyIsOpen: state.reply.isOpen
+  const { forum } = useSelector(state => ({
+    forum: state.forum
   }), shallowEqual);
   const dispatch = useDispatch();
   const idList = useMemo(() => [...forum.keys()], [forum]);
   const querySize = 10;
-  const queryIdList = useMemo(() => idList.filter(id => !forum.get(id)).slice(0, querySize), [idList]);
+  const queryIdList = useMemo(() => {console.log("AAAA"); return idList.filter(id => !forum.get(id)).slice(0, querySize)}, [idList, forum]);
   const queryLock = useRef(false);
 
   /* --- Loading id & article --- */
@@ -55,7 +54,7 @@ export default function Forum() {
     queryLock.current = true;
 
     forumRequest.getArticles(queryIdList).then(articles => {
-      dispatch(setAllArticle(articles));
+      dispatch(setAllArticles(articles));
     }).catch((e) => {
       dispatch(showConsole(i18next.t("findPost-err")));
       queryLock.current = false;
@@ -97,8 +96,8 @@ export default function Forum() {
   }, [])
 
   const clickReply = (event) => {
-    if (replyIsOpen && !event.target.closest(`[${REPLY_BOX}]`)) {
-      dispatch(replySetOpen(false));
+    if (!event.target.closest(`[${REPLY_BOX}]`)) {
+      dispatch(setReplyId(""));
     }
   }
 

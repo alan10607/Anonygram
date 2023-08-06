@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { ICON_USER } from 'util/constant';
-import './index.scss';
+import './content.scss';
 
 export default function ContDel({ id, no }) {
   const { t } = useTranslation();

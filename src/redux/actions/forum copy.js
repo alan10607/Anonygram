@@ -8,6 +8,7 @@ import {
   closeLoading,
   closeBigBox
 } from "./common";
+import { setAllContents } from "./forum";
 
 /* --- 同時也是request url --- */
 export const SET_ALL_ID = "findIdSet";
@@ -74,8 +75,8 @@ export const findTopCont = (data) => (dispatch) => {
 /* --- 新增留言 --- */
 export const replyPost = (data) => (dispatch) => {
   postService.replyPost(data).then((cont) => {
-    dispatch({ type: SET_ARTICLE, data : cont});
-    dispatch(resetReplyData());
+    dispatch(setAllContents);
+    // dispatch(resetReplyData());
   }).catch((e) => {
     dispatch(showConsole(i18next.t("replyPost-err")));
   });

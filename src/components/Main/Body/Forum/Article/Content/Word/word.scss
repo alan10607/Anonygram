@@ -1,11 +1,7 @@
 @import 'root.scss';
 
 .word {
-	font-size: 16px;
-	line-height: 28px;
-	font-family: Microsoft JhengHei;
-	margin: 12px 0;
-	color: var(--color-normal);
+	margin: 7px 0;
 
 	> div:not(.no-padding) {
     padding: 0 15px;

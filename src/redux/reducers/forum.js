@@ -6,6 +6,7 @@ import {
   SET_ARTICLE,
   DELETE_ARTICLE,
   SET_ALL_CONTENT,
+  SET_CONTENT,
   DELETE_CONTENT,
   UPDATE_CONTENT_LIKE
 } from "../actions/forum";
@@ -28,9 +29,8 @@ export default function forumReducer(preState = initForumMap, action) {
     case SET_ALL_ARTICLE:
       data.forEach(art => newState.set(art.id, art));
       return newState;
-    
+
     case SET_ARTICLE:
-      // newState.get(data.id).contNum = Math.max(newState.get(data.id).contNum + 1, data.no);
       newState.set(data.id, data);
       return newState;
 
@@ -40,9 +40,14 @@ export default function forumReducer(preState = initForumMap, action) {
 
     case SET_ALL_CONTENT:
       data.forEach((cont) => {
-        newState.get(cont.id).contNum = Math.max(newState.get(cont.id).contNum, cont.no);
+        newState.get(cont.id).contNum = Math.max(newState.get(cont.id).contNum, cont.no + 1);//update contNum by no
         newState.get(cont.id).contList[cont.no] = cont;
       });
+      return newState;
+
+    case SET_CONTENT:
+      newState.get(data.id).contNum = Math.max(newState.get(data.id).contNum, data.no + 1);//update contNum by no
+      newState.get(data.id).contList[data.no] = data;
       return newState;
 
     case DELETE_CONTENT:

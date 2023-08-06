@@ -1,3 +1,5 @@
+import { scrollTo } from "util/inputControll";
+
 let k = 0;
 let id = "";
 
@@ -66,16 +68,9 @@ const createSpan =   (str) => {console.log(k, id); return<span key={k++}>{str}</
 const createBr =        () => <br key={k++}></br>;
 
 const goToBx = (id, no) => {
-  return () => {
-    var contEle = document.getElementById(`${id}_${no}`);
-    if (!contEle) return;
-    goTo(contEle);
-  }
+  return () => scrollTo(`${id}_${no}`);
 }
 
-const goTo = (ele = "body") => {
-  const buffer = document.getElementById("header").offsetHeight;
-  window.scrollTo({ top : ele.offsetTop - buffer, behavior : "smooth" });
-}
+
 
 export default createWord;

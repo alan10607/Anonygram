@@ -1,13 +1,13 @@
 @import 'root.scss';
 
 .info {
-  padding: 2px 17px 7px 17px;
-  font-size: 13px;
   display: flex;
   align-items: center;
+  padding: 0 17px 8px 17px;
+  font-size: 13px;
   color: var(--color-light);
 
-  .del {
+  .info-btn {
     flex: 0 1 auto;
     font-size: 13px;
     color: var(--color-mid);

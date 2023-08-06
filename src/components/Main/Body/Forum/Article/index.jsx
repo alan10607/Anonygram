@@ -2,9 +2,10 @@ import { Fragment } from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
 import Content from 'components/Main/Body/Forum/Article/Content';
 import { STATUS_TYPE } from 'util/constant';
-import './index.scss';
+import './article.scss';
 import Move from 'components/Main/Body/Forum/Article/Move';
 import ContDel from 'components/Main/Body/Forum/Article/Content/ContDel';
+import Reply from 'components/Main/Body/Forum/Article/Reply';
 
 export default function Article({ id }) {
   const { title, contList } = useSelector(state => ({
@@ -29,11 +30,11 @@ export default function Article({ id }) {
   }
 
   return (
-    <div id={id} className="art-cont">
+    <div id={id} className="art">
       <div className="title">{title}</div>
       <Fragment>{getContentNode(contList)}</Fragment>
       <Move id={id} />
-      {/* <Reply id={id} /> */}
+      <Reply id={id} />
     </div>
   )
 }

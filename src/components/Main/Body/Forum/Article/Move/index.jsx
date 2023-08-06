@@ -4,11 +4,11 @@ import { useTranslation } from 'react-i18next';
 import { replySetId, replySetOpen } from 'redux/actions/reply';
 import { REPLY_BOX_ATTR } from 'util/constant';
 import useThrottle from 'util/useThrottle';
-import './index.scss';
+import './move.scss';
 import forumRequest from 'service/request/forumRequest';
-import { setAllContent } from 'redux/actions/forum';
+import { setAllContents } from 'redux/actions/forum';
 import i18next from "i18next";
-import { showConsole } from 'redux/actions/common';
+import { setReplyId, showConsole } from 'redux/actions/common';
 
 export default function Move({ id }) {
   const { contNum, contList } = useSelector(state => ({
@@ -17,55 +17,53 @@ export default function Move({ id }) {
   }), shallowEqual);
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const firstNotNull = contList.findIndex(cont => !cont);
-  const start = firstNotNull === -1 ? contList.length : firstNotNull;
-
   const noList = useMemo(() => [...Array(contNum).keys()], [contNum]);
   const querySize = 10;
-  const emptyNoList = useMemo(() => noList.filter(no => !contList[no]), [noList]);
-  const queryNoList = useMemo(() => noList.filter(no => !contList[no]).slice(0, querySize), [noList]);
+  const emptyNoList = noList.filter(no => !contList[no]);
+  const queryNoList = emptyNoList.slice(0, querySize);
 
-  const getOpenStr = () => {
-    if (contNum === 1) return t("open-none");//只有本文
-    if (queryNoList === 0) return "";//已展開全部留言
-    if (queryNoList[0] === 1) return t("open-all", { remain: emptyNoList.length });//尚未展開
-    return t("open-remain", { remain: emptyNoList.length });//展開剩餘
-  }
-
-  const doFindTopCont = useThrottle(() => {
-    forumRequest.getContents(id, noList).then((contents) => {
-      dispatch(setAllContent(contents));
+  const getContents = useThrottle(() => {
+    forumRequest.getContents(id, queryNoList).then((contents) => {
+      dispatch(setAllContents(contents));
     }).catch((e) => {
       dispatch(showConsole(i18next.t("findTopCont-err")));
     });
   })
 
   const openReply = () => {
-    dispatch(replySetId(id));
-    dispatch(replySetOpen(true));
+    dispatch(setReplyId(id));
   }
 
   const getOpenNode = () => {
     if (contNum === 1) {//only one content
       return (
-        <div className={"open open-disable"} onClick={doFindTopCont}>
-          {t("open-none")}
-        </div>
+        <div className={"open open-disable"}>{t("open-none")}</div>
       )
     }
-    
-    if (queryNoList === 0) return "";//已展開全部留言
-    if (queryNoList[0] === 1) return t("open-all", { remain: emptyNoList.length });//尚未展開
-    return t("open-remain", { remain: emptyNoList.length });//展開剩餘
+
+    if (queryNoList.length === 0) {//already open all
+      return (
+        <div className={"open open-disable"}></div>
+      )
+    }
+
+    const remain = emptyNoList.length;
+    if (queryNoList[0] === 1) {//not open any yet
+      return (
+        <div className={"open open-enable"} onClick={getContents}>{t("open-all", { remain })}</div>
+      )
+    }
+
+    return (//open remain
+      <div className={"open open-enable"} onClick={getContents}>{t("open-remain", { remain })}</div>
+    )
   }
 
   return (
     <div className="move">
-      <div className={"open " + (contNum === 1 ? "not-open" : "")} onClick={doFindTopCont}>
-        {getOpenStr(contNum, start)}
-      </div>
+      {getOpenNode()}
       <div className="flex-empty"></div>
-      <div className="reply-btn" onClick={openReply} {...REPLY_BOX_ATTR}>{t("add-cont")}</div>
+      <div className="word-btn" onClick={openReply} {...REPLY_BOX_ATTR}>{t("add-cont")}</div>
     </div>
   )
 }

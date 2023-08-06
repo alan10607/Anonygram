@@ -2,17 +2,20 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { getTimeFromStr } from 'util/time';
 import useThrottle from 'util/useThrottle';
-import './index.scss';
+import './info.scss';
 import forumRequest from 'service/request/forumRequest';
 import { deleteArticle, deleteContent } from 'redux/actions/forum';
-import { showConsole } from 'redux/actions/common';
+import { addReplyHtml, setReplyHtml, setReplyId, showConsole } from 'redux/actions/common';
 import i18next from "i18next";
+import { scrollTo } from 'util/inputControll';
+import { REPLY_BOX_ATTR } from 'util/constant';
 
 export default function Info({ id, no }) {
-  const { author, createDate, userId } = useSelector(state => ({
+  const { author, createDate, userId, replyHtml } = useSelector(state => ({
     author: state.forum.get(id).contList[no].author,
     createDate: state.forum.get(id).contList[no].createDate,
-    userId: state.user.userId
+    userId: state.user.userId,
+    replyHtml: state.common.replyHtml[id]
   }), shallowEqual);
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -43,10 +46,17 @@ export default function Info({ id, no }) {
     });
   }
 
+  const replyThisContent = () => {
+    dispatch(setReplyId(id));
+    dispatch(addReplyHtml(id, `<div>@${no}</div>`));
+    scrollTo(`${id}_reply`);
+  }
+
   return (
     <div className="info">
-      <div>B{no}, {getTimeFromStr(createDate)}</div>
-      {userId === author && <div className="del" onClick={deletePostOrCont}>{t("del")}</div>}
+      <div>@{no}, {getTimeFromStr(createDate)}</div>
+      <div className="info-btn" onClick={replyThisContent} {...REPLY_BOX_ATTR}>{t("reply")}</div>
+      {userId === author && <div className="info-btn" onClick={deletePostOrCont}>{t("del")}</div>}
     </div>
   )
 }

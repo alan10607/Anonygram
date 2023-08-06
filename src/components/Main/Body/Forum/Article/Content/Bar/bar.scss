@@ -3,28 +3,26 @@
 .bar {
   display: flex;
   align-items: center;
-  padding: 12px 15px 0 15px;
+  padding: 10px 15px 0 15px;
+  font-size: 17px;
 
   .head {
     flex: 0 1 auto;
-    width: 26x;
+    width: 26px;
     height: 26px;
     margin-right: 8px;
   }
   
   .author {
-    flex: 1 1 auto;
-    font-size: 15px;
-    margin: 0;
-    font-weight: 600;
+    flex: 0 1 auto;
   }
 
-  .likes-icon{
+  .like-icon{
+    flex: 0 1 auto;
     display: flex;
-    flex-direction: row;
     align-items: center;
   
-    &.likes-icon-yes {
+    &.like-icon-enable {
       img{
         filter: invert(15%) sepia(55%) saturate(6826%) hue-rotate(0deg) brightness(103%) contrast(95%);
       }

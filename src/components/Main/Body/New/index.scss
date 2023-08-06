@@ -17,6 +17,14 @@
 		margin-right: 8px;
 	}
 
+	.reply{
+		flex: 1 1 auto;
+
+		.input-box{
+			flex: 1 1 auto;
+		}
+	}
+
 	.new-author {
 		flex: 0 1 auto;
 		font-size: 20px;
@@ -35,11 +43,11 @@
 	}
 
 	.new-title {
-		margin: 8px 0;
-		flex: 0 1 auto;
-		font-size: 26px;
-		font-weight: 600;
-		height: 38px;
+    flex: 0 1 auto;
+    margin: 0 8px 7px 8px;
+    padding: 2px 8px;
+    font-size: 22px;
+    height: 35px;
 	}
 
 	.new-input-box{

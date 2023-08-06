@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
-import './index.scss';
+import './word.scss';
 import createWord from './createWord';
 
 export default function Word({ id, no }) {

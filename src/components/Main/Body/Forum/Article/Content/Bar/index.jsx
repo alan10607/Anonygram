@@ -3,7 +3,7 @@ import { likeContent, unlikeContent, updateContentLike } from 'redux/actions/for
 import forumRequest from 'service/request/forumRequest';
 import { ICON_USER, ICON_LIKE } from 'util/constant';
 import useThrottle from 'util/useThrottle';
-import './index.scss';
+import './bar.scss';
 
 export default function Bar({ id, no }) {
   const { authorName, like, likes } = useSelector(state => ({
@@ -27,7 +27,8 @@ export default function Bar({ id, no }) {
     <div className="bar">
       <img className="head icon" src={ICON_USER} alt="ICON_USER" />
       <div className="author">{authorName}</div>
-      <div className={"likes-icon " + (like ? "likes-icon-yes" : "")}>
+      <div className="flex-empty"></div>
+      <div className={"like-icon " + (like ? "like-icon-enable" : "")}>
         <img src={ICON_LIKE} onClick={toggleLike} alt="ICON_LIKE" />
         <div>{likes}</div>
       </div>

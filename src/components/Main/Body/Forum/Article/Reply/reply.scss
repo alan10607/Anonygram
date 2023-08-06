@@ -1,0 +1,48 @@
+@import 'root.scss';
+
+.reply {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	font-size: 13px;
+
+	&.reply-disable{
+		opacity: 0;
+    visibility: hidden;
+    height: 0;
+	}
+
+	&:before {
+		@include line
+	}
+
+	.input-box {
+    flex: 0 1 auto;
+    font-size: 15px;
+    height: 200px;
+    line-height: 21px;
+    font-family: Microsoft JhengHei;
+    background-color: var(--bg-body);
+		outline: $border-light;
+		margin: 0 8px;
+    padding: 5px 8px 20px 8px;
+    overflow-x: auto;
+		
+    img {
+      max-width: 100%;
+    }
+	}
+
+	.reply-move{
+		display: flex;
+		align-items: center;
+		font-size: 13px;
+		color: var(--color-normal);
+		padding: 8px 17px;
+
+		.word-btn {
+			flex: 0 1 auto;
+			cursor: pointer;
+		}
+	}
+}

@@ -16,13 +16,12 @@ import ReplyBar from '../Content/Bar/ReplyBar';
 import ReplyInfo from '../Content/Info/ReplyInfo';
 
 
-export default function Reply({ id }) {
+export default function NewReply({ id = "new" }) {
   const inputRef = useRef();
   const { replyId, replyHtml } = useSelector(state => ({
     replyId: state.common.replyId,
     replyHtml: state.common.replyHtml[id]
   }), shallowEqual);
-  const isOpen = replyId === id;
   const dispatch = useDispatch();
   const showConsole = useConsole();
   const { t } = useTranslation();
@@ -47,9 +46,7 @@ export default function Reply({ id }) {
   }
 
   return (
-    <div id={`${id}_reply`} className={"reply " + (isOpen ? "" : "reply-disable")} {...REPLY_BOX_ATTR}>
-      <ReplyBar />
-      <ReplyInfo id={id} />
+    <div id={`${id}_reply`} className="reply" {...REPLY_BOX_ATTR}>
       <div ref={inputRef}
         className="input-box"
         onPaste={pasteAsPlain}
