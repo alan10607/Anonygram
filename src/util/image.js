@@ -1,4 +1,3 @@
-import i18next from "i18next";
 import forumRequest from "service/request/forumRequest";
 
 const imgQuality = 1, imgMaxWidth = 450;

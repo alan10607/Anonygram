@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import { setUser } from 'redux/actions/user';
@@ -11,27 +11,18 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [hint, setHint] = useState("");
-  const [logged, setlogged] = useState(false);
   const navigate = useNavigate();
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { userId } = useSelector(state => ({
-    userId: state.user.userId
-  }), shallowEqual);
-  useEffect(() => {//For testing, check user SSL confirmation
-    // authRequest.ssl().then((res) => { })
-    //   .catch((e) => {//If does not conform SSL then redirect to the backend
-    //     const sslUrl = `${BACKEND_API_URL}/ssl?callbackUrl=${window.location.href}`;
-    //     console.log("Redirect backend for ssl", sslUrl)
-    //     locationTo(sslUrl);
-    //   });
-  }, []);
 
-  useEffect(() => {//取得新的jwt後跳轉
-    if (logged) {
-      navigate("/hub");
-    }
-  }, [logged]);
+  useEffect(() => {//For testing, check user SSL confirmation
+    authRequest.ssl().then((res) => { })
+      .catch((e) => {//If does not conform SSL then redirect to the backend
+        const sslUrl = `${BACKEND_API_URL}/ssl?callbackUrl=${window.location.href}`;
+        console.log("Redirect backend for ssl", sslUrl)
+        locationTo(sslUrl);
+      });
+  }, []);
 
   const login = (event) => {
     event.preventDefault();
@@ -44,13 +35,12 @@ export default function Login() {
     });
   }
 
-  const loginAnonymous = (event) => {
-    event.preventDefault();
 
-    // if (userId) {
-    //   navigate(WELCOME_PAGE);
-    //   return;
-    // }
+  const loginAnonymous = (event) => {
+    if (alreadyAnonymousAuth) {
+      navigate(WELCOME_PAGE);
+      return;
+    }
 
     authRequest.anonymous().then((res) => {
       dispatch(setUser(res.id, res.username, true));
@@ -59,6 +49,17 @@ export default function Login() {
       setHint(t("login-anony-err"));
     });
 
+  }
+
+  const alreadyAnonymousAuth = async () => {
+    try {
+      const res = await authRequest.test();
+      return res.email === "" ? true : false;
+    } catch {
+      (e) => {
+        return false;
+      }
+    };
   }
 
   return (

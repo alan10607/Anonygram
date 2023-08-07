@@ -1,47 +1,46 @@
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-// import { resetAllData } from '.redux/actions/post';
-import { useLocalSetting, useLang, useTheme } from 'util/localSetting';
 import './setting.scss';
+import { THEME_OPTIONS } from 'util/constant';
+import SettingOption from './SettingOption';
+import { deleteUser, setLanguage, setTheme } from 'redux/actions/user';
 
 export default function Setting() {
-  const [{ lang, theme }, { setJwt, setLang, setTheme }] = useLocalSetting()
-  const { isAnonyUser } = useSelector(state => ({
-    isAnonyUser: state.user.isAnonyUser
+  const { user: { userId, username, isAnonymous, language, theme } } = useSelector(state => ({
+    isAnonyUser: state.user
   }), shallowEqual);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  const exit = () => {
-    setJwt({});
-    // dispatch(resetAllData());
+  const logout = () => {
+    dispatch(deleteUser());
     navigate("/login");
   }
 
+
   return (
     <div id="setting">
-      <div className="list">
+      <div className="user-info">
+        <img className="head icon" src={ICON_USER} alt="ICON_USER" />
         <div>
-          <div>{t("lang")}</div>
-          <select value={lang} onChange={(event) => { setLang(event.target.value) }}>
-            <option value="en">English</option>
-            <option value="zh-TW">繁體中文</option>
-          </select>
-        </div>
-        <div>
-          <div>{t("theme")}</div>
-          <select value={theme} onChange={(event) => { setTheme(event.target.value) }}>
-            <option value="light">{t("theme-light")}</option>
-            <option value="dark">{t("theme-dark")}</option>
-          </select>
-        </div>
-        <div className="flex-empty"></div>
-        <div onClick={exit}>
-          <div>{isAnonyUser ? t("login") : t("logout")}</div>
+          <div className="username">{username}</div>
+          <div className="user-id">#{userId}</div>
         </div>
       </div>
+      <div className="list">
+        <SettingOption name={t("lang")}
+          optionMap={LANGUAGE_OPTIONS}
+          value={language}
+          setValue={(v) => dispatch(setLanguage(v))} />
+        <SettingOption name={t("theme")}
+          optionMap={THEME_OPTIONS}
+          value={theme}
+          setValue={(v) => dispatch(setTheme(v))} />
+      </div>
+      <div className="flex-empty"></div>
+      <div onClick={logout}>{t("logout")}</div>
     </div>
   )
 

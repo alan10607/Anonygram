@@ -4,7 +4,8 @@ const initUserState = {
   userId: null,
   username: null,
   isAnonymous: null,
-  expiredTime: null
+  language: "en",
+  theme: "dark"
 };
 
 export default function userReducer(preState = initUserState, action) {
