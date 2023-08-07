@@ -39,7 +39,7 @@ export default function Setting() {
           setValue={(v) => dispatch(setTheme(v))} />
       </div>
       <div className="flex-empty"></div>
-      <input className="logout" type="submit" onClick={logout} value={t("logout")} ></input>
+      <input className="logout" type="button" onClick={logout} value={t("logout")} ></input>// pointer?
     </div>
   )
 
