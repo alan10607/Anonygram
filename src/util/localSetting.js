@@ -4,7 +4,7 @@ import useLocalStorage from "./localStorage";
 import { LOCAL_SETTING, LANG, THEME } from "./constant";
 
 const initState = {
-  jwt: {},
+
   lang: "",
   theme: ""
 };

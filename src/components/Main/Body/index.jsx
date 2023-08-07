@@ -8,8 +8,6 @@ import Main from "..";
 
 export default function Body() {
   return (
-    <div>
       <Outlet />
-    </div>
   )
 }

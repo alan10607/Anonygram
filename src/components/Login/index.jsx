@@ -3,12 +3,11 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import { setUser } from 'redux/actions/user';
-import { ICON_LOGO, VERSION, BACKEND_API_URL } from 'util/constant';
+import { ICON_LOGO, VERSION, BACKEND_API_URL, WELCOME_PAGE } from 'util/constant';
 import authRequest from 'service/request/authRequest';
 import './index.scss'
 
 export default function Login() {
-  const welcomePage = "/forum";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [hint, setHint] = useState("");
@@ -39,7 +38,7 @@ export default function Login() {
 
     authRequest.login(email, password).then((res) => {
       dispatch(setUser(res.id, res.username, false));
-      navigate(welcomePage);
+      navigate(WELCOME_PAGE);
     }).catch((e) => {
       setHint(t("login-err"));
     });
@@ -49,13 +48,13 @@ export default function Login() {
     event.preventDefault();
 
     // if (userId) {
-    //   navigate(welcomePage);
+    //   navigate(WELCOME_PAGE);
     //   return;
     // }
 
     authRequest.anonymous().then((res) => {
       dispatch(setUser(res.id, res.username, true));
-      navigate(welcomePage);
+      navigate(WELCOME_PAGE);
     }).catch((e) => {
       setHint(t("login-anony-err"));
     });

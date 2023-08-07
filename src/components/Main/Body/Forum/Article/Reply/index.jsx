@@ -32,19 +32,14 @@ export default function Reply({ id }) {
     if (word.trim() === "") return showConsole(t("empty-word"));
     if (word.length > 3000) return showConsole(t("too-many-word", { length: word.length}));
 
-    console.log(`Upload word:\n${word}`);
     forumRequest.setContent(id, word).then((content) => {
       dispatch(setContent(content));
       dispatch(setReplyId(""));
-      setHtml("<br>");
+      dispatch(setReplyHtml(id, "<div><br></div>"));
     }).catch((e) => {
       dispatch(showConsole(i18next.t("replyPost-err")));
     })
   });
-
-  const setHtml = (html) => {
-    dispatch(setReplyHtml(id, html));
-  }
 
   return (
     <div id={`${id}_reply`} className={"reply " + (isOpen ? "" : "reply-disable")} {...REPLY_BOX_ATTR}>
@@ -53,7 +48,7 @@ export default function Reply({ id }) {
       <div ref={inputRef}
         className="input-box"
         onPaste={pasteAsPlain}
-        onBlur={(event) => setHtml(event.target.innerHTML)}
+        onBlur={(event) => dispatch(setReplyHtml(id, event.target.innerHTML))}
         contentEditable="true"
         dangerouslySetInnerHTML={{ __html: replyHtml }}>
       </div>

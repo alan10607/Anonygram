@@ -1,12 +1,13 @@
 import { Routes, Route, Navigate, useRoutes } from "react-router-dom";
 import Main from './components/Main';
 import Login from './components/Login';
-import Register from './components/Register';
+import Register from './components/Login/Register';
 import Error from './components/Error'
 import Console from './components/Console';
 import './App.scss';
 import Forum from "components/Main/Body/Forum";
 import New from "components/Main/Body/New";
+import Setting from "components/Main/Body/Setting";
 
 const routeConfig = [
   {
@@ -31,6 +32,7 @@ const routeConfig = [
     children: [
       { path: '/forum/', element: <Forum /> },
       { path: '/forum/new', element: <New /> },
+      { path: '/forum/setting', element: <Setting /> }
     ],
   },
   {

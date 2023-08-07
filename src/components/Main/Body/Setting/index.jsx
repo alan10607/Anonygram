@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 // import { resetAllData } from '.redux/actions/post';
 import { useLocalSetting, useLang, useTheme } from 'util/localSetting';
-import './index.scss';
+import './setting.scss';
 
 export default function Setting() {
   const [{ lang, theme }, { setJwt, setLang, setTheme }] = useLocalSetting()

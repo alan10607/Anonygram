@@ -2,24 +2,24 @@ import { useRef, useState } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { inputFilter } from 'util/inputControll';
-import { REPLY_BOX_ATTR } from 'util/constant';
+import { WELCOME_PAGE } from 'util/constant';
 import useConsole from 'util/useConsole';
 import useThrottle from 'util/useThrottle';
 import './reply.scss';
 import forumRequest from 'service/request/forumRequest';
-import { setContent } from 'redux/actions/forum';
+import { deleteAllId } from 'redux/actions/forum';
 import i18next from "i18next";
 import UploadImageBtn from './UploadImgBtn';
 import { pasteAsPlain } from 'util/inputControll';
-import { setReplyHtml, setReplyId } from 'redux/actions/common';
+import { setReplyHtml } from 'redux/actions/common';
 import ReplyBar from '../Content/Bar/ReplyBar';
-import ReplyInfo from '../Content/Info/ReplyInfo';
+import NewInfo from '../Content/Info/NewInfo';
 
 
 export default function NewReply({ id = "new" }) {
+  const [title, setTitle] = useState("");
   const inputRef = useRef();
-  const { replyId, replyHtml } = useSelector(state => ({
-    replyId: state.common.replyId,
+  const { replyHtml } = useSelector(state => ({
     replyHtml: state.common.replyHtml[id]
   }), shallowEqual);
   const dispatch = useDispatch();
@@ -27,30 +27,34 @@ export default function NewReply({ id = "new" }) {
   const { t } = useTranslation();
 
   const httpSetContent = useThrottle(() => {
+    if (title.trim() === "") return showConsole(t("empty-title"));
+    if (title.length > 50) return showConsole(t("too-many-title", { length: title.length }));
     const word = inputFilter(inputRef.current);
     if (word.trim() === "") return showConsole(t("empty-word"));
-    if (word.length > 3000) return showConsole(t("too-many-word", { length: word.length}));
+    if (word.length > 3000) return showConsole(t("too-many-word", { length: word.length }));
 
-    console.log(`Upload word:\n${word}`);
-    forumRequest.setContent(id, word).then((content) => {
-      dispatch(setContent(content));
-      dispatch(setReplyId(""));
-      setHtml("<br>");
+    forumRequest.setArticle(title, word).then((content) => {
+      dispatch(deleteAllId());//reload forum page
+      dispatch(setReplyHtml(id, "<div><br></div>"));
+      navigate(WELCOME_PAGE);
     }).catch((e) => {
-      dispatch(showConsole(i18next.t("replyPost-err")));
+      dispatch(showConsole(i18next.t("createPost-err")));
     })
   });
 
-  const setHtml = (html) => {
-    dispatch(setReplyHtml(id, html));
-  }
-
   return (
-    <div id={`${id}_reply`} className="reply" {...REPLY_BOX_ATTR}>
+    <div className="reply">
+      <ReplyBar />
+      <NewInfo />
+      <input value={title}
+        onChange={(event) => { setTitle(event.target.value) }}
+        className="new-title"
+        type="text"
+        placeholder={t("title")} />
       <div ref={inputRef}
         className="input-box"
         onPaste={pasteAsPlain}
-        onBlur={(event) => setHtml(event.target.innerHTML)}
+        onBlur={(event) => dispatch(setReplyHtml(id, event.target.innerHTML))}
         contentEditable="true"
         dangerouslySetInnerHTML={{ __html: replyHtml }}>
       </div>

@@ -7,6 +7,5 @@ import user from './user';
 export default combineReducers({
   forum,
   common,
-  reply,
   user
 });

@@ -10,7 +10,10 @@ export const inputFilter = (e) => {
         row.push(node.textContent.trim());
     }
   }
-  return row.join("\n").trim();
+
+  const word = row.join("\n").trim();
+  console.log(`Input word string:\n${word}`);
+  return word;
 }
 
 /* --- Paste auto to plain text --- */

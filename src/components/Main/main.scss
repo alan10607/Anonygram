@@ -1,0 +1,15 @@
+@import 'root.scss';
+
+.main {	
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+
+	> :first-child {
+		flex: 0 1 auto;
+	}
+
+	> :last-child {
+		flex: 1 1 auto;
+	}
+}
