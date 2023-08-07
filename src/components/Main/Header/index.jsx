@@ -1,7 +1,7 @@
 import { useSelector, shallowEqual } from 'react-redux';
 import { Link } from "react-router-dom";
 import { ICON_ADD, ICON_OPTION } from 'util/constant';
-import "./index.scss";
+import "./head.scss";
 
 export default function Header() {
   const { username, isAnonyUser } = useSelector(state => ({
@@ -11,7 +11,7 @@ export default function Header() {
   const user = (isAnonyUser ? "#" : "") + username;
 
   return (
-    <div id="header">
+    <div className="header">
       <div>
         <div className="user">{user}</div>
         <Link to="/forum">

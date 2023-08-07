@@ -1,7 +1,6 @@
 import { Fragment, useState, useEffect, useRef, useMemo } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { setAllArticles, setAllId, setArticle } from 'redux/actions/forum';
-import { replySetOpen } from 'redux/actions/reply';
 import { STATUS_TYPE, REPLY_BOX } from 'util/constant';
 import forumRequest from 'service/request/forumRequest';
 import Article from 'components/Main/Body/Forum/Article';

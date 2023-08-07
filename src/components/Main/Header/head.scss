@@ -1,12 +1,6 @@
 @import '../../../root.scss';
 
-#header {	
-	position: sticky;
-	top: 0;
-	left: 0;
-	right: 0;
-	height: $nav-height;
-	z-index: 999;
+.header {	
 
 	> div {
 		width: 100%;

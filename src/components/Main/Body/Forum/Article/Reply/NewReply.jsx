@@ -14,6 +14,7 @@ import { pasteAsPlain } from 'util/inputControll';
 import { setReplyHtml } from 'redux/actions/common';
 import ReplyBar from '../Content/Bar/ReplyBar';
 import NewInfo from '../Content/Info/NewInfo';
+import { Link, useNavigate } from "react-router-dom";
 
 
 export default function NewReply({ id = "new" }) {
@@ -25,6 +26,7 @@ export default function NewReply({ id = "new" }) {
   const dispatch = useDispatch();
   const showConsole = useConsole();
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const httpSetContent = useThrottle(() => {
     if (title.trim() === "") return showConsole(t("empty-title"));
@@ -52,7 +54,7 @@ export default function NewReply({ id = "new" }) {
         type="text"
         placeholder={t("title")} />
       <div ref={inputRef}
-        className="input-box"
+        className="input-box input-box-full"
         onPaste={pasteAsPlain}
         onBlur={(event) => dispatch(setReplyHtml(id, event.target.innerHTML))}
         contentEditable="true"

@@ -1,9 +1,5 @@
-import { Routes, Route, Outlet } from "react-router-dom";
-import Forum from "./Forum";
-import New from "./New";
-// import Setting from "./Setting";
-import './index.scss';
-import Main from "..";
+import { Outlet } from "react-router-dom";
+import './body.scss';
 
 
 export default function Body() {

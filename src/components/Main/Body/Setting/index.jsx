@@ -2,13 +2,13 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import './setting.scss';
-import { THEME_OPTIONS } from 'util/constant';
+import { ICON_USER, LANGUAGE_OPTIONS, THEME_OPTIONS } from 'util/constant';
 import SettingOption from './SettingOption';
 import { deleteUser, setLanguage, setTheme } from 'redux/actions/user';
 
 export default function Setting() {
   const { user: { userId, username, isAnonymous, language, theme } } = useSelector(state => ({
-    isAnonyUser: state.user
+    user: state.user
   }), shallowEqual);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -19,7 +19,6 @@ export default function Setting() {
     navigate("/login");
   }
 
-
   return (
     <div id="setting">
       <div className="user-info">
@@ -29,18 +28,18 @@ export default function Setting() {
           <div className="user-id">#{userId}</div>
         </div>
       </div>
-      <div className="list">
+      <div className="setting-main">
         <SettingOption name={t("lang")}
-          optionMap={LANGUAGE_OPTIONS}
+          optionArray={LANGUAGE_OPTIONS}
           value={language}
           setValue={(v) => dispatch(setLanguage(v))} />
         <SettingOption name={t("theme")}
-          optionMap={THEME_OPTIONS}
+          optionArray={THEME_OPTIONS}
           value={theme}
           setValue={(v) => dispatch(setTheme(v))} />
       </div>
       <div className="flex-empty"></div>
-      <div onClick={logout}>{t("logout")}</div>
+      <input className="logout" type="submit" onClick={logout} value={t("logout")} ></input>
     </div>
   )
 

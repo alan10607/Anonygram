@@ -6,6 +6,7 @@ import { setUser } from 'redux/actions/user';
 import { ICON_LOGO, VERSION, BACKEND_API_URL, WELCOME_PAGE } from 'util/constant';
 import authRequest from 'service/request/authRequest';
 import './index.scss'
+import { locationTo } from 'util/locationTo';
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -15,14 +16,14 @@ export default function Login() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  useEffect(() => {//For testing, check user SSL confirmation
-    authRequest.ssl().then((res) => { })
-      .catch((e) => {//If does not conform SSL then redirect to the backend
-        const sslUrl = `${BACKEND_API_URL}/ssl?callbackUrl=${window.location.href}`;
-        console.log("Redirect backend for ssl", sslUrl)
-        locationTo(sslUrl);
-      });
-  }, []);
+  // useEffect(() => {//For testing, check user SSL confirmation
+  //   authRequest.ssl().then((res) => { })
+  //     .catch((e) => {//If does not conform SSL then redirect to the backend
+  //       const sslUrl = `${BACKEND_API_URL}/ssl?callbackUrl=${window.location.href}`;
+  //       console.log("Redirect backend for ssl", sslUrl)
+  //       locationTo(sslUrl);
+  //     });
+  // }, []);
 
   const login = (event) => {
     event.preventDefault();
@@ -35,31 +36,25 @@ export default function Login() {
     });
   }
 
+  const alreadyAnonymousLogin = (event) => {
+    authRequest.test().then((res) => {
+      if(res.email === ""){
+        navigate(WELCOME_PAGE);
+      }else{
+        anonymousLogin()
+      }
+    }).catch((e) => {
+      anonymousLogin()
+    });
+  }
 
-  const loginAnonymous = (event) => {
-    if (alreadyAnonymousAuth) {
-      navigate(WELCOME_PAGE);
-      return;
-    }
-
+  const anonymousLogin = () => {
     authRequest.anonymous().then((res) => {
       dispatch(setUser(res.id, res.username, true));
       navigate(WELCOME_PAGE);
     }).catch((e) => {
       setHint(t("login-anony-err"));
     });
-
-  }
-
-  const alreadyAnonymousAuth = async () => {
-    try {
-      const res = await authRequest.test();
-      return res.email === "" ? true : false;
-    } catch {
-      (e) => {
-        return false;
-      }
-    };
   }
 
   return (
@@ -89,7 +84,7 @@ export default function Login() {
           </div>
           <div className="hint">{hint}</div>
           <div className="line-word">{t("or")}</div>
-          <input type="button" value={t("as-anony")} onClick={loginAnonymous} />
+          <input type="button" value={t("as-anony")} onClick={alreadyAnonymousLogin} />
         </div>
         <div className="version">{VERSION}</div>
       </div>

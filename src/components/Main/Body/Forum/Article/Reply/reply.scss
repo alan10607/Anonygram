@@ -31,6 +31,10 @@
     img {
       max-width: 100%;
     }
+
+		&.input-box-full{
+			flex: 1 1 auto;
+		}
 	}
 
 	.reply-move{

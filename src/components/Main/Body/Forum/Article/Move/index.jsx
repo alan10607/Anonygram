@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { replySetId, replySetOpen } from 'redux/actions/reply';
 import { REPLY_BOX_ATTR } from 'util/constant';
 import useThrottle from 'util/useThrottle';
 import './move.scss';

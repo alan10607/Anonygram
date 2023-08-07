@@ -1,15 +1,3 @@
-import i18next from "i18next";
-import forumRequest from "service/request/forumRequest";
-import { resetUserData } from "./user";
-import { resetReplyData, replyAddImg } from "./reply";
-import {
-  showConsole,
-  showLoading,
-  closeLoading,
-  closeBigBox
-} from "./common";
-
-
 export const SET_ALL_ID = "setAllId";
 export const DELETE_ALL_ID = "deleteAllId";
 export const SET_ALL_ARTICLE = "setAllArticle";
@@ -64,30 +52,3 @@ export const updateContentLike = (id, no, like) => ({
   data: { id, no, like } 
 });
 
-
-export const UPLOAD_IMG = "uploadImg";
-
-/* --- 圖片上傳 --- */
-export const uploadImg = (data) => (dispatch) => {
-  dispatch(showLoading());
-  forumRequest.uploadImg(data).then((imgData) => {
-    dispatch(replyAddImg(imgData.imgUrl));
-  }).catch((e) => {
-    dispatch(showConsole(i18next.t("uploadImg-err")));
-  }).finally(() => {
-    dispatch(closeLoading());
-  });
-}
-
-// /* --- 重設資料 --- */
-// export const resetPostData = () => (dispatch) => {
-//   dispatch({ type: DELETE_ALL_ID });
-//   dispatch(closeBigBox());
-//   dispatch(closeLoading());
-// }
-
-// export const resetAllData = () => (dispatch) => {
-//   dispatch(resetPostData());
-//   dispatch(resetUserData());
-//   dispatch(resetReplyData());
-// }

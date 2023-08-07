@@ -4,12 +4,14 @@
 	display: flex;
 	flex-direction: column;
 	align-items: stretch;
+	height: 100vh;
 
 	> :first-child {
-		flex: 0 1 auto;
+		flex: 0 1 $nav-height;
 	}
 
 	> :last-child {
 		flex: 1 1 auto;
+		padding-bottom: 20px;
 	}
 }
