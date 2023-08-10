@@ -23,7 +23,7 @@ export const addReplyHtml = (id, html) => ({
 
 export const setConsole = (message) => ({ 
   type: SET_CONSOLE, 
-  message 
+  data: message
 });
 
 export const deleteConsole = () => ({ 

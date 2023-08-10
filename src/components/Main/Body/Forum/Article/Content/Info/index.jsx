@@ -5,8 +5,7 @@ import useThrottle from 'util/useThrottle';
 import './info.scss';
 import forumRequest from 'service/request/forumRequest';
 import { deleteArticle, deleteContent } from 'redux/actions/forum';
-import { addReplyHtml, setReplyHtml, setReplyId, showConsole } from 'redux/actions/common';
-import i18next from "i18next";
+import { addReplyHtml, setConsole, setReplyHtml, setReplyId } from 'redux/actions/common';
 import { scrollTo } from 'util/inputControll';
 import { REPLY_BOX_ATTR } from 'util/constant';
 
@@ -31,18 +30,18 @@ export default function Info({ id, no }) {
   const httpDeleteArticle = () => {
     forumRequest.deleteArticle(id).then((res) => {
       dispatch(deleteArticle(id));
-      dispatch(showConsole(i18next.t("deletePost-ok")));
+      dispatch(setConsole(t("deletePost-ok")));
     }).catch((e) => {
-      dispatch(showConsole(i18next.t("deletePost-err")));
+      dispatch(setConsole(t("deletePost-err")));
     });
   }
 
   const httpDeleteContent = () => {
     forumRequest.deleteContent(id, no).then((res) => {
       dispatch(deleteContent(id, no));
-      dispatch(showConsole(i18next.t("deleteCont-ok")));
+      dispatch(setConsole(t("deleteCont-ok")));
     }).catch((e) => {
-      dispatch(showConsole(i18next.t("deleteCont-err")));
+      dispatch(setConsole(t("deleteCont-err")));
     });
   }
 

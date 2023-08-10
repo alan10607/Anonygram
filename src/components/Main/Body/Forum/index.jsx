@@ -5,14 +5,15 @@ import { STATUS_TYPE, REPLY_BOX } from 'util/constant';
 import forumRequest from 'service/request/forumRequest';
 import Article from 'components/Main/Body/Forum/Article';
 import './forum.scss';
-import { setReplyId, showConsole } from 'redux/actions/common';
-import i18next from "i18next";
+import { setConsole, setReplyId } from 'redux/actions/common';
+import { useTranslation } from 'react-i18next';
 
 export default function Forum() {
   const { forum } = useSelector(state => ({
     forum: state.forum
   }), shallowEqual);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const idList = useMemo(() => [...forum.keys()], [forum]);
   const querySize = 10;
   const queryIdList = useMemo(() => {console.log("AAAA"); return idList.filter(id => !forum.get(id)).slice(0, querySize)}, [idList, forum]);
@@ -24,7 +25,7 @@ export default function Forum() {
       forumRequest.getId().then(res => {
         dispatch(setAllId(res));
       }).catch((e) => {
-        dispatch(showConsole(i18next.t("findIdSet-err")));
+        dispatch(setConsole(t("findIdSet-err")));
       });
     }
   }, [])
@@ -55,7 +56,7 @@ export default function Forum() {
     forumRequest.getArticles(queryIdList).then(articles => {
       dispatch(setAllArticles(articles));
     }).catch((e) => {
-      dispatch(showConsole(i18next.t("findPost-err")));
+      dispatch(setConsole(t("findPost-err")));
       queryLock.current = false;
     })
   }

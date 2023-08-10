@@ -16,15 +16,6 @@ export default function Login() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  // useEffect(() => {//For testing, check user SSL confirmation
-  //   authRequest.ssl().then((res) => { })
-  //     .catch((e) => {//If does not conform SSL then redirect to the backend
-  //       const sslUrl = `${BACKEND_API_URL}/ssl?callbackUrl=${window.location.href}`;
-  //       console.log("Redirect backend for ssl", sslUrl)
-  //       locationTo(sslUrl);
-  //     });
-  // }, []);
-
   const login = (event) => {
     event.preventDefault();
 
@@ -37,15 +28,16 @@ export default function Login() {
   }
 
   const alreadyAnonymousLogin = (event) => {
-    authRequest.test().then((res) => {
-      if(res.email === ""){
-        navigate(WELCOME_PAGE);
-      }else{
-        anonymousLogin()
-      }
-    }).catch((e) => {
-      anonymousLogin()
-    });
+    anonymousLogin();
+    // authRequest.test().then((res) => {
+    //   if(res.email === ""){
+    //     navigate(WELCOME_PAGE);
+    //   }else{
+    //     anonymousLogin()
+    //   }
+    // }).catch((e) => {
+    //   anonymousLogin()
+    // });
   }
 
   const anonymousLogin = () => {

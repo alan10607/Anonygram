@@ -63,6 +63,10 @@ table {
 	}
 }
 
+input[type="button"], input[type="submit"] {
+	@include login-btn;
+}
+
 select {
 	font-size: 20px;
 	line-height: 34px;

@@ -1,8 +1,25 @@
+import i18next from "i18next";
 import forumRequest from "service/request/forumRequest";
+import ValidationError from "util/validationError";
 
 const imgQuality = 1, imgMaxWidth = 450;
 
 /* --- image convert and compress --- */
+const checkTargetFiles = (files) => {
+  return new Promise((resolve, reject) => {
+    if (!files || files.length === 0 || !files[0]){
+      reject(new ValidationError(i18next.t("empty-img")));
+    }
+  
+    const file = files[0], fileTypeExp = /image\/\w+/g;//must be MIME image type
+    if (!fileTypeExp.test(file.type)){
+      reject(new ValidationError(i18next.t("not-img")));
+    }
+
+    resolve(file);
+  });
+}
+
 const convertFileToBase64 = (file) => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader()
@@ -44,8 +61,10 @@ const compressImg = (image, quality, maxWidth) => {
   });
 };
 
-export const uploadImageFromFile = (file) => {
-  return convertFileToBase64(file).then(base64 => {
+export const uploadImageFromTargetFiles = (files) => {
+  return checkTargetFiles(files).then(file => {
+    return convertFileToBase64(file);
+  }).then(base64 => {
     return buildImg(base64);
   }).then(image => {
     return compressImg(image, imgQuality, imgMaxWidth);

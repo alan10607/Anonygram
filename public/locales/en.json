@@ -60,5 +60,6 @@
   "just": "now",
   "empty-img": "The selected image is empty",
   "not-img": "Image format error",
-  "load-img-err": "Failed to load image"
+  "load-img-err": "Failed to load image",
+  "load-img-err-reason": "Failed to upload image. {{reason}}"
 }

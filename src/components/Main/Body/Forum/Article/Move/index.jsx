@@ -6,8 +6,7 @@ import useThrottle from 'util/useThrottle';
 import './move.scss';
 import forumRequest from 'service/request/forumRequest';
 import { setAllContents } from 'redux/actions/forum';
-import i18next from "i18next";
-import { setReplyId, showConsole } from 'redux/actions/common';
+import { setReplyId, setConsole } from 'redux/actions/common';
 
 export default function Move({ id }) {
   const { contNum, contList } = useSelector(state => ({
@@ -25,7 +24,7 @@ export default function Move({ id }) {
     forumRequest.getContents(id, queryNoList).then((contents) => {
       dispatch(setAllContents(contents));
     }).catch((e) => {
-      dispatch(showConsole(i18next.t("findTopCont-err")));
+      dispatch(setConsole(t("findTopCont-err")));
     });
   })
 

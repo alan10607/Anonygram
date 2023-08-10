@@ -10,6 +10,8 @@ export default function Console() {
     showLoading: state.common.showLoading
   }), shallowEqual);
   const dispatch = useDispatch();
+  useLang();
+  useTheme();
 
   useEffect(() => {
     if (!console) return;

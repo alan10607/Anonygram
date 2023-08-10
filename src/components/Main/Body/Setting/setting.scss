@@ -19,11 +19,20 @@
 		align-items: center;
 		margin: 25px 15px 15px 15px;
 
-		.head {
+		.upload-head-btn{
 			flex: 0 1 auto;
-			width: 110px;
-			height: 110px;
-			margin-right: 12px;
+
+			img {
+				width: 110px;
+				height: 110px;
+				margin-right: 12px;
+				border-radius: 100%;
+				cursor: pointer;
+			}
+		
+			input {
+				display: none;
+			}
 		}
 
 		>div {

@@ -1,7 +1,9 @@
+import i18next from "i18next";
+
 /* --- Input html to string --- */
-export const inputFilter = (e) => {
+export const replyFilter = (inputElement) => {
   const row = [];
-  for(let node of e.childNodes){
+  for(let node of inputElement.childNodes){
     switch (node.nodeName) {
       case "IMG":
         row.push(node.src);
@@ -14,6 +16,10 @@ export const inputFilter = (e) => {
   const word = row.join("\n").trim();
   console.log(`Input word string:\n${word}`);
   return word;
+}
+
+const newFilter = (title) => {
+
 }
 
 /* --- Paste auto to plain text --- */

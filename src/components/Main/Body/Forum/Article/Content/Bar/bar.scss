@@ -3,18 +3,18 @@
 .bar {
   display: flex;
   align-items: center;
-  padding: 10px 15px 2px 15px;
-  font-size: 17px;
+  padding: 10px 13px 4px 13px;
 
   .head {
     flex: 0 1 auto;
-    width: 26px;
-    height: 26px;
+    width: 40px;
+    height: 40px;
     margin-right: 8px;
   }
   
   .author {
     flex: 0 1 auto;
+    font-size: 16px;
   }
 
   .like-icon{
@@ -30,8 +30,8 @@
   
     img{
       flex: 0 1 auto;
-      width: 13px;
-      height: 13px;
+      width: 14px;
+      height: 14px;
       padding: 7px 6px 6px 0;
       cursor: pointer;
       filter: invert(61%) sepia(2%) saturate(184%) hue-rotate(19deg) brightness(93%) contrast(77%);
@@ -39,7 +39,7 @@
   
     div{
       flex: 0 1 auto;
-      font-size: 13px;
+      font-size: 14px;
       color: var(--color-light);
       min-width: 10px;
       text-align: right;
