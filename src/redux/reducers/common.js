@@ -2,10 +2,8 @@ import {
   SET_REPLY_ID,
   SET_REPLY_HTML,
   ADD_REPLY_HTML,
-  SHOW_BIG_BOX,
-  CLOSE_BIG_BOX,
-  SHOW_CONSOLE,
-  CLOSE_CONSOLE,
+  SET_CONSOLE,
+  DELETE_CONSOLE,
   SHOW_LOADING,
   CLOSE_LOADING
 } from "../actions/common";
@@ -13,9 +11,8 @@ import {
 const initState = {
   replyId: "",
   replyHtml: {},
-  consoleStr: "",
-  isLoading: false,
-  openBigBoxId: ""
+  console: "",
+  showLoading: false
 };
 
 export default function commonReducer(preState = initState, action) {
@@ -39,23 +36,17 @@ export default function commonReducer(preState = initState, action) {
       preState.replyHtml[data.id] = oldHtml + data.html + "<div><br></div>";
       return Object.assign({}, preState);
 
-    case SHOW_BIG_BOX:
-      return Object.assign({}, preState, { openBigBoxId: data });
+    case SET_CONSOLE:
+      return Object.assign({}, preState, { console: data });
 
-    case CLOSE_BIG_BOX:
-      return Object.assign({}, preState, { openBigBoxId: "" });
-
-    case SHOW_CONSOLE:
-      return Object.assign({}, preState, { consoleStr: data });
-
-    case CLOSE_CONSOLE:
-      return Object.assign({}, preState, { consoleStr: "" });
+    case DELETE_CONSOLE:
+      return Object.assign({}, preState, { console: "" });
 
     case SHOW_LOADING:
-      return Object.assign({}, preState, { isLoading: true });
+      return Object.assign({}, preState, { showLoading: true });
 
     case CLOSE_LOADING:
-      return Object.assign({}, preState, { isLoading: false });
+      return Object.assign({}, preState, { showLoading: false });
 
     default:
       return preState;
