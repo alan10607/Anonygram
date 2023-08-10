@@ -26,7 +26,7 @@ export default function UploadImageBtn({ id }) {
     if (!fileTypeExp.test(file.type))
       return showConsole(t("not-img"));
 
-    uploadImageFromFile(id, file).then((res) => {
+    uploadImageFromFile(file).then((res) => {
       const imgUrl = res.imgUrl;
       console.log("Image url", imgUrl);
       dispatch(addReplyHtml(id, `<img src="${imgUrl}" alt="${imgUrl}"/>`));

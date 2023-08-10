@@ -44,12 +44,12 @@ const compressImg = (image, quality, maxWidth) => {
   });
 };
 
-export const uploadImageFromFile = (id, file) => {
+export const uploadImageFromFile = (file) => {
   return convertFileToBase64(file).then(base64 => {
     return buildImg(base64);
   }).then(image => {
     return compressImg(image, imgQuality, imgMaxWidth);
-  }).then(compressed => {
-    return forumRequest.uploadImg(id, compressed);
+  }).then(compressedBase64 => {
+    return forumRequest.uploadImg(compressedBase64);
   })
 }

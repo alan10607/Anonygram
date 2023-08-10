@@ -51,4 +51,3 @@ export const updateContentLike = (id, no, like) => ({
   type: UPDATE_CONTENT_LIKE, 
   data: { id, no, like } 
 });
-

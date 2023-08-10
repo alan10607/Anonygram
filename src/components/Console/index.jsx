@@ -5,8 +5,8 @@ import { useLang, useTheme } from '../../util/localSetting';
 import './index.scss';
 
 export default function Console() {
-  const { consoleStr, isLoading } = useSelector(state => ({
-    consoleStr: state.common.consoleStr,
+  const { consoleString, isLoading } = useSelector(state => ({
+    consoleString: state.common.consoleString,
     isLoading: state.common.isLoading
   }), shallowEqual);
   const dispatch = useDispatch();
@@ -14,7 +14,7 @@ export default function Console() {
   useTheme();
 
   useEffect(() => {
-    if (!consoleStr) return;
+    if (!consoleString) return;
 
     const closeTimeout = setTimeout(() => { dispatch(closeConsole()) }, 2000);
     return () => {
@@ -24,8 +24,8 @@ export default function Console() {
 
   return (
     <div>
-      <div id="console" className={consoleStr ? "console-open" : "console-close"}>
-        <div>{consoleStr}</div>
+      <div id="console" className={consoleString ? "console-open" : "console-close"}>
+        <div>{consoleString}</div>
       </div>
       <div id="loading" className={"full-screan center " + (isLoading ? "" : "disable")}>
         <div>

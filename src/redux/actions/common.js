@@ -1,10 +1,7 @@
-export const SHOW_BIG_BOX = "showBigBox";
-export const CLOSE_BIG_BOX = "closeBigBox";
-export const SHOW_CONSOLE = "showConsole";
-export const CLOSE_CONSOLE = "closeConsole";
 export const SHOW_LOADING = "showLoading";
 export const CLOSE_LOADING = "closeLoading";
-
+export const SET_CONSOLE = "setConsole";
+export const DELETE_CONSOLE = "deleteConsole";
 export const SET_REPLY_ID = "setReplyId";
 export const SET_REPLY_HTML = "setReplyHtml";
 export const ADD_REPLY_HTML = "addReplyHtml";
