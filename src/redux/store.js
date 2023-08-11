@@ -13,11 +13,11 @@ const persistConfig = {
   whitelist: ['user'] // 白名单：只保存 reducer1 和 reducer2 的状态
 };
 
-// const persistedReducer = persistReducer(persistConfig, reducer);
-// const store = createStore(persistedReducer, composeWithDevTools(applyMiddleware(thunk)))
+const persistedReducer = persistReducer(persistConfig, reducer);
+const store = createStore(persistedReducer, composeWithDevTools(applyMiddleware(thunk)))
 
-// export const persistor = persistStore(store)
-// export default store;
+export const persistor = persistStore(store)
+export default store;
 
 // export default createStore(reducer, applyMiddleware(thunk));
-export default createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));
+// export default createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));

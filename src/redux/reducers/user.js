@@ -1,7 +1,7 @@
 import { SET_USER, DELETE_USER } from "../actions/user";
 
 const initUserState = {
-  userId: null,
+  id: null,
   username: "",
   isAnonymous: null,
   headUrl: "",

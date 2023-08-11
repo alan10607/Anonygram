@@ -31,6 +31,7 @@ const PUBLIC_URL = process.env.PUBLIC_URL;
 export const ICON_USER = `${PUBLIC_URL}/pic/user.svg`;
 export const ICON_LIKE = `${PUBLIC_URL}/pic/like.svg`;
 export const ICON_UPLOAD_IMG = `${PUBLIC_URL}/pic/uploadImg.svg`;
+export const ICON_FORUM = `${PUBLIC_URL}/pic/forum.svg`;
 export const ICON_ADD = `${PUBLIC_URL}/pic/add.svg`;
 export const ICON_OPTION = `${PUBLIC_URL}/pic/option.svg`;
 export const ICON_CLOSE = `${PUBLIC_URL}/pic/close.svg`;

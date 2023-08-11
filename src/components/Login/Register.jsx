@@ -6,9 +6,9 @@ import authRequest from 'service/request/authRequest';
 import '../Login/index.scss'
 
 export default function Register() {
-  const [email, setEmail] = useState();
-  const [username, setUsername] = useState();
-  const [password, setPassword] = useState();
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [hint, setHint] = useState("");
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -16,30 +16,30 @@ export default function Register() {
   const register = (event) => {
     event.preventDefault();
 
-    const errorStr = checkUserData(email, username, password);
+    const errorStr = checkUserData(username, email, password);
     if (errorStr !== "") {
       return setHint(errorStr);
     }
 
-    authRequest.register(email, username, password).then((res) => {
+    authRequest.register(username, email, password).then((res) => {
       waitThenGo(3);
     }).catch((e) => {
-      setHint(t("register-err"));
+      setHint(t("tip.register.error"));
     });
   }
 
-  const checkUserData = (email, userName, pw) => {
+  const checkUserData = (username, email, password) => {
     const emailExp = /^[\w-.]+@([\w-]+\.)+[\w-]+$/g;
     const pwExp = /^[\w-.@$!%*#?&]{6,}$/g;
-    if (!emailExp.test(email)) return t("register-email-err");
-    if (userName === "") return t("register-username-err");
-    if (!pwExp.test(pw)) return t("register-pw-err");
+    if (username === "") return t("tip.register.username.error");
+    if (!emailExp.test(email)) return t("tip.register.email.error");
+    if (!pwExp.test(password)) return t("tip.register.password.error");
     return "";
   }
 
   const waitThenGo = (sec) => {
     if (sec > 0) {
-      setHint(t("register-success", { sec }));
+      setHint(t("tip.register.success", { sec }));
       setTimeout(() => waitThenGo(sec - 1), 1000);
     } else {
       navigate("/login");
@@ -52,30 +52,30 @@ export default function Register() {
         <img className="logo icon" src={ICON_LOGO} alt="ICON_LOGO" />
         <div className="col-flex">
           <form onSubmit={register}>
-            <h2>{t("user-register")}</h2>
-            <input value={email}
-              onChange={(event) => { setEmail(event.target.value) }}
-              type="text"
-              placeholder="Email"
-              autoComplete="off"
-              required
-              autoFocus />
+            <h2>{t("text.register.title")}</h2>
             <input value={username}
               onChange={(event) => { setUsername(event.target.value) }}
               type="text"
-              placeholder={t("username")}
+              placeholder={t("common.username")}
               autoComplete="off"
               required />
+            <input value={email}
+              onChange={(event) => { setEmail(event.target.value) }}
+              type="text"
+              placeholder={t("common.email")}
+              autoComplete="off"
+              required
+              autoFocus />
             <input value={password}
               onChange={(event) => { setPassword(event.target.value) }}
               type="password"
-              placeholder={t("pw")}
+              placeholder={t("common.password")}
               autoComplete="off"
               required />
-            <input type="submit" value={t("register")} />
+            <input type="submit" value={t("common.register")} />
           </form>
           <div className="login-info">
-            <Link to="/login" className="info-link">{t("back-to-login")}</Link>
+            <Link to="/login" className="info-link">{t("text.register.backToLogin")}</Link>
           </div>
           <div className="hint">{hint}</div>
         </div>

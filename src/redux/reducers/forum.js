@@ -17,7 +17,7 @@ export default function forumReducer(preState = initForumMap, action) {
   const { type, data } = action;
   const newState = new Map(preState);
 
-  console.log("Reducer get data, type=", type, "data=", data);
+  console.warn("Reducer get data, type=", type, "data=", data);
   switch (type) {
     case SET_ALL_ID:
       data.forEach(id => newState.set(id, null));

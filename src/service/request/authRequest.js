@@ -13,9 +13,9 @@ const anonymous = () => request.postMethod(
   `/auth/anonymous`
 );
 
-const register = (email, userName, password) => request.postMethod(
+const register = (username, email, password) => request.postMethod(
   `/auth/register`, 
-  { email, userName, password }
+  { username, email, password }
 );
 
 const ssl = () => request.getMethod(

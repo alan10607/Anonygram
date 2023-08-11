@@ -12,8 +12,13 @@ import { setConsole } from 'redux/actions/common';
 import userRequest from 'service/request/userRequest';
 
 export default function Setting() {
-  const { user: { userId, username, isAnonymous, language, theme } } = useSelector(state => ({
-    user: state.user
+  const { userId, username, email, isAnonymous, language, theme } = useSelector(state => ({
+    userId: state.user.id,
+    username: state.user.username,
+    email: state.user.email,
+    isAnonymous: state.user.isAnonymous,
+    language: state.user.language,
+    theme: state.user.theme,
   }), shallowEqual);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -33,10 +38,10 @@ export default function Setting() {
   }];
 
   const THEME_OPTIONS = [{
-    name: t("theme-dark"),
+    name: t("text.setting.theme.dark"),
     value: "dark"
   }, {
-    name: t("theme-light"),
+    name: t("text.setting.theme.light"),
     value: "light"
   }];
 
@@ -68,21 +73,22 @@ export default function Setting() {
         </label>
         <div>
           <div className="username">{username}</div>
+          <div className="email">{email}</div>
           <div className="user-id">#{userId}</div>
         </div>
       </div>
       <div className="setting-main">
-        <SettingOption name={t("lang")}
+        <SettingOption name={t("common.lang")}
           optionArray={LANGUAGE_OPTIONS}
           value={language}
           setValue={(language) => dispatch(setUser({ language }))} />
-        <SettingOption name={t("theme")}
+        <SettingOption name={t("common.theme")}
           optionArray={THEME_OPTIONS}
           value={theme}
           setValue={(theme) => dispatch(setUser({ theme }))} />
       </div>
       <div className="flex-empty"></div>
-      <input className="logout" type="button" onClick={logout} value={t("logout")} ></input>
+      <input className="logout" type="button" onClick={logout} value={t("common.logout")} ></input>
     </div>
   )
 
