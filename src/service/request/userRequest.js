@@ -1,22 +1,23 @@
 import request from ".";
 
-const get = () => request.getMethod(
-  `/user`
+const updateLanguage = (language) => request.patchMethod(
+  `/user`,
+  { language }
 );
 
-const update = (language, theme) => request.patchMethod(
-  `/user`, 
-  {language, theme}
+const updateTheme = (theme) => request.patchMethod(
+  `/user`,
+  { theme }
 );
 
-const updateHeadUrl = (imageBase64) => request.patchMethod(
+const updateHeadUrl = (headUrl) => request.patchMethod(
   `/user/headUrl`,
-  {imageBase64}
+  { headUrl }
 );
 
 
 export default {
-  get,
-  update,
+  updateLanguage,
+  updateTheme,
   updateHeadUrl
 };

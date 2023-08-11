@@ -24,11 +24,6 @@ export default function Setting() {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  const logout = () => {
-    dispatch(deleteUser());
-    navigate("/login");
-  }
-
   const LANGUAGE_OPTIONS = [{
     name: "English",
     value: "en"
@@ -64,6 +59,35 @@ export default function Setting() {
     })
   })
 
+  const updateLanguage = useThrottle((language) => {
+    userRequest.updateLanguage(language).then(user => {
+      dispatch(setUser(user));
+    }).catch(e => {
+      console.log("Update language failed", e);
+    })
+  });
+
+  const updateTheme = useThrottle((theme) => {
+    userRequest.updateTheme(theme).then(user => {
+      dispatch(setUser(user));
+    }).catch(e => {
+      console.log("Update theme failed", e);
+    })
+  });
+
+  const logout = () => {
+    dispatch(deleteUser());
+    navigate("/login");
+  }
+
+  const getOptionNode = (optionArray) => {
+    const nodeList = [];
+    optionArray.forEach(opt => {
+      nodeList.push(<option key={opt.name} value={opt.value}>{opt.name}</option>);
+    });
+    return nodeList;
+  }
+
   return (
     <div id="setting">
       <div className="user-info">
@@ -78,14 +102,31 @@ export default function Setting() {
         </div>
       </div>
       <div className="setting-main">
+        <div className="setting-option">
+          <div>{t("common.lang")}</div>
+          <select value={language}
+            onChange={(event) => { updateLanguage(event.target.value) }}
+            disabled={isAnonymous}>
+            {getOptionNode(LANGUAGE_OPTIONS)}
+          </select>
+        </div>
+        <div className="setting-option">
+          <div>{t("common.theme")}</div>
+          <select value={theme}
+            onChange={(event) => { updateTheme(event.target.value) }}
+            disabled={isAnonymous}>
+            {getOptionNode(THEME_OPTIONS)}
+          </select>
+        </div>
+
         <SettingOption name={t("common.lang")}
           optionArray={LANGUAGE_OPTIONS}
           value={language}
-          setValue={(language) => dispatch(setUser({ language }))} />
+          setValue={updateLanguage} />
         <SettingOption name={t("common.theme")}
           optionArray={THEME_OPTIONS}
           value={theme}
-          setValue={(theme) => dispatch(setUser({ theme }))} />
+          setValue={updateTheme} />
       </div>
       <div className="flex-empty"></div>
       <input className="logout" type="button" onClick={logout} value={t("common.logout")} ></input>
