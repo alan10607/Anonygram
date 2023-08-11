@@ -10,9 +10,9 @@ import { scrollTo } from 'util/inputControll';
 import { REPLY_BOX_ATTR } from 'util/constant';
 
 export default function Info({ id, no }) {
-  const { author, createDate, userId, replyHtml } = useSelector(state => ({
-    author: state.forum.get(id).contList[no].author,
-    createDate: state.forum.get(id).contList[no].createDate,
+  const { authorId, createDate, userId, replyHtml } = useSelector(state => ({
+    authorId: state.forum.get(id).contentList[no].authorId,
+    createDate: state.forum.get(id).contentList[no].createDate,
     userId: state.user.userId,
     replyHtml: state.common.replyHtml[id]
   }), shallowEqual);
@@ -55,7 +55,7 @@ export default function Info({ id, no }) {
     <div className="info">
       <div>@{no}, {getTimeFromStr(createDate)}</div>
       <div className="info-btn" onClick={replyThisContent} {...REPLY_BOX_ATTR}>{t("reply")}</div>
-      {userId === author && <div className="info-btn" onClick={deletePostOrCont}>{t("del")}</div>}
+      {userId === authorId && <div className="info-btn" onClick={deletePostOrCont}>{t("del")}</div>}
     </div>
   )
 }

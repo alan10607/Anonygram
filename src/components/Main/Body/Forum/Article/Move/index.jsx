@@ -9,15 +9,15 @@ import { setAllContents } from 'redux/actions/forum';
 import { setReplyId, setConsole } from 'redux/actions/common';
 
 export default function Move({ id }) {
-  const { contNum, contList } = useSelector(state => ({
+  const { contNum, contentList } = useSelector(state => ({
     contNum: state.forum.get(id).contNum,
-    contList: state.forum.get(id).contList
+    contentList: state.forum.get(id).contentList
   }), shallowEqual);
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const noList = useMemo(() => [...Array(contNum).keys()], [contNum]);
   const querySize = 10;
-  const emptyNoList = noList.filter(no => !contList[no]);
+  const emptyNoList = noList.filter(no => !contentList[no]);
   const queryNoList = emptyNoList.slice(0, querySize);
 
   const getContents = useThrottle(() => {

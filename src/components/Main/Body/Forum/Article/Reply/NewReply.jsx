@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { replyFilter as inputFilter } from 'util/inputControll';
@@ -9,7 +9,7 @@ import forumRequest from 'service/request/forumRequest';
 import { deleteAllId } from 'redux/actions/forum';
 import UploadImageBtn from './UploadImgBtn';
 import { pasteAsPlain } from 'util/inputControll';
-import { setReplyHtml, setConsole } from 'redux/actions/common';
+import { setReplyHtml, setConsole, setReplyId } from 'redux/actions/common';
 import ReplyBar from '../Content/Bar/ReplyBar';
 import NewInfo from '../Content/Info/NewInfo';
 import { Link, useNavigate } from "react-router-dom";
@@ -24,6 +24,10 @@ export default function NewReply({ id = "new" }) {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(setReplyId(id));
+  }, [])
 
   const httpSetContent = useThrottle(() => {
     if (title.trim() === "") return dispatch(setConsole(t("empty-title")));

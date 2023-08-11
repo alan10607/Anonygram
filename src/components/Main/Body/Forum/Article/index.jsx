@@ -4,26 +4,26 @@ import Content from 'components/Main/Body/Forum/Article/Content';
 import { STATUS_TYPE } from 'util/constant';
 import './article.scss';
 import Move from 'components/Main/Body/Forum/Article/Move';
-import ContDel from 'components/Main/Body/Forum/Article/Content/ContDel';
 import Reply from 'components/Main/Body/Forum/Article/Reply';
+import DeletedContent from 'components/Main/Body/Forum/Article/Content/DeletedContent';
 
 export default function Article({ id }) {
-  const { title, contList } = useSelector(state => ({
+  const { title, contentList } = useSelector(state => ({
     title: state.forum.get(id).title,
-    contList: state.forum.get(id).contList
+    contentList: state.forum.get(id).contentList
   }), shallowEqual);
 
-  const getContentNode = (contList) => {
+  const getContentNode = (contentList) => {
     console.log("getAllContents")
     const allContent = [];
-    for (let no = 0; no < contList.length; ++no) {
+    for (let no = 0; no < contentList.length; ++no) {
       const key = `${id}_${no}`;
-      const content = contList[no];
+      const content = contentList[no];
       if (!content) continue;//not load yet
       if (content.status === STATUS_TYPE.NORMAL) {
         allContent.push(<Content key={key} id={id} no={no} />);
       } else if (content.status === STATUS_TYPE.DELETED) {
-        allContent.push(<ContDel key={key} id={id} no={no} />);
+        allContent.push(<DeletedContent key={key} id={id} no={no} />);
       }
     }
     return allContent;
@@ -32,7 +32,7 @@ export default function Article({ id }) {
   return (
     <div id={id} className="art">
       <div className="title">{title}</div>
-      <Fragment>{getContentNode(contList)}</Fragment>
+      <Fragment>{getContentNode(contentList)}</Fragment>
       <Move id={id} />
       <Reply id={id} />
     </div>

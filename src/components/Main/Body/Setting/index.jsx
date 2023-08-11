@@ -4,11 +4,12 @@ import { useTranslation } from 'react-i18next';
 import './setting.scss';
 import { ICON_USER, LANGUAGE_OPTIONS, THEME_OPTIONS } from 'util/constant';
 import SettingOption from './SettingOption';
-import { deleteUser, setLanguage, setTheme } from 'redux/actions/user';
+import { deleteUser, setLanguage, setTheme, setUser } from 'redux/actions/user';
 import useThrottle from 'util/useThrottle';
-import { uploadImageFromTargetFiles } from 'util/image';
+import { convertToBase64FromFiles } from 'util/image';
 import ValidationError from 'util/validationError';
 import { setConsole } from 'redux/actions/common';
+import userRequest from 'service/request/userRequest';
 
 export default function Setting() {
   const { user: { userId, username, isAnonymous, language, theme } } = useSelector(state => ({
@@ -23,11 +24,29 @@ export default function Setting() {
     navigate("/login");
   }
 
+  const LANGUAGE_OPTIONS = [{
+    name: "English",
+    value: "en"
+  }, {
+    name: "繁體中文",
+    value: "zh-TW"
+  }];
+
+  const THEME_OPTIONS = [{
+    name: t("theme-dark"),
+    value: "dark"
+  }, {
+    name: t("theme-light"),
+    value: "light"
+  }];
+
   const uploadHead = useThrottle((event) => {
-    uploadImageFromTargetFiles(event.target.files).then((res) => {
-      const imgUrl = res.imgUrl;
-      console.log("Image url", imgUrl);
-      // dispatch(addReplyHtml(id, `<img src="${imgUrl}" alt="${imgUrl}"/>`));
+    convertToBase64FromFiles(event.target.files).then(compressedBase64 => {
+      return userRequest.updateHeadUrl(compressedBase64);
+    }).then(() => {
+      return userRequest.get();
+    }).then((res) => {
+      dispatch(setUser(res));
     }).catch(e => {
       console.log("Image load failed", e);
       if (e instanceof ValidationError) {
@@ -56,11 +75,11 @@ export default function Setting() {
         <SettingOption name={t("lang")}
           optionArray={LANGUAGE_OPTIONS}
           value={language}
-          setValue={(v) => dispatch(setLanguage(v))} />
+          setValue={(language) => dispatch(setUser({ language }))} />
         <SettingOption name={t("theme")}
           optionArray={THEME_OPTIONS}
           value={theme}
-          setValue={(v) => dispatch(setTheme(v))} />
+          setValue={(theme) => dispatch(setUser({ theme }))} />
       </div>
       <div className="flex-empty"></div>
       <input className="logout" type="button" onClick={logout} value={t("logout")} ></input>

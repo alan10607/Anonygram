@@ -7,9 +7,9 @@ import './bar.scss';
 
 export default function Bar({ id, no }) {
   const { authorName, like, likes } = useSelector(state => ({
-    authorName: state.forum.get(id).contList[no].authorName,
-    like: state.forum.get(id).contList[no].like,
-    likes: state.forum.get(id).contList[no].likes
+    authorName: state.forum.get(id).contentList[no].authorName,
+    like: state.forum.get(id).contentList[no].like,
+    likes: state.forum.get(id).contentList[no].likes
   }), shallowEqual);
   const dispatch = useDispatch();
 

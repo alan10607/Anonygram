@@ -43,9 +43,9 @@ const likeContent = (id, no, like) => request.patchMethod(
   { like }
 )
 
-const uploadImg = (id, imgBase64) => request.postMethod(
-  `/forum/img`,
-  { id, imgBase64 }
+const uploadImage = (imageBase64) => request.postMethod(
+  `/forum/image`,
+  { imageBase64 }
 )
 
 
@@ -60,5 +60,5 @@ export default {
   setContent,
   deleteContent,
   likeContent,
-  uploadImg
+  uploadImage
 };

@@ -41,19 +41,3 @@ export const STATUS_TYPE = { NORMAL: "NORMAL", DELETED: "DELETED", UNKNOWN: "UNK
 export const BIG_BOX_ID = { NEW: "NEW", SETTING: "SETTING" };
 export const REPLY_BOX = "data-reply-box";
 export const REPLY_BOX_ATTR = { [REPLY_BOX]: true };
-
-export const LANGUAGE_OPTIONS = [{
-    name: "English",
-    value: "en"
-}, {
-    name: "繁體中文",
-    value: "zh-TW"
-}];
-
-export const THEME_OPTIONS = [{
-    name: i18next.t("theme-dark"),
-    value: "dark"
-}, {
-    name: i18next.t("theme-light"),
-    value: "light"
-}];

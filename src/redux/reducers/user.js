@@ -2,8 +2,9 @@ import { SET_USER, DELETE_USER } from "../actions/user";
 
 const initUserState = {
   userId: null,
-  username: null,
+  username: "",
   isAnonymous: null,
+  headUrl: "",
   language: "en",
   theme: "dark"
 };
