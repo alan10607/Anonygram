@@ -1,15 +1,13 @@
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import './setting.scss';
-import { ICON_USER, LANGUAGE_OPTIONS, THEME_OPTIONS } from 'util/constant';
-import { deleteUser, setLanguage, setTheme, setUser } from 'redux/actions/user';
-import useThrottle from 'util/useThrottle';
-import { uploadImageFromTargetFiles, useUploadImage } from 'util/image';
-import ValidationError from 'util/validationError';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { setConsole } from 'redux/actions/common';
+import { deleteUser, setUser } from 'redux/actions/user';
 import userRequest from 'service/request/userRequest';
-import forumRequest from 'service/request/forumRequest';
+import { ICON_USER } from 'util/constant';
+import { useUploadImage } from 'util/image';
+import useThrottle from 'util/useThrottle';
+import './setting.scss';
 
 export default function Setting() {
   const { userId, username, email, isAnonymous, headUrl, language, theme } = useSelector(state => ({
@@ -43,27 +41,22 @@ export default function Setting() {
   }];
 
   const uploadHead = useThrottle((event) => {
-    uploadImage(event).then((imageUrl) => {
-      return userRequest.updateHeadUrl(imageUrl);
-    }).then((user) => {
-      dispatch(setUser(user));
-    })
+    uploadImage(event)
+      .then(imageUrl => userRequest.updateHeadUrl(imageUrl))
+      .then(user => dispatch(setUser(user)))
+      .catch(e => dispatch(setConsole(t("tip.setting.headUrl.error"))));
   })
 
   const updateLanguage = useThrottle((language) => {
-    userRequest.updateLanguage(language).then(user => {
-      dispatch(setUser(user));
-    }).catch(e => {
-      console.log("Update language failed", e);
-    })
+    userRequest.updateLanguage(language)
+      .then(user => dispatch(setUser(user)))
+      .catch(e => console.log("Update language failed", e));
   });
 
   const updateTheme = useThrottle((theme) => {
-    userRequest.updateTheme(theme).then(user => {
-      dispatch(setUser(user));
-    }).catch(e => {
-      console.log("Update theme failed", e);
-    })
+    userRequest.updateTheme(theme)
+      .then(user => dispatch(setUser(user)))
+      .catch(e => console.log("Update theme failed", e))
   });
 
   const logout = () => {

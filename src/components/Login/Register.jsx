@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
-import { ICON_LOGO } from 'util/constant';
+import { Link, useNavigate } from "react-router-dom";
 import authRequest from 'service/request/authRequest';
-import '../Login/index.scss'
+import { ICON_LOGO } from 'util/constant';
+import './login.scss';
 
 export default function Register() {
   const [username, setUsername] = useState("");
@@ -21,11 +21,9 @@ export default function Register() {
       return setHint(errorStr);
     }
 
-    authRequest.register(username, email, password).then((res) => {
-      waitThenGo(3);
-    }).catch((e) => {
-      setHint(t("tip.register.error"));
-    });
+    authRequest.register(username, email, password)
+      .then(() => waitThenGo(3))
+      .catch(e => setHint(t("tip.register.error")));
   }
 
   const checkUserData = (username, email, password) => {

@@ -11,12 +11,12 @@ const imgQuality = 1, imgMaxWidth = 450;
 const checkTargetFiles = (files) => {
   return new Promise((resolve, reject) => {
     if (!files || files.length === 0 || !files[0]) {
-      reject(new ValidationError(i18next.t("empty-img")));
+      reject(new ValidationError(i18next.t("tip.img.error.empty")));
     }
 
     const file = files[0], fileTypeExp = /image\/\w+/g;//must be MIME image type
     if (!fileTypeExp.test(file.type)) {
-      reject(new ValidationError(i18next.t("not-img")));
+      reject(new ValidationError(i18next.t("tip.img.error.format")));
     }
 
     resolve(file);
@@ -81,23 +81,25 @@ export const useUploadImage = () => {
 
   const uploadImage = (event) => {
     return checkTargetFiles(event.target.files)
-    .then(file => convertFileToBase64(file))
-    .then(base64 => buildImg(base64))
-    .then(image => compressImg(image, imgQuality, imgMaxWidth))
-    .then(compressedBase64 => forumRequest.uploadImage(compressedBase64))
-    .then(res => {
-      console.log("Upload image url", res.imageUrl);
-      return Promise.resolve(res.imageUrl);
-    }).catch(e => {
-      console.log("Image load failed", e);
-      if (e instanceof ValidationError) {
-        dispatch(setConsole(t("load-img-err-reason", { reason: e.message })));
-      } else {
-        dispatch(setConsole(t("load-img-err")));
-      }
-    }).finally(() => {
-      event.target.value = "";//remove file
-    });
+      .then(file => convertFileToBase64(file))
+      .then(base64 => buildImg(base64))
+      .then(image => compressImg(image, imgQuality, imgMaxWidth))
+      .then(compressedBase64 => forumRequest.uploadImage(compressedBase64))
+      .then(res => {
+        console.log("Upload image url", res.imageUrl);
+        return Promise.resolve(res.imageUrl);
+      })
+      .catch(e => {
+        if (e instanceof ValidationError) {
+          dispatch(setConsole(e.message));
+        } else {
+          console.log("Image load failed", e);
+          dispatch(setConsole(t("tip.img.error")));
+        }
+      })
+      .finally(() => {
+        event.target.value = "";//remove file
+      });
   }
 
   return uploadImage;

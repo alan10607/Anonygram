@@ -1,0 +1,1 @@
+export const isAnonygramUser = (user) => user.email === "";

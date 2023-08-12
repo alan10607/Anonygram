@@ -26,6 +26,10 @@
 "tip.register.username.error": "Username cannot be empty",
 "tip.register.password.error": "The password is less than 6 characters or the format is wrong",
 "tip.register.success": "Register success!! Auto redirect after {{sec}} seconds...",
+"tip.setting.headUrl.error": "Update profile picture failed, please try again later",
 
-  "load-img.error-reason": "Failed to upload image. {{reason}}"
+"tip.img.error": "Failed to upload image",
+"tip.img.error.empty": "The selected image is empty",
+"tip.img.error.format": "Image format error"
+
 }

@@ -1,12 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from "react-router-dom";
-import { useTranslation } from 'react-i18next';
 import { setUser } from 'redux/actions/user';
-import { ICON_LOGO, VERSION, BACKEND_API_URL, WELCOME_PAGE } from 'util/constant';
-import { locationTo } from 'util/locationTo';
 import authRequest from 'service/request/authRequest';
-import './index.scss'
+import { BACKEND_API_URL, ICON_LOGO, VERSION, WELCOME_PAGE } from 'util/constant';
+import { locationTo } from 'util/locationTo';
+import { isAnonygramUser } from 'util/userUtil';
+import './login.scss';
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -17,8 +18,9 @@ export default function Login() {
   const dispatch = useDispatch();
 
   useEffect(() => {//For testing, check user SSL confirmation
-    authRequest.ssl().then(() => { })
-      .catch((e) => {//If does not conform SSL then redirect to the backend
+    authRequest.ssl()
+      .then(() => { })
+      .catch(e => {//If does not conform SSL then redirect to the backend
         const sslUrl = `${BACKEND_API_URL}/ssl?callbackUrl=${window.location.href}`;
         console.log("Redirect backend for ssl", sslUrl)
         locationTo(sslUrl);
@@ -28,21 +30,20 @@ export default function Login() {
   const login = (event) => {
     event.preventDefault();
 
-    authRequest.login(email, password).then((user) => {
-      dispatch(setUser(user));
-      navigate(WELCOME_PAGE);
-    }).catch((e) => {
-      setHint(t("tip.login.error"));
-    });
+    authRequest.login(email, password)
+      .then(user => {
+        dispatch(setUser(user));
+        navigate(WELCOME_PAGE);
+      })
+      .catch(e => setHint(t("tip.login.error")));
   }
 
   const anonymousLogin = async (event) => {
     try {
       const oldUser = await authRequest.test();
-      const isAlreadyAnonymousLogin = oldUser.email === "";
-      if(isAlreadyAnonymousLogin){
+      if (isAnonygramUser(oldUser)) {
         dispatch(setUser(oldUser));
-      }else{
+      } else {
         const user = await authRequest.anonymous();
         dispatch(setUser(user));
       }

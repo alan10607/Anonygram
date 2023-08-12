@@ -1,12 +1,12 @@
-import { Fragment, useState, useEffect, useRef, useMemo } from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { setAllArticles, setAllId, setArticle } from 'redux/actions/forum';
-import { STATUS_TYPE, REPLY_BOX } from 'util/constant';
-import forumRequest from 'service/request/forumRequest';
-import Article from 'components/Main/Body/Forum/Article';
-import './forum.scss';
-import { setConsole, setReplyId } from 'redux/actions/common';
+import { Fragment, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { setConsole, setReplyId } from 'redux/actions/common';
+import { setAllArticles, setAllId } from 'redux/actions/forum';
+import forumRequest from 'service/request/forumRequest';
+import { REPLY_BOX, STATUS_TYPE } from 'util/constant';
+import Article from './Article';
+import './forum.scss';
 
 export default function Forum() {
   const { forum } = useSelector(state => ({
@@ -14,24 +14,22 @@ export default function Forum() {
   }), shallowEqual);
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const idList = useMemo(() => [...forum.keys()], [forum]);
   const querySize = 10;
-  const queryIdList = useMemo(() => {console.log("AAAA"); return idList.filter(id => !forum.get(id)).slice(0, querySize)}, [idList, forum]);
+  const idList = useMemo(() => [...forum.keys()], [forum]);
+  const queryIdList = useMemo(() => idList.filter(id => !forum.get(id)).slice(0, querySize), [idList, forum]);
   const queryLock = useRef(false);
 
   /* --- Loading id & article --- */
   useEffect(() => {
-    if (idList.length === 0) {
-      forumRequest.getId().then(res => {
-        dispatch(setAllId(res));
-      }).catch((e) => {
-        dispatch(setConsole(t("findIdSet-err")));
-      });
+    if (forum.size === 0) {
+      forumRequest.getId()
+        .then(res => dispatch(setAllId(res)))
+        .catch(e => dispatch(setConsole(t("findIdSet-err"))));
     }
   }, [])
 
   useEffect(() => {
-    queryLock.current = false;
+    queryLock.current = false;//redux state update means that query finished
   }, [queryIdList])
 
   useEffect(() => {//dynamic loading article
@@ -53,12 +51,12 @@ export default function Forum() {
 
     queryLock.current = true;
 
-    forumRequest.getArticles(queryIdList).then(articles => {
-      dispatch(setAllArticles(articles));
-    }).catch((e) => {
-      dispatch(setConsole(t("findPost-err")));
-      queryLock.current = false;
-    })
+    forumRequest.getArticles(queryIdList)
+      .then(articles => dispatch(setAllArticles(articles)))
+      .catch(e => {
+        dispatch(setConsole(t("findPost-err")));
+        queryLock.current = false;
+      })
   }
 
   const canQueryArticle = () => {
@@ -104,15 +102,13 @@ export default function Forum() {
 
   /* --- Create view --- */
   const getArticleNode = () => {
-    console.log("getAllArticles")
+    console.log(`Article loaded: ${idList.filter(id => forum.get(id)).length} / ${idList.length}`);
     const allArticle = [];
     for (let [id, article] of forum) {
       if (!article) continue;//not load yet
       if (article.status !== STATUS_TYPE.NORMAL) continue;
 
-      allArticle.push(
-        <Article key={id} id={id} />
-      );
+      allArticle.push(<Article key={id} id={id} />);
     }
     return allArticle;
   }

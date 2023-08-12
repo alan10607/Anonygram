@@ -1,4 +1,4 @@
-import { useSelector, shallowEqual } from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
 import { NavLink } from "react-router-dom";
 import { ICON_ADD, ICON_FORUM, ICON_LOGO, ICON_OPTION } from 'util/constant';
 import "./head.scss";
