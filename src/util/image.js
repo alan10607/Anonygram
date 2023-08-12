@@ -1,4 +1,7 @@
 import i18next from "i18next";
+import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
+import { setConsole } from "redux/actions/common";
 import forumRequest from "service/request/forumRequest";
 import ValidationError from "util/validationError";
 
@@ -72,8 +75,13 @@ export const uploadImageFromTargetFiles = (files) => {
     });
 }
 
-export const useUploadImage = (event) => {
-  return checkTargetFiles(event.target.value).then(file => convertFileToBase64(file))
+export const useUploadImage = () => {
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
+
+  const uploadImage = (event) => {
+    return checkTargetFiles(event.target.files)
+    .then(file => convertFileToBase64(file))
     .then(base64 => buildImg(base64))
     .then(image => compressImg(image, imgQuality, imgMaxWidth))
     .then(compressedBase64 => forumRequest.uploadImage(compressedBase64))
@@ -90,4 +98,7 @@ export const useUploadImage = (event) => {
     }).finally(() => {
       event.target.value = "";//remove file
     });
+  }
+
+  return uploadImage;
 }

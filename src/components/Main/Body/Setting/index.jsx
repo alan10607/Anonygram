@@ -5,7 +5,7 @@ import './setting.scss';
 import { ICON_USER, LANGUAGE_OPTIONS, THEME_OPTIONS } from 'util/constant';
 import { deleteUser, setLanguage, setTheme, setUser } from 'redux/actions/user';
 import useThrottle from 'util/useThrottle';
-import { uploadImageFromTargetFiles } from 'util/image';
+import { uploadImageFromTargetFiles, useUploadImage } from 'util/image';
 import ValidationError from 'util/validationError';
 import { setConsole } from 'redux/actions/common';
 import userRequest from 'service/request/userRequest';
@@ -24,6 +24,7 @@ export default function Setting() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const uploadImage = useUploadImage();
 
   const LANGUAGE_OPTIONS = [{
     name: "English",
@@ -42,19 +43,10 @@ export default function Setting() {
   }];
 
   const uploadHead = useThrottle((event) => {
-    uploadImageFromTargetFiles(event.target.files).then((imageUrl) => {
+    uploadImage(event).then((imageUrl) => {
       return userRequest.updateHeadUrl(imageUrl);
     }).then((user) => {
       dispatch(setUser(user));
-    }).catch(e => {
-      console.log("Image load failed", e);
-      if (e instanceof ValidationError) {
-        dispatch(setConsole(t("load-img-err-reason", { reason: e.message })));
-      } else {
-        dispatch(setConsole(t("load-img-err")));
-      }
-    }).finally(() => {
-      event.target.value = "";//remove file
     })
   })
 
