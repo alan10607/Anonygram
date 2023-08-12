@@ -11,24 +11,24 @@
     height: 40px;
     margin-right: 8px;
   }
-  
+
   .author {
     flex: 0 1 auto;
     font-size: 16px;
   }
 
-  .like-icon{
+  .like-icon {
     flex: 0 1 auto;
     display: flex;
     align-items: center;
-  
-    &.like-icon-enable {
-      img{
+
+    &:not([disabled]) {
+      img {
         filter: invert(15%) sepia(55%) saturate(6826%) hue-rotate(0deg) brightness(103%) contrast(95%);
       }
     }
-  
-    img{
+
+    img {
       flex: 0 1 auto;
       width: 14px;
       height: 14px;
@@ -36,8 +36,8 @@
       cursor: pointer;
       filter: invert(61%) sepia(2%) saturate(184%) hue-rotate(19deg) brightness(93%) contrast(77%);
     }
-  
-    div{
+
+    div {
       flex: 0 1 auto;
       font-size: 14px;
       color: var(--color-light);

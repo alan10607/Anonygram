@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from "react-router-dom";
 import authRequest from 'service/request/authRequest';
 import { ICON_LOGO } from 'util/constant';
+import { EMAIL_EXP, PASSWORD_EXP } from 'util/regexp';
 import './login.scss';
 
 export default function Register() {
@@ -27,11 +28,9 @@ export default function Register() {
   }
 
   const checkUserData = (username, email, password) => {
-    const emailExp = /^[\w-.]+@([\w-]+\.)+[\w-]+$/g;
-    const pwExp = /^[\w-.@$!%*#?&]{6,}$/g;
     if (username === "") return t("tip.register.username.error");
-    if (!emailExp.test(email)) return t("tip.register.email.error");
-    if (!pwExp.test(password)) return t("tip.register.password.error");
+    if (!EMAIL_EXP.test(email)) return t("tip.register.email.error");
+    if (!PASSWORD_EXP.test(password)) return t("tip.register.password.error");
     return "";
   }
 

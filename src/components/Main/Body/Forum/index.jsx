@@ -24,7 +24,7 @@ export default function Forum() {
     if (forum.size === 0) {
       forumRequest.getId()
         .then(res => dispatch(setAllId(res)))
-        .catch(e => dispatch(setConsole(t("findIdSet-err"))));
+        .catch(e => dispatch(setConsole(t("tip.forum.id.error"))));
     }
   }, [])
 
@@ -54,7 +54,7 @@ export default function Forum() {
     forumRequest.getArticles(queryIdList)
       .then(articles => dispatch(setAllArticles(articles)))
       .catch(e => {
-        dispatch(setConsole(t("findPost-err")));
+        dispatch(setConsole(t("tip.forum.article.error")));
         queryLock.current = false;
       })
   }

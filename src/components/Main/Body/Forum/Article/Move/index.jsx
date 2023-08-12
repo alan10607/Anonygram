@@ -1,31 +1,29 @@
 import { useMemo } from 'react';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { setReplyId } from 'redux/actions/common';
+import { setAllContents } from 'redux/actions/forum';
+import forumRequest from 'service/request/forumRequest';
 import { REPLY_BOX_ATTR } from 'util/constant';
 import useThrottle from 'util/useThrottle';
 import './move.scss';
-import forumRequest from 'service/request/forumRequest';
-import { setAllContents } from 'redux/actions/forum';
-import { setReplyId, setConsole } from 'redux/actions/common';
 
 export default function Move({ id }) {
-  const { contNum, contentList } = useSelector(state => ({
-    contNum: state.forum.get(id).contNum,
+  const { contentSize, contentList } = useSelector(state => ({
+    contentSize: state.forum.get(id).contentSize,
     contentList: state.forum.get(id).contentList
   }), shallowEqual);
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const noList = useMemo(() => [...Array(contNum).keys()], [contNum]);
+  const noList = useMemo(() => [...Array(contentSize).keys()], [contentSize]);
   const querySize = 10;
   const emptyNoList = noList.filter(no => !contentList[no]);
   const queryNoList = emptyNoList.slice(0, querySize);
 
   const getContents = useThrottle(() => {
-    forumRequest.getContents(id, queryNoList).then((contents) => {
-      dispatch(setAllContents(contents));
-    }).catch((e) => {
-      dispatch(setConsole(t("findTopCont-err")));
-    });
+    forumRequest.getContents(id, queryNoList)
+      .then(contents => dispatch(setAllContents(contents)))
+      .catch(e => console.log("Failed to get contents", e));
   })
 
   const openReply = () => {
@@ -33,35 +31,25 @@ export default function Move({ id }) {
   }
 
   const getOpenNode = () => {
-    if (contNum === 1) {//only one content
-      return (
-        <div className={"open open-disable"}>{t("open-none")}</div>
-      )
-    }
+    if (contentSize === 1)//only one content
+      return <div className={"open"} disabled>{t("text.move.open.none")}</div>
 
-    if (queryNoList.length === 0) {//already open all
-      return (
-        <div className={"open open-disable"}></div>
-      )
-    }
+    if (queryNoList.length === 0)//already open all
+      return <div className={"open"} disabled></div>
 
     const remain = emptyNoList.length;
-    if (queryNoList[0] === 1) {//not open any yet
-      return (
-        <div className={"open open-enable"} onClick={getContents}>{t("open-all", { remain })}</div>
-      )
-    }
+    if (queryNoList[0] === 1)//not open any yet
+      return <div className={"open"} onClick={getContents}>{t("text.move.open.all", { remain })}</div>
 
-    return (//open remain
-      <div className={"open open-enable"} onClick={getContents}>{t("open-remain", { remain })}</div>
-    )
+    //open remain
+    return <div className={"open"} onClick={getContents}>{t("text.move.open.remain", { remain })}</div>
   }
 
   return (
     <div className="move">
       {getOpenNode()}
       <div className="flex-empty"></div>
-      <div className="word-btn" onClick={openReply} {...REPLY_BOX_ATTR}>{t("add-cont")}</div>
+      <div className="text-btn" onClick={openReply} {...REPLY_BOX_ATTR}>{t("add-cont")}</div>
     </div>
   )
 }

@@ -40,13 +40,13 @@ export default function forumReducer(preState = initForumMap, action) {
 
     case SET_ALL_CONTENT:
       data.forEach((cont) => {
-        newState.get(cont.id).contNum = Math.max(newState.get(cont.id).contNum, cont.no + 1);//update contNum by no
+        newState.get(cont.id).contentSize = Math.max(newState.get(cont.id).contentSize, cont.no + 1);//update contentSize by no
         newState.get(cont.id).contentList[cont.no] = cont;
       });
       return newState;
 
     case SET_CONTENT:
-      newState.get(data.id).contNum = Math.max(newState.get(data.id).contNum, data.no + 1);//update contNum by no
+      newState.get(data.id).contentSize = Math.max(newState.get(data.id).contentSize, data.no + 1);//update contentSize by no
       newState.get(data.id).contentList[data.no] = data;
       return newState;
 

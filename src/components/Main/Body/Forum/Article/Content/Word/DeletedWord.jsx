@@ -5,9 +5,7 @@ export default function DeletedWord() {
   
   return (
     <div className="word">
-      <div>
-        <span>{t("del-word")}</span>
-      </div>
+      <div>{t("text.word.deleted")}</div>
     </div>
   )
 }

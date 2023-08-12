@@ -1,11 +1,12 @@
 import { scrollTo } from "util/inputControll";
+import { BX_EXP, IMG_URL_EXP, URL_EXP } from "util/regexp";
 
 let k = 0;
 let id = "";
 
 const createWord = (inputId, word) => {
-  k = 0;
-  id = inputId;
+  k = 0;;//TO-DO: need test that is init will restart??
+  id = inputId
   const allLine = [];
   word.split("\n").forEach((row, i) => {
     const lineNodes = createLine(row);
@@ -40,21 +41,17 @@ const createLine = (line) => {//build each line
 }
 
 const replaceTargetToMark = (line, m) => {
-  //url = protocol(https) + domain/port(1~256) + country-code(0~6) + path
-  const urlExp = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.?[a-zA-Z0-9()]{0,6}\b[-a-zA-Z0-9@:%_+.~#=?&/()]*/gi;
-  const imgExp = /https?:[/|.|\w|\s|-]*\.(?:jpeg|jpg|gif|png)/gi;
-  const bxExp = /(?<=^|\s)@\d+(?=\s|$)/gi;
   let mark = 0xf490;//private in UTF-16, unlikely to occur
 
-  return line.replace(imgExp, (imgUrl) => {//replace imgUrl before url
+  return line.replace(IMG_URL_EXP, (imgUrl) => {//replace imgUrl before url
     const key = String.fromCharCode(mark++);
     m.set(key, createImg(imgUrl));
     return key;
-  }).replace(urlExp, (url) => {
+  }).replace(URL_EXP, (url) => {
     const key = String.fromCharCode(mark++);
     m.set(key, createA(url));
     return key;
-  }).replace(bxExp, (bx) => {
+  }).replace(BX_EXP, (bx) => {
     const key = String.fromCharCode(mark++);
     m.set(key, createBx(id, bx));
     return key;
@@ -62,10 +59,10 @@ const replaceTargetToMark = (line, m) => {
 }
 
 const createImg = (imgUrl) => <img key={k++} src={imgUrl} alt={imgUrl} />;
-const createA =      (url) => <a key={k++} href={url} target="_blank" rel="noreferrer">{url}</a>;
-const createBx =  (id, bx) => <span key={k++} className="bx" onClick={goToBx(id, bx.substr(1))}>{bx}</span>;
-const createSpan =   (str) => {console.log(k, id); return<span key={k++}>{str}</span>};
-const createBr =        () => <br key={k++}></br>;
+const createA = (url) => <a key={k++} href={url} target="_blank" rel="noreferrer">{url}</a>;
+const createBx = (id, bx) => <span key={k++} className="bx" onClick={goToBx(id, bx.substr(1))}>{bx}</span>;
+const createSpan = (str) => { console.log(k, id); return <span key={k++}>{str}</span> };
+const createBr = () => <br key={k++}></br>;
 
 const goToBx = (id, no) => {
   return () => scrollTo(`${id}_${no}`);

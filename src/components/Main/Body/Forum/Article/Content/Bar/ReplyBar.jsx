@@ -1,8 +1,5 @@
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import { likeContent, unlikeContent, updateContentLike } from 'redux/actions/forum';
-import forumRequest from 'service/request/forumRequest';
-import { ICON_USER, ICON_LIKE } from 'util/constant';
-import useThrottle from 'util/useThrottle';
+import { shallowEqual, useSelector } from 'react-redux';
+import { ICON_USER } from 'util/constant';
 import './bar.scss';
 
 export default function ReplyBar() {

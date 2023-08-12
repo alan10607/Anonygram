@@ -1,51 +1,50 @@
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { addReplyHtml, setConsole, setReplyId } from 'redux/actions/common';
+import { deleteArticle, deleteContent } from 'redux/actions/forum';
+import forumRequest from 'service/request/forumRequest';
+import { REPLY_BOX_ATTR } from 'util/constant';
+import { scrollTo } from 'util/inputControll';
 import { getTimeFromStr } from 'util/time';
 import useThrottle from 'util/useThrottle';
 import './info.scss';
-import forumRequest from 'service/request/forumRequest';
-import { deleteArticle, deleteContent } from 'redux/actions/forum';
-import { addReplyHtml, setConsole, setReplyHtml, setReplyId } from 'redux/actions/common';
-import { scrollTo } from 'util/inputControll';
-import { REPLY_BOX_ATTR } from 'util/constant';
 
 export default function Info({ id, no }) {
-  const { authorId, createDate, userId, replyHtml } = useSelector(state => ({
+  const { authorId, createDate, userId } = useSelector(state => ({
     authorId: state.forum.get(id).contentList[no].authorId,
     createDate: state.forum.get(id).contentList[no].createDate,
     userId: state.user.userId,
-    replyHtml: state.common.replyHtml[id]
   }), shallowEqual);
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  
-  const deletePostOrCont = useThrottle(() => {
+
+  const deleteArticleOrContent = useThrottle(() => {
     if (no === 0) {
       httpDeleteArticle();
-    }else{
+    } else {
       httpDeleteContent();
     }
   })
 
   const httpDeleteArticle = () => {
-    forumRequest.deleteArticle(id).then((res) => {
-      dispatch(deleteArticle(id));
-      dispatch(setConsole(t("deletePost-ok")));
-    }).catch((e) => {
-      dispatch(setConsole(t("deletePost-err")));
-    });
+    forumRequest.deleteArticle(id)
+      .then(() => {
+        dispatch(deleteArticle(id));
+        dispatch(setConsole(t("tip.forum.article.delete.ok")));
+      })
+      .catch(e => dispatch(setConsole(t("tip.forum.article.delete.error"))));
   }
 
   const httpDeleteContent = () => {
-    forumRequest.deleteContent(id, no).then((res) => {
-      dispatch(deleteContent(id, no));
-      dispatch(setConsole(t("deleteCont-ok")));
-    }).catch((e) => {
-      dispatch(setConsole(t("deleteCont-err")));
-    });
+    forumRequest.deleteContent(id, no)
+      .then(() => {
+        dispatch(deleteContent(id, no));
+        dispatch(setConsole(t("tip.forum.content.delete.ok")));
+      })
+      .catch(e => dispatch(setConsole(t("tip.forum.content.delete.error"))));
   }
 
-  const replyThisContent = () => {
+  const openReplyBoxAndScroll = () => {
     dispatch(setReplyId(id));
     dispatch(addReplyHtml(id, `<div>@${no}</div>`));
     scrollTo(`${id}_reply`);
@@ -54,8 +53,8 @@ export default function Info({ id, no }) {
   return (
     <div className="info">
       <div>@{no}, {getTimeFromStr(createDate)}</div>
-      <div className="info-btn" onClick={replyThisContent} {...REPLY_BOX_ATTR}>{t("reply")}</div>
-      {userId === authorId && <div className="info-btn" onClick={deletePostOrCont}>{t("del")}</div>}
+      <div className="info-btn" onClick={openReplyBoxAndScroll} {...REPLY_BOX_ATTR}>{t("common.reply")}</div>
+      {userId === authorId && <div className="info-btn" onClick={deleteArticleOrContent}>{t("common.delete")}</div>}
     </div>
   )
 }

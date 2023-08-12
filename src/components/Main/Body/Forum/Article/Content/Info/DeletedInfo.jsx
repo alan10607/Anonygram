@@ -5,7 +5,7 @@ export default function DeletedInfo({ id, no }) {
 
   return (
     <div className="info">
-      <div>@{no}, {t("del-done")}</div>
+      <div>@{no}, {t("common.deleted")}</div>
     </div>
   )
 }

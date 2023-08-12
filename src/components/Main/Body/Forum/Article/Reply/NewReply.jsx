@@ -64,7 +64,7 @@ export default function NewReply({ id = "new" }) {
       <div className="reply-move">
         <UploadImageBtn id={id} />
         <div className="flex-empty"></div>
-        <div className="word-btn" onClick={httpSetContent}>{t("submit")}</div>
+        <div className="text-btn" onClick={httpSetContent}>{t("submit")}</div>
       </div>
     </div>
   )

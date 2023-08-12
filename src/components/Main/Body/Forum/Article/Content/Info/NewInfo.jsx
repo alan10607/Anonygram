@@ -1,4 +1,4 @@
-import { getNowTime,  } from 'util/time';
+import { getNowTime } from 'util/time';
 
 export default function NewInfo() {
   return (

@@ -1,7 +1,7 @@
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import { likeContent, unlikeContent, updateContentLike } from 'redux/actions/forum';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { updateContentLike } from 'redux/actions/forum';
 import forumRequest from 'service/request/forumRequest';
-import { ICON_USER, ICON_LIKE } from 'util/constant';
+import { ICON_LIKE, ICON_USER } from 'util/constant';
 import useThrottle from 'util/useThrottle';
 import './bar.scss';
 
@@ -20,13 +20,12 @@ export default function Bar({ id, no }) {
       .catch(e => console.log(`Update content like to ${updatedLike} failed`, e));
   })
 
-
   return (
     <div className="bar">
       <img className="head icon" src={ICON_USER} alt="ICON_USER" />
       <div className="author">{authorName}</div>
       <div className="flex-empty"></div>
-      <div className={"like-icon " + (like ? "like-icon-enable" : "")}>
+      <div className="like-icon" disabled={!like}>
         <img src={ICON_LIKE} onClick={toggleLike} alt="ICON_LIKE" />
         <div>{likes}</div>
       </div>

@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { setConsole } from "redux/actions/common";
 import forumRequest from "service/request/forumRequest";
 import ValidationError from "util/validationError";
+import { MIME_IMAGE_EXP } from "util/regexp";
 
 const imgQuality = 1, imgMaxWidth = 450;
 
@@ -14,8 +15,8 @@ const checkTargetFiles = (files) => {
       reject(new ValidationError(i18next.t("tip.img.error.empty")));
     }
 
-    const file = files[0], fileTypeExp = /image\/\w+/g;//must be MIME image type
-    if (!fileTypeExp.test(file.type)) {
+    const file = files[0];
+    if (!MIME_IMAGE_EXP.test(file.type)) {//must be MIME image type
       reject(new ValidationError(i18next.t("tip.img.error.format")));
     }
 

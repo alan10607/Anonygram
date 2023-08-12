@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
-import { useSelector, shallowEqual } from 'react-redux';
-import './word.scss';
+import { shallowEqual, useSelector } from 'react-redux';
 import createWord from './createWord';
+import './word.scss';
 
 export default function Word({ id, no }) {
   const { word } = useSelector(state => ({
