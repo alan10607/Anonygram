@@ -54,7 +54,7 @@ export default function Forum() {
     forumRequest.getArticles(queryIdList)
       .then(articles => dispatch(setAllArticles(articles)))
       .catch(e => {
-        dispatch(setConsole(t("tip.forum.article.error")));
+        dispatch(setConsole(t("tip.forum.article.get.error")));
         queryLock.current = false;
       })
   }
@@ -104,7 +104,7 @@ export default function Forum() {
   const getArticleNode = () => {
     console.log(`Article loaded: ${idList.filter(id => forum.get(id)).length} / ${idList.length}`);
     const allArticle = [];
-    for (let [id, article] of forum) {
+    for (const [id, article] of forum) {
       if (!article) continue;//not load yet
       if (article.status !== STATUS_TYPE.NORMAL) continue;
 

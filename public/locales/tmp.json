@@ -5,9 +5,8 @@
 
   "empty-title": "The title cannot be blank!!",
   "empty-word": "The content of the comments cannot be blank!!",
-  "too-many-title": "Maximum character limit of title is 50, already have {{length}} characters",
-  "too-many-word": "Maximum character limit of content is 3000, already have {{length}} characters",
-  "submit": "Submit",
+
+
   "add-post": "Post",
   "add-cont": "Reply",
   "title": "Title",

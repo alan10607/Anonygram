@@ -25,7 +25,7 @@ const createLine = (line) => {//build each line
   line = replaceTargetToMark(line, markToNode);
 
   let last = 0;
-  for (let i = 0; i < line.length; i++) {
+  for (let i = 0; i < line.length; ++i) {
     if (markToNode.has(line[i])) {
       if (last < i) allNode.push(createSpan(line.substring(last, i)));
       allNode.push(markToNode.get(line[i]));

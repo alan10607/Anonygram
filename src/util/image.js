@@ -1,5 +1,4 @@
 import i18next from "i18next";
-import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { setConsole } from "redux/actions/common";
 import forumRequest from "service/request/forumRequest";
@@ -9,19 +8,17 @@ import { MIME_IMAGE_EXP } from "util/regexp";
 const imgQuality = 1, imgMaxWidth = 450;
 
 /* --- image convert and compress --- */
-const checkTargetFiles = (files) => {
-  return new Promise((resolve, reject) => {
-    if (!files || files.length === 0 || !files[0]) {
-      reject(new ValidationError(i18next.t("tip.img.error.empty")));
-    }
+const checkTargetFiles = async (files) => {
+  if (!files || files.length === 0 || !files[0]) {
+    throw new ValidationError(i18next.t("tip.img.error.empty"));
+  }
 
-    const file = files[0];
-    if (!MIME_IMAGE_EXP.test(file.type)) {//must be MIME image type
-      reject(new ValidationError(i18next.t("tip.img.error.format")));
-    }
+  const file = files[0];
+  if (!MIME_IMAGE_EXP.test(file.type)) {//must be MIME image type
+    throw new ValidationError(i18next.t("tip.img.error.format"));
+  }
 
-    resolve(file);
-  });
+  return file;
 }
 
 const convertFileToBase64 = (file) => {
@@ -78,7 +75,6 @@ export const uploadImageFromTargetFiles = (files) => {
 
 export const useUploadImage = () => {
   const dispatch = useDispatch();
-  const { t } = useTranslation();
 
   const uploadImage = (event) => {
     return checkTargetFiles(event.target.files)
@@ -95,7 +91,7 @@ export const useUploadImage = () => {
           dispatch(setConsole(e.message));
         } else {
           console.log("Image load failed", e);
-          dispatch(setConsole(t("tip.img.error")));
+          dispatch(setConsole(i18next.t("tip.img.error")));
         }
       })
       .finally(() => {

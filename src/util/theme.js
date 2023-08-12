@@ -13,7 +13,7 @@ const styleName = [
 export const setTheme = (theme) => {
   const root = document.documentElement;
   const rootStyle = window.getComputedStyle(root);
-  for (let name of styleName) {
+  for (const name of styleName) {
     const value = rootStyle.getPropertyValue(`--${theme}-${name}`);
     root.style.setProperty(`--${name}`, value);
   }

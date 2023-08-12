@@ -6,7 +6,7 @@
 	align-items: stretch;
 	font-size: 14px;
 
-	&.reply-disable {
+	&[disabled] {
 		opacity: 0;
 		visibility: hidden;
 		height: 0;

@@ -1,9 +1,12 @@
 import i18next from "i18next";
+import { useDispatch } from "react-redux";
+import { setConsole } from "redux/actions/common";
+import ValidationError from "util/validationError";
 
 /* --- Input html to string --- */
-export const replyFilter = (inputElement) => {
+const htmlToString = async (inputElement) => {
   const row = [];
-  for(let node of inputElement.childNodes){
+  for (const node of inputElement.childNodes) {
     switch (node.nodeName) {
       case "IMG":
         row.push(node.src);
@@ -13,14 +16,46 @@ export const replyFilter = (inputElement) => {
     }
   }
 
-  const word = row.join("\n").trim();
-  console.log(`Input word string:\n${word}`);
-  return word;
+  const string = row.join("\n").trim();
+  console.log(`Input content string:\n${string}`);
+  return string;
 }
 
-const newFilter = (title) => {
+const checkWord = async (string) => {
+  string = string.trim();
+  const maxLength = 3000;
+  const length = string.length;
+  
+  if (length === 0) {
+    throw new ValidationError(i18next.t("tip.word.error.empty"));
+  }
 
+  if (length > maxLength) {
+    throw new ValidationError(i18next.t("tip.word.error.max", { maxLength, length }));
+  }
+
+  return string;
 }
+
+export const useInputFilter = () => {
+  const dispatch = useDispatch();
+
+  const inputFilter = async (inputElement) => {
+    try {
+      const string = await htmlToString(inputElement);
+      return await checkWord(string);
+    } catch (e) {
+      if (e instanceof ValidationError) {
+        dispatch(setConsole(e.message));
+      } else {
+        console.log("InputFilter error", e);
+      }
+    }
+  }
+
+  return inputFilter;
+}
+
 
 /* --- Paste auto to plain text --- */
 export const pasteAsPlain = (e) => {
@@ -35,5 +70,5 @@ export const scrollTo = (elementId) => {
   const element = document.getElementById(elementId);
   if (!element) return;
   const buffer = document.getElementById("header").offsetHeight;
-  window.scrollTo({ top : element.offsetTop - buffer, behavior : "smooth" });
+  window.scrollTo({ top: element.offsetTop - buffer, behavior: "smooth" });
 }
