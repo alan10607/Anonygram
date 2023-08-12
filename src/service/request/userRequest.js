@@ -11,7 +11,7 @@ const updateTheme = (theme) => request.patchMethod(
 );
 
 const updateHeadUrl = (headUrl) => request.patchMethod(
-  `/user/headUrl`,
+  `/user`,
   { headUrl }
 );
 

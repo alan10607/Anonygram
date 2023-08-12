@@ -2,7 +2,7 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { ICON_UPLOAD_IMG } from 'util/constant';
 import useThrottle from 'util/useThrottle';
-import { convertToBase64FromFiles } from 'util/image';
+import { uploadImageFromTargetFiles } from 'util/image';
 import "./index.scss";
 import { addReplyHtml, setConsole } from 'redux/actions/common';
 import ValidationError from 'util/validationError';
@@ -18,11 +18,7 @@ export default function UploadImageBtn({ id }) {
   const { t } = useTranslation();
 
   const uploadImage = useThrottle((event) => {
-    convertToBase64FromFiles(event.target.files).then(compressedBase64 => {
-      return forumRequest.uploadImage(compressedBase64);
-    }).then((res) => {
-      const imageUrl = res.imageUrl;
-      console.log("Image url", imageUrl);
+    uploadImageFromTargetFiles(event.target.files).then((imageUrl) => {
       dispatch(addReplyHtml(id, `<img src="${imageUrl}" alt="${imageUrl}"/>`));
     }).catch(e => {
       console.log("Image load failed", e);

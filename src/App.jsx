@@ -30,9 +30,18 @@ const routeConfig = [
     path: '/forum',
     element: <Main />,
     children: [
-      { path: '/forum/', element: <Forum /> },
-      { path: '/forum/new', element: <New /> },
-      { path: '/forum/setting', element: <Setting /> }
+      {
+        path: '/forum',
+        element: <Forum />
+      },
+      {
+        path: '/forum/new',
+        element: <New />
+      },
+      {
+        path: '/forum/setting',
+        element: <Setting />
+      }
     ],
   },
   {

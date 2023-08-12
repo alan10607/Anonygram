@@ -80,6 +80,11 @@ select {
 	-moz-appearance: none;
 	appearance: none;
 	cursor: pointer;
+
+	&:disabled {
+		background: var(--bg-light);
+		cursor: initial;
+	}
 }
 
 .full-screan {

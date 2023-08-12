@@ -7,6 +7,7 @@
   --light-color-normal: #262626;
   --light-color-mid: #545454;
   --light-color-light: #8e8e8e;
+  --light-bg-light:#ececec;
   --light-icon-filter: invert(0%) sepia(93%) saturate(0%) hue-rotate(229deg) brightness(93%) contrast(107%);
 
   --dark-bg-body: #000000;
@@ -17,6 +18,7 @@
   --dark-color-normal: #ececec;
   --dark-color-mid: #efefef;
   --dark-color-light: #aaaaaa;
+  --light-bg-light:#545454;
   --dark-icon-filter: invert(100%) sepia(57%) saturate(41%) hue-rotate(308deg) brightness(113%) contrast(87%);
 
   --bg-body: var(--light-bg-body);
@@ -27,6 +29,7 @@
   --color-normal: var(--light-color-normal);
   --color-mid: var(--light-color-mid);
   --color-light: var(--light-color-light);
+  --bg-light: var(--light-bg-light);
   --icon-filter: var(--light-icon-filter);
 }
 
