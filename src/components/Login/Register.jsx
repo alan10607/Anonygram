@@ -17,7 +17,7 @@ export default function Register() {
   const register = (event) => {
     event.preventDefault();
 
-    const errorStr = checkUserData(username, email, password);
+    const errorStr = checkRegisterData(username, email, password);
     if (errorStr !== "") {
       return setHint(errorStr);
     }
@@ -27,7 +27,7 @@ export default function Register() {
       .catch(e => setHint(t("tip.register.error")));
   }
 
-  const checkUserData = (username, email, password) => {
+  const checkRegisterData = (username, email, password) => {
     if (username === "") return t("tip.register.username.error");
     if (!EMAIL_EXP.test(email)) return t("tip.register.email.error");
     if (!PASSWORD_EXP.test(password)) return t("tip.register.password.error");

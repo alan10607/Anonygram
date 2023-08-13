@@ -1,5 +1,5 @@
 // import { useDispatch } from 'react-redux';
-// import { showConsole } from '../redux/actions/common';
+// import { showConsole } from 'redux/actions/common';
 
 // export default function useConsole() {
 //   const dispatch = useDispatch();

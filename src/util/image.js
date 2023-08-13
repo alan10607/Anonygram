@@ -1,9 +1,9 @@
 import i18next from "i18next";
 import { useDispatch } from "react-redux";
-import { setConsole } from "redux/actions/common";
+import { setConsole, setLoading } from "redux/actions/common";
 import forumRequest from "service/request/forumRequest";
-import ValidationError from "util/validationError";
 import { MIME_IMAGE_EXP } from "util/regexp";
+import ValidationError from "util/validationError";
 
 const imgQuality = 1, imgMaxWidth = 450;
 
@@ -62,21 +62,12 @@ const compressImg = (image, quality, maxWidth) => {
   });
 };
 
-export const uploadImageFromTargetFiles = (files) => {
-  return checkTargetFiles(files).then(file => convertFileToBase64(file))
-    .then(base64 => buildImg(base64))
-    .then(image => compressImg(image, imgQuality, imgMaxWidth))
-    .then(compressedBase64 => forumRequest.uploadImage(compressedBase64))
-    .then(res => {
-      console.log("Upload image url", res.imageUrl);
-      return Promise.resolve(res.imageUrl);
-    });
-}
-
 export const useUploadImage = () => {
   const dispatch = useDispatch();
 
   const uploadImage = (event) => {
+    dispatch(setLoading(true));
+
     return checkTargetFiles(event.target.files)
       .then(file => convertFileToBase64(file))
       .then(base64 => buildImg(base64))
@@ -96,6 +87,7 @@ export const useUploadImage = () => {
       })
       .finally(() => {
         event.target.value = "";//remove file
+        dispatch(setLoading(false));
       });
   }
 

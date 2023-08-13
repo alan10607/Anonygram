@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { setReplyId } from 'redux/actions/common';
+import { setConsole, setReplyId } from 'redux/actions/common';
 import { setAllContents } from 'redux/actions/forum';
 import forumRequest from 'service/request/forumRequest';
 import { REPLY_BOX_ATTR } from 'util/constant';
@@ -23,7 +23,7 @@ export default function Move({ id }) {
   const getContents = useThrottle(() => {
     forumRequest.getContents(id, queryNoList)
       .then(contents => dispatch(setAllContents(contents)))
-      .catch(e => console.log("Failed to get contents", e));
+      .catch(e => dispatch(setConsole(t("tip.forum.content.get.error"))));
   })
 
   const openReply = () => {

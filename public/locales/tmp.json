@@ -3,45 +3,11 @@
 
 
 
-  "empty-title": "The title cannot be blank!!",
-  "empty-word": "The content of the comments cannot be blank!!",
-
-
-  "add-post": "Post",
-  "add-cont": "Reply",
-  "title": "Title",
-  "reply": "Reply",
-  "del": "Delete",
-  "login": "Login",
-  "logout": "Logout",
-  "register": "Register",
 
 
 
 
-  "back-to-login": "Back to Login",
-  "or": "or",
-  "as-anony": "Anonymous Login",
-  "user-register": "User Register",
-  "email": "Email",
-  "username": "Username",
-  "pw": "Password",
-  "lang": "Language",
-  "theme": "Theme",
-  "theme-dark": "Dark",
-  "theme-light": "Light",
-
-
-
-  "createPost-ok": "The post was published successfully!!",
-  "createPost-err": "Failed to publish the post, please try again later",
-
-  "findTopCont-err": "Loading comments error",
-  "replyPost-err": "Failed to leave a comments, please try again later",
-
-  "uploadImg-err": "Failed to upload image, please try again later",
-
-  "date-half": "{{MM}}/{{dd}}",
+  "date-half": "{{MM}}-{{dd}}",
   "date-full": "{{yyyy}}-{{MM}}-{{dd}}",
   "time-half": "{{yyyy}}-{{MM}}-{{dd}} {{hh}}:{{mm}}",
   "just-day": " days ago",

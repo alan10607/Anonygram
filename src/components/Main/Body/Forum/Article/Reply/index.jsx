@@ -12,7 +12,6 @@ import ReplyInfo from '../Content/Info/ReplyInfo';
 import UploadImageBtn from './UploadImgBtn';
 import './reply.scss';
 
-
 export default function Reply({ id }) {
   const inputRef = useRef();
   const { replyId, replyHtml } = useSelector(state => ({
@@ -24,6 +23,12 @@ export default function Reply({ id }) {
   const { t } = useTranslation();
   const inputFilter = useInputFilter();
 
+  useEffect(() => {//init input html
+    if(!replyHtml){
+      dispatch(setReplyHtml(id, "<div><br></div>"));
+    }
+  }, [replyHtml])
+  
   const httpSetContent = useThrottle(() => {
     inputFilter(inputRef.current)
       .then(word => forumRequest.setContent(id, word))

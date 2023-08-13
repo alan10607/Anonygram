@@ -1,25 +1,25 @@
 import { useEffect } from 'react';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import { closeConsole, deleteConsole } from '../../redux/actions/common';
-import { useLang, useTheme } from '../../util/localSetting';
-import './index.scss';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { deleteConsole } from 'redux/actions/common';
+import './console.scss';
+import { useTranslation } from 'react-i18next';
 
 export default function Console() {
-  const { console, showLoading } = useSelector(state => ({
+  const { console, loading } = useSelector(state => ({
     console: state.common.console,
-    showLoading: state.common.showLoading
+    loading: state.common.loading
   }), shallowEqual);
   const dispatch = useDispatch();
-  useLang();
-  useTheme();
+  const { t } = useTranslation();
+  const consoleShowSec = 2;
 
   useEffect(() => {
     if (!console) return;
 
     const closeTimeout = setTimeout(() => {
       dispatch(deleteConsole())
-    }, 2000);
-    
+    }, consoleShowSec * 1000);
+
     return () => {
       clearTimeout(closeTimeout);
     }
@@ -27,10 +27,13 @@ export default function Console() {
 
   return (
     <div>
-      <div id="console" className={console ? "console-open" : "console-close"}>
-        <div>{console}</div>
+      <div id="console" disabled={!!console}>
+        <div>
+          <div>{t("text.console.title")}</div>
+          <div>{console}</div>
+        </div>
       </div>
-      <div id="loading" className={"full-screan center " + (showLoading ? "" : "disable")}>
+      <div id="loading" className="full-screan center" disabled={!loading}>
         <div>
           <div className="loading-icon">
             <div></div>

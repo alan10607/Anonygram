@@ -1,19 +1,17 @@
-import { useState, useEffect, useRef } from 'react';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { inputFilter, useInputFilter } from 'util/inputControll';
-import { WELCOME_PAGE } from 'util/constant';
-import useThrottle from 'util/useThrottle';
-import './reply.scss';
-import forumRequest from 'service/request/forumRequest';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from "react-router-dom";
+import { setConsole, setReplyHtml } from 'redux/actions/common';
 import { deleteAllId } from 'redux/actions/forum';
-import UploadImageBtn from './UploadImgBtn';
-import { pasteAsPlain } from 'util/inputControll';
-import { setReplyHtml, setConsole, setReplyId } from 'redux/actions/common';
+import forumRequest from 'service/request/forumRequest';
+import { WELCOME_PAGE } from 'util/constant';
+import { pasteAsPlain, useInputFilter } from 'util/inputControll';
+import useThrottle from 'util/useThrottle';
 import ReplyBar from '../Content/Bar/ReplyBar';
 import NewInfo from '../Content/Info/NewInfo';
-import { Link, useNavigate } from "react-router-dom";
-
+import UploadImageBtn from './UploadImgBtn';
+import './reply.scss';
 
 export default function NewReply({ id = "new" }) {
   const [title, setTitle] = useState("");
@@ -26,28 +24,27 @@ export default function NewReply({ id = "new" }) {
   const navigate = useNavigate();
   const inputFilter = useInputFilter();
 
-  useEffect(() => {
-    dispatch(setReplyId(id));
-  }, [])
+  useEffect(() => {//init input html
+    if(!replyHtml){
+      dispatch(setReplyHtml(id, "<div><br></div>"));
+    }
+  }, [replyHtml])
 
-  const checkTitle = async (title) => {
-    title = title.trim();
+  const checkTitle = (title) => {
     const maxLength = 3000;
     const length = title.length;
-    
-    if (length === 0) {
-      throw new ValidationError(i18next.t("tip.title.error.empty"));
-    }
-  
-    if (length > maxLength) {
-      throw new ValidationError(i18next.t("tip.title.error.max", { maxLength, length }));
-    }
-  
-    return string;
+    if (length === 0) return t("tip.title.error.empty");
+    if (length > maxLength) return t("tip.title.error.max", { maxLength, length });
+    return "";
   }
 
   const httpSetContent = useThrottle(() => {
-    checkTitle// mass here
+    const trimmedTitle = title.trim();
+    const titleError = checkTitle(trimmedTitle);
+    if (titleError !== "") {
+      dispatch(setConsole(titleError));
+      return
+    }
 
     inputFilter(inputRef.current)
       .then(word => forumRequest.setArticle(trimmedTitle, word))
@@ -56,9 +53,7 @@ export default function NewReply({ id = "new" }) {
         dispatch(setReplyHtml(id, "<div><br></div>"));
         navigate(WELCOME_PAGE);
       })
-      .catch((e) => {
-        dispatch(setConsole(t("createPost-err")));
-      })
+      .catch(e => dispatch(setConsole(t("tip.forum.article.set.error"))))
   });
 
   return (
@@ -69,7 +64,7 @@ export default function NewReply({ id = "new" }) {
         onChange={(event) => { setTitle(event.target.value) }}
         className="new-title"
         type="text"
-        placeholder={t("title")} />
+        placeholder={t("common.title")} />
       <div ref={inputRef}
         className="input-box input-box-full"
         onPaste={pasteAsPlain}
@@ -80,7 +75,7 @@ export default function NewReply({ id = "new" }) {
       <div className="reply-move">
         <UploadImageBtn id={id} />
         <div className="flex-empty"></div>
-        <div className="text-btn" onClick={httpSetContent}>{t("submit")}</div>
+        <div className="text-btn" onClick={httpSetContent}>{t("common.submit")}</div>
       </div>
     </div>
   )
