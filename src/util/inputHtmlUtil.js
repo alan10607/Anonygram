@@ -1,7 +1,7 @@
 import i18next from "i18next";
 import { useDispatch } from "react-redux";
 import { setConsole } from "redux/actions/common";
-import ValidationError from "util/validationError";
+import ValidationError from "Error/validationError";
 
 /* --- Input html to string --- */
 const htmlToString = async (inputElement) => {
@@ -56,11 +56,10 @@ export const useInputFilter = () => {
   return inputFilter;
 }
 
-
 /* --- Paste auto to plain text --- */
 export const pasteAsPlain = (e) => {
   const text = (e.originalEvent || e).clipboardData.getData("text/plain");
-  document.execCommand("insertText", false, text);//已過時的方法
+  document.execCommand("insertText", false, text);//deprecated
   console.log("Paste as plain", text);
   e.preventDefault();
 }

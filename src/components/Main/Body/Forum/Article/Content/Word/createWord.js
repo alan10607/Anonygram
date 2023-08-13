@@ -1,5 +1,5 @@
-import { scrollTo } from "util/inputControll";
-import { BX_EXP, IMG_URL_EXP, URL_EXP } from "util/regexp";
+import { scrollTo } from "util/inputHtmlUtil";
+import { BX_EXP, IMG_URL_EXP, URL_EXP } from "config/regexp";
 
 let k = 0;
 let id = "";

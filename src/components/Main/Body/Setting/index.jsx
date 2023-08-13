@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { setConsole } from 'redux/actions/common';
 import { deleteUser, setUser } from 'redux/actions/user';
 import userRequest from 'service/request/userRequest';
-import { ICON_USER } from 'util/constant';
+import { ICON_USER } from 'config/constant';
 import { useUploadImage } from 'util/imageUtil';
-import useThrottle from 'hook/useThrottle';
+import useThrottle from 'util/useThrottle';
 import './setting.scss';
 
 export default function Setting() {

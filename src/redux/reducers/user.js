@@ -1,7 +1,7 @@
 import i18n from 'i18next';
 import { SET_USER, DELETE_USER } from "../actions/user";
 import { setTheme } from 'util/themeUtil';
-import { isAnonygramUser } from 'util/userUtil';
+import { isAnonygramUser } from 'util/authUtil';
 const initUserState = {
   id: null,
   username: "",

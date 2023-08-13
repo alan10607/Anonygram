@@ -12,7 +12,7 @@ console.log(String.raw`
 
 /* --- Backend url --- */
 export const VERSION = "v0501";
-export const WELCOME_PAGE = "/forum";
+export const WELCOME_PAGE = "/forum/index";
 
 /* --- Backend url --- */
 const CLOUD_URL = "https://13.112.45.117";

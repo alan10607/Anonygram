@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
-import { STATUS_TYPE } from 'util/constant';
+import { STATUS_TYPE } from 'config/constant';
 import Content from './Content';
 import DeletedContent from './Content/DeletedContent';
 import Move from './Move';

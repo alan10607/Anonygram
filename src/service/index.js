@@ -1,6 +1,6 @@
 import axios from "axios";
 import { setCookie } from "util/cookieUtil";
-import { BACKEND_API_URL } from "util/constant";
+import { BACKEND_API_URL } from "config/constant";
 import { locationLocalTo } from "util/locationUtil";
 import { addPending, removePending } from "./pending";
 

@@ -4,8 +4,8 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { setConsole, setReplyId } from 'redux/actions/common';
 import { setAllContents } from 'redux/actions/forum';
 import forumRequest from 'service/request/forumRequest';
-import { REPLY_BOX_ATTR } from 'util/constant';
-import useThrottle from 'hook/useThrottle';
+import { REPLY_BOX_ATTR } from 'config/constant';
+import useThrottle from 'util/useThrottle';
 import './move.scss';
 
 export default function Move({ id }) {

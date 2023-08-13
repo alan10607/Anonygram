@@ -1,4 +1,4 @@
-import { STATUS_TYPE } from "util/constant";
+import { STATUS_TYPE } from "config/constant";
 import {
   SET_ALL_ID,
   DELETE_ALL_ID,

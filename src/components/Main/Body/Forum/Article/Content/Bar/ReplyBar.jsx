@@ -1,5 +1,5 @@
 import { shallowEqual, useSelector } from 'react-redux';
-import { ICON_USER } from 'util/constant';
+import { ICON_USER } from 'config/constant';
 import './bar.scss';
 
 export default function ReplyBar() {

@@ -2,8 +2,8 @@ import i18next from "i18next";
 import { useDispatch } from "react-redux";
 import { setConsole, setLoading } from "redux/actions/common";
 import forumRequest from "service/request/forumRequest";
-import { MIME_IMAGE_EXP } from "util/regexp";
-import ValidationError from "util/validationError";
+import { MIME_IMAGE_EXP } from "config/regexp";
+import ValidationError from "Error/validationError";
 
 const imgQuality = 1, imgMaxWidth = 450;
 

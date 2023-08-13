@@ -5,9 +5,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { setUser } from 'redux/actions/user';
 import authRequest from 'service/request/authRequest';
 import otherRequest from 'service/request/otherRequest';
-import { BACKEND_API_URL, ICON_LOGO, VERSION, WELCOME_PAGE } from 'util/constant';
+import { BACKEND_API_URL, ICON_LOGO, VERSION, WELCOME_PAGE } from 'config/constant';
 import { locationTo } from 'util/locationUtil';
-import { isAnonygramUser } from 'util/userUtil';
+import { isAnonygramUser } from 'util/authUtil';
 import './login.scss';
 
 export default function Login() {

@@ -3,10 +3,10 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { addReplyHtml, setConsole, setReplyId } from 'redux/actions/common';
 import { deleteArticle, deleteContent } from 'redux/actions/forum';
 import forumRequest from 'service/request/forumRequest';
-import { REPLY_BOX_ATTR } from 'util/constant';
-import { scrollTo } from 'util/inputControll';
+import { REPLY_BOX_ATTR } from 'config/constant';
+import { scrollTo } from 'util/inputHtmlUtil';
 import { getTimeFromStr } from 'util/timeUtil';
-import useThrottle from 'hook/useThrottle';
+import useThrottle from 'util/useThrottle';
 import './info.scss';
 
 export default function Info({ id, no }) {

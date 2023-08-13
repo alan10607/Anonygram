@@ -63,7 +63,8 @@ table {
 	}
 }
 
-input[type="button"], input[type="submit"] {
+input[type="button"],
+input[type="submit"] {
 	@include login-btn;
 }
 
@@ -98,14 +99,14 @@ select {
 .center {
 	display: table;
 
-	> div {
+	>div {
 		display: table-cell;
 		vertical-align: middle;
 		text-align: center;
 	}
 }
 
-.icon{
+.icon {
 	filter: var(--icon-filter)
 }
 

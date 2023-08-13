@@ -4,7 +4,7 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { setConsole, setReplyId } from 'redux/actions/common';
 import { setAllArticles, setAllId } from 'redux/actions/forum';
 import forumRequest from 'service/request/forumRequest';
-import { REPLY_BOX, STATUS_TYPE } from 'util/constant';
+import { REPLY_BOX, STATUS_TYPE } from 'config/constant';
 import Article from './Article';
 import './forum.scss';
 
