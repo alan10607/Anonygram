@@ -1,5 +1,5 @@
 import { shallowEqual, useSelector } from 'react-redux';
-import { getNowTime } from 'util/time';
+import { getNowTime } from 'util/timeUtil';
 
 export default function ReplyInfo({ id }) {
   const { contentSize } = useSelector(state => ({

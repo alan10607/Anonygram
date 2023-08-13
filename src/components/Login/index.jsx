@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from "react-router-dom";
 import { setUser } from 'redux/actions/user';
 import authRequest from 'service/request/authRequest';
+import otherRequest from 'service/request/otherRequest';
 import { BACKEND_API_URL, ICON_LOGO, VERSION, WELCOME_PAGE } from 'util/constant';
 import { locationTo } from 'util/locationTo';
 import { isAnonygramUser } from 'util/userUtil';
@@ -18,7 +19,7 @@ export default function Login() {
   const dispatch = useDispatch();
 
   useEffect(() => {//For testing, check user SSL confirmation
-    authRequest.ssl()
+    otherRequest.ssl()
       .then(() => { })
       .catch(e => {//If does not conform SSL then redirect to the backend
         const sslUrl = `${BACKEND_API_URL}/ssl?callbackUrl=${window.location.href}`;

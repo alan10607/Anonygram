@@ -25,7 +25,7 @@ const checkWord = async (string) => {
   string = string.trim();
   const maxLength = 3000;
   const length = string.length;
-  
+
   if (length === 0) {
     throw new ValidationError(i18next.t("tip.word.error.empty"));
   }

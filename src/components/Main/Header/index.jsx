@@ -1,6 +1,6 @@
 import { shallowEqual, useSelector } from 'react-redux';
 import { NavLink } from "react-router-dom";
-import { ICON_ADD, ICON_FORUM, ICON_LOGO, ICON_OPTION } from 'util/constant';
+import { ICON_ADD, ICON_FORUM, ICON_LOGO, ICON_SETTING } from 'util/constant';
 import "./head.scss";
 
 export default function Header() {
@@ -18,10 +18,10 @@ export default function Header() {
         <img className="icon" src={ICON_FORUM} alt="ICON_FORUM" />
       </NavLink>
       <NavLink to="/forum/new">
-        <img className="icon" src={ICON_ADD} alt="ICON_OPTION" />
+        <img className="icon" src={ICON_ADD} alt="ICON_SETTING" />
       </NavLink>
       <NavLink to="/forum/setting">
-        <img className="icon" src={ICON_OPTION} alt="ICON_OPTION" />
+        <img className="icon" src={ICON_SETTING} alt="ICON_SETTING" />
       </NavLink>
     </div>
   )

@@ -12,21 +12,21 @@ export const getTimeFromStr = (dateStr) => {
   const day = 86400000;
   const week = 604800000;
 
-  if(gap >= week){//超過一周直接顯示日期
+  if(gap >= week){//if more than a week display the date
     const dateObj = {
       yyyy : date.getFullYear(),
       MM : String(date.getMonth()).padStart(2, "0"),
       dd : String(date.getDate()).padStart(2, "0")
     };
     return now.getFullYear() > date.getFullYear() ? 
-      i18next.t("date-full", dateObj) :
-      i18next.t("date-half", dateObj) ;
+      i18next.t("text.time.yyyyMMdd", dateObj) :
+      i18next.t("text.time.MMdd", dateObj) ;
   }
-  if(gap >= day) return Math.floor(gap / day) + i18next.t("just-day");
-  if(gap >= h) return Math.floor(gap / h) + i18next.t("just-hour");
-  if(gap >= m) return Math.floor(gap / m) + i18next.t("just-min",);
-  if(gap >= s) return Math.floor(gap / s) + i18next.t("just-sec",);
-  if(gap >= 0) return i18next.t("just");
+  if(gap >= day) return Math.floor(gap / day) + i18next.t("text.time.day.ago");
+  if(gap >= h) return Math.floor(gap / h) + i18next.t("text.time.hou.agor");
+  if(gap >= m) return Math.floor(gap / m) + i18next.t("text.time.min.ago",);
+  if(gap >= s) return Math.floor(gap / s) + i18next.t("text.time.sec.ago",);
+  if(gap >= 0) return i18next.t("text.time.now");
   return "";
 }
 
@@ -39,5 +39,5 @@ export const getNowTime = () => {
     hh : String(now.getHours()).padStart(2, "0"),
     mm : String(now.getMinutes()).padStart(2, "0")
   };
-  return i18next.t("time-half", dateObj);
+  return i18next.t("text.time.yyyyMMddhhmm", dateObj);
 }

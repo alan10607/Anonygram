@@ -5,7 +5,7 @@ import { deleteArticle, deleteContent } from 'redux/actions/forum';
 import forumRequest from 'service/request/forumRequest';
 import { REPLY_BOX_ATTR } from 'util/constant';
 import { scrollTo } from 'util/inputControll';
-import { getTimeFromStr } from 'util/time';
+import { getTimeFromStr } from 'util/timeUtil';
 import useThrottle from 'util/useThrottle';
 import './info.scss';
 

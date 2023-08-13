@@ -28,17 +28,16 @@ export const THEME = "ag-theme";
 
 /* --- Pic --- */
 const PUBLIC_URL = process.env.PUBLIC_URL;
+export const ICON_LOGO = `${PUBLIC_URL}/pic/logo.svg`;
 export const ICON_USER = `${PUBLIC_URL}/pic/user.svg`;
 export const ICON_LIKE = `${PUBLIC_URL}/pic/like.svg`;
 export const ICON_UPLOAD_IMG = `${PUBLIC_URL}/pic/uploadImg.svg`;
 export const ICON_FORUM = `${PUBLIC_URL}/pic/forum.svg`;
 export const ICON_ADD = `${PUBLIC_URL}/pic/add.svg`;
-export const ICON_OPTION = `${PUBLIC_URL}/pic/option.svg`;
+export const ICON_SETTING = `${PUBLIC_URL}/pic/setting.svg`;
 export const ICON_CLOSE = `${PUBLIC_URL}/pic/close.svg`;
-export const ICON_LOGO = `${PUBLIC_URL}/pic/logo.svg`;
 
 /* --- Data static --- */
 export const STATUS_TYPE = { NORMAL: "NORMAL", DELETED: "DELETED", UNKNOWN: "UNKNOWN" };
-export const BIG_BOX_ID = { NEW: "NEW", SETTING: "SETTING" };
 export const REPLY_BOX = "data-reply-box";
 export const REPLY_BOX_ATTR = { [REPLY_BOX]: true };

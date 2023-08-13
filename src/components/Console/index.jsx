@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { deleteConsole } from 'redux/actions/common';
-import './console.scss';
 import { useTranslation } from 'react-i18next';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { setConsole } from 'redux/actions/common';
+import './console.scss';
 
 export default function Console() {
   const { console, loading } = useSelector(state => ({
@@ -17,7 +17,7 @@ export default function Console() {
     if (!console) return;
 
     const closeTimeout = setTimeout(() => {
-      dispatch(deleteConsole())
+      dispatch(setConsole(""));
     }, consoleShowSec * 1000);
 
     return () => {

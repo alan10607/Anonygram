@@ -48,7 +48,6 @@ const uploadImage = (imageBase64) => request.postMethod(
   { imageBase64 }
 )
 
-
 export default {
   getId,
   getArticles,

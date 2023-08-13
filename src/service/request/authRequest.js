@@ -5,8 +5,8 @@ const test = () => request.getMethod(
 );
 
 const login = (email, password) => request.postMethod(
-  `/auth/login`, 
-  {email, password}
+  `/auth/login`,
+  { email, password }
 );
 
 const anonymous = () => request.postMethod(
@@ -14,18 +14,13 @@ const anonymous = () => request.postMethod(
 );
 
 const register = (username, email, password) => request.postMethod(
-  `/auth/register`, 
+  `/auth/register`,
   { username, email, password }
-);
-
-const ssl = () => request.getMethod(
-  `/ssl`
 );
 
 export default {
   test,
   login,
   anonymous,
-  register,
-  ssl
+  register
 };

@@ -3,9 +3,7 @@ import {
   SET_REPLY_HTML,
   ADD_REPLY_HTML,
   SET_CONSOLE,
-  DELETE_CONSOLE,
-  SET_LOADING,
-  CLOSE_LOADING
+  SET_LOADING
 } from "../actions/common";
 
 const initState = {
@@ -35,9 +33,6 @@ export default function commonReducer(preState = initState, action) {
 
     case SET_CONSOLE:
       return Object.assign({}, preState, { console: data });
-
-    case DELETE_CONSOLE:
-      return Object.assign({}, preState, { console: "" });
 
     case SET_LOADING:
       return Object.assign({}, preState, { loading: data });

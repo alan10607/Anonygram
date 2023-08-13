@@ -6,10 +6,10 @@ export const getCookie = (key) => {
   return cookies.get(key);
 }
 
-export const setCookie = (key, value, expiredDays) => {
+export const setCookie = (key, value, expiredSecond) => {
   cookies.set(key, value, {
     path: "/",
-    maxAge: 60 * 60 * 24 * expiredDays,
+    maxAge: 60 * expiredSecond,
     secure: true,
     sameSite: "None"
   });

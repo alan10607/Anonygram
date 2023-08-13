@@ -2,7 +2,6 @@ export const SET_REPLY_ID = "setReplyId";
 export const SET_REPLY_HTML = "setReplyHtml";
 export const ADD_REPLY_HTML = "addReplyHtml";
 export const SET_CONSOLE = "setConsole";
-export const DELETE_CONSOLE = "deleteConsole";
 export const SET_LOADING = "setLoading";
 
 export const setReplyId = (id) => ({
@@ -23,10 +22,6 @@ export const addReplyHtml = (id, html) => ({
 export const setConsole = (message) => ({
   type: SET_CONSOLE,
   data: message
-});
-
-export const deleteConsole = () => ({
-  type: DELETE_CONSOLE
 });
 
 export const setLoading = (show) => ({

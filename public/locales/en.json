@@ -11,7 +11,6 @@
 "common.reply": "Reply",
 "common.delete": "Delete",
 "common.deleted": "Deleted",
-
 "common.submit": "Submit",
 "common.title": "Title",
 
@@ -28,6 +27,14 @@
 "text.move.open.all": "View all {{remain}} comments",
 "text.move.open.remain": "View {{remain}} remain comments",
 "text.console.title": "System Notification",
+"text.time.MMdd": "{{MM}}-{{dd}}",
+"text.time.yyyyMMdd": "{{yyyy}}-{{MM}}-{{dd}}",
+"text.time.yyyyMMddhhmm": "{{yyyy}}-{{MM}}-{{dd}} {{hh}}:{{mm}}",
+"text.time.day.ago": " days ago",
+"text.time.hour.ago": " hours ago",
+"text.time.min.ago": " minutes ago",
+"text.time.sec.ago": " seconds ago",
+"text.time.now": "now",
 
 
 "tip.login.error": "Login failed, email or password not correct",
@@ -47,13 +54,11 @@
 "tip.forum.content.delete.ok": "The comment has been deleted",
 "tip.forum.content.delete.error": "Delete comment failed",
 "tip.forum.content.set.error": "Failed to leave a comment, please try again later",
-
 "tip.img.error": "Failed to upload image, please try again later",
 "tip.img.error.empty": "The selected image is empty",
 "tip.img.error.format": "Image format error",
 "tip.title.error.empty": "The title cannot be blank",
 "tip.title.error.max": "Maximum character limit of title is {{maxLength}}, already have {{length}} characters",
 "tip.word.error.empty": "The content cannot be blank",
-"tip.word.error.max": "Maximum character limit of content is {{maxLength}}, already have {{length}} characters",
-
+"tip.word.error.max": "Maximum character limit of content is {{maxLength}}, already have {{length}} characters"
 }

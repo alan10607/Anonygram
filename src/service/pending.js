@@ -21,7 +21,7 @@ export const addPending = (config) => {
 
 export const removePending = (config) => {
   const hash = getHash(config);
-  if (pending.has(hash)) { 
+  if (pending.has(hash)) {
     const controller = pending.get(hash)
     controller.abort();
     pending.delete(hash);

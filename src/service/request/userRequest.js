@@ -15,7 +15,6 @@ const updateHeadUrl = (headUrl) => request.patchMethod(
   { headUrl }
 );
 
-
 export default {
   updateLanguage,
   updateTheme,
