@@ -5,7 +5,7 @@ import { setConsole, setReplyId } from 'redux/actions/common';
 import { setAllContents } from 'redux/actions/forum';
 import forumRequest from 'service/request/forumRequest';
 import { REPLY_BOX_ATTR } from 'util/constant';
-import useThrottle from 'util/useThrottle';
+import useThrottle from 'hook/useThrottle';
 import './move.scss';
 
 export default function Move({ id }) {

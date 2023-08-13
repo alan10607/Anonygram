@@ -1,7 +1,7 @@
 import axios from "axios";
 import { setCookie } from "util/cookieUtil";
 import { BACKEND_API_URL } from "util/constant";
-import { locationLocalTo } from "util/locationTo";
+import { locationLocalTo } from "util/locationUtil";
 import { addPending, removePending } from "./pending";
 
 const axiosInstance = axios.create({

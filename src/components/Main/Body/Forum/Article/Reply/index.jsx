@@ -6,7 +6,7 @@ import { setContent } from 'redux/actions/forum';
 import forumRequest from 'service/request/forumRequest';
 import { REPLY_BOX_ATTR } from 'util/constant';
 import { pasteAsPlain, useInputFilter } from 'util/inputControll';
-import useThrottle from 'util/useThrottle';
+import useThrottle from 'hook/useThrottle';
 import ReplyBar from '../Content/Bar/ReplyBar';
 import ReplyInfo from '../Content/Info/ReplyInfo';
 import UploadImageBtn from './UploadImgBtn';

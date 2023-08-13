@@ -6,7 +6,7 @@ import { setUser } from 'redux/actions/user';
 import authRequest from 'service/request/authRequest';
 import otherRequest from 'service/request/otherRequest';
 import { BACKEND_API_URL, ICON_LOGO, VERSION, WELCOME_PAGE } from 'util/constant';
-import { locationTo } from 'util/locationTo';
+import { locationTo } from 'util/locationUtil';
 import { isAnonygramUser } from 'util/userUtil';
 import './login.scss';
 

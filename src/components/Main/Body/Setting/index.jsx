@@ -5,8 +5,8 @@ import { setConsole } from 'redux/actions/common';
 import { deleteUser, setUser } from 'redux/actions/user';
 import userRequest from 'service/request/userRequest';
 import { ICON_USER } from 'util/constant';
-import { useUploadImage } from 'util/image';
-import useThrottle from 'util/useThrottle';
+import { useUploadImage } from 'util/imageUtil';
+import useThrottle from 'hook/useThrottle';
 import './setting.scss';
 
 export default function Setting() {

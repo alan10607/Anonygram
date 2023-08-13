@@ -1,8 +1,8 @@
 import { useDispatch } from 'react-redux';
 import { addReplyHtml } from 'redux/actions/common';
 import { ICON_UPLOAD_IMG } from 'util/constant';
-import { useUploadImage } from 'util/image';
-import useThrottle from 'util/useThrottle';
+import { useUploadImage } from 'util/imageUtil';
+import useThrottle from 'hook/useThrottle';
 import "./uploadIMgBtn.scss";
 
 export default function UploadImageBtn({ id }) {

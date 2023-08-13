@@ -6,7 +6,7 @@ import forumRequest from 'service/request/forumRequest';
 import { REPLY_BOX_ATTR } from 'util/constant';
 import { scrollTo } from 'util/inputControll';
 import { getTimeFromStr } from 'util/timeUtil';
-import useThrottle from 'util/useThrottle';
+import useThrottle from 'hook/useThrottle';
 import './info.scss';
 
 export default function Info({ id, no }) {

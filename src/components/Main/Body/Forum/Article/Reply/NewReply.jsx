@@ -7,7 +7,7 @@ import { deleteAllId } from 'redux/actions/forum';
 import forumRequest from 'service/request/forumRequest';
 import { WELCOME_PAGE } from 'util/constant';
 import { pasteAsPlain, useInputFilter } from 'util/inputControll';
-import useThrottle from 'util/useThrottle';
+import useThrottle from 'hook/useThrottle';
 import ReplyBar from '../Content/Bar/ReplyBar';
 import NewInfo from '../Content/Info/NewInfo';
 import UploadImageBtn from './UploadImgBtn';
