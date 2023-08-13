@@ -48,15 +48,24 @@ export default function Setting() {
   })
 
   const updateLanguage = useThrottle((language) => {
-    userRequest.updateLanguage(language)
-      .then(user => dispatch(setUser(user)))
-      .catch(e => console.log("Update language failed", e));
+    if (isAnonymous) {
+      dispatch(setUser({ language }))
+    } else {
+      userRequest.updateLanguage(language)
+        .then(user => dispatch(setUser(user)))
+        .catch(e => console.log("Update language failed", e));
+    }
   });
 
   const updateTheme = useThrottle((theme) => {
-    userRequest.updateTheme(theme)
-      .then(user => dispatch(setUser(user)))
-      .catch(e => console.log("Update theme failed", e))
+    if (isAnonymous) {
+      dispatch(setUser({ theme }))
+      return;
+    } else {
+      userRequest.updateTheme(theme)
+        .then(user => dispatch(setUser(user)))
+        .catch(e => console.log("Update theme failed", e))
+    }
   });
 
   const logout = () => {
@@ -90,16 +99,14 @@ export default function Setting() {
       <div className="setting-option">
         <div>{t("common.lang")}</div>
         <select value={language}
-          onChange={(event) => { updateLanguage(event.target.value) }}
-          disabled={isAnonymous}>
+          onChange={(event) => { updateLanguage(event.target.value) }}>
           {getOptionNode(LANGUAGE_OPTIONS)}
         </select>
       </div>
       <div className="setting-option">
         <div>{t("common.theme")}</div>
         <select value={theme}
-          onChange={(event) => { updateTheme(event.target.value) }}
-          disabled={isAnonymous}>
+          onChange={(event) => { updateTheme(event.target.value) }}>
           {getOptionNode(THEME_OPTIONS)}
         </select>
       </div>

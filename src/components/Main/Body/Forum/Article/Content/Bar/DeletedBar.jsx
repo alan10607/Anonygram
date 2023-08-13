@@ -8,7 +8,7 @@ export default function DeletedBar() {
   return (
     <div className="bar">
       <img className="head icon" src={ICON_USER} alt="ICON_USER" />
-      <div className="author">{t("text.bar.author.deleted")}</div>
+      <div className="author">-</div>
     </div>
 
   )
