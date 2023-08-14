@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import authRequest from 'service/request/authRequest';
 import { ICON_LOGO } from 'config/constant';
 import { EMAIL_EXP, PASSWORD_EXP } from 'config/regexp';
-import './login.scss';
+import './Login.scss';
 
 export default function Register() {
   const [username, setUsername] = useState("");

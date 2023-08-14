@@ -5,7 +5,7 @@ import Content from './Content';
 import DeletedContent from './Content/DeletedContent';
 import Move from './Move';
 import Reply from './Reply';
-import './article.scss';
+import './Article.scss';
 
 export default function Article({ id }) {
   const { title, contentList } = useSelector(state => ({

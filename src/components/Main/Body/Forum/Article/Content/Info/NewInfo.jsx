@@ -1,4 +1,5 @@
 import { getNowTime } from 'util/timeUtil';
+import './Info.scss';
 
 export default function NewInfo() {
   return (

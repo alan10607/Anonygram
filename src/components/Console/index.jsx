@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { setConsole } from 'redux/actions/common';
-import './console.scss';
+import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { setConsole } from "redux/actions/common";
+import './Console.scss';
 
 export default function Console() {
   const { console, loading } = useSelector(state => ({

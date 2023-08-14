@@ -3,7 +3,7 @@ import { updateContentLike } from 'redux/actions/forum';
 import forumRequest from 'service/request/forumRequest';
 import { ICON_LIKE, ICON_USER } from 'config/constant';
 import useThrottle from 'util/useThrottle';
-import './bar.scss';
+import './Bar.scss';
 
 export default function Bar({ id, no }) {
   const { authorName, like, likes } = useSelector(state => ({

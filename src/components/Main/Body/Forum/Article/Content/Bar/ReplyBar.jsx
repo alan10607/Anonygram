@@ -1,6 +1,6 @@
 import { shallowEqual, useSelector } from 'react-redux';
 import { ICON_USER } from 'config/constant';
-import './bar.scss';
+import './Bar.scss';
 
 export default function ReplyBar() {
   const { username } = useSelector(state => ({

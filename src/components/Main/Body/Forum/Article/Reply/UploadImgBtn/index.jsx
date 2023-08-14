@@ -3,7 +3,7 @@ import { addReplyHtml } from 'redux/actions/common';
 import { ICON_UPLOAD_IMG } from 'config/constant';
 import { useUploadImage } from 'util/imageUtil';
 import useThrottle from 'util/useThrottle';
-import "./uploadIMgBtn.scss";
+import './UploadImgBtn.scss';
 
 export default function UploadImageBtn({ id }) {
   const dispatch = useDispatch();

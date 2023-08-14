@@ -1,6 +1,6 @@
 import Header from "./Header";
 import Body from "./Body";
-import "./main.scss";
+import './Main.scss';
 
 export default function Main() {
   return (

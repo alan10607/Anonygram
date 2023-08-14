@@ -6,7 +6,7 @@ import { setAllContents } from 'redux/actions/forum';
 import forumRequest from 'service/request/forumRequest';
 import { REPLY_BOX_ATTR } from 'config/constant';
 import useThrottle from 'util/useThrottle';
-import './move.scss';
+import './Move.scss';
 
 export default function Move({ id }) {
   const { contentSize, contentList } = useSelector(state => ({

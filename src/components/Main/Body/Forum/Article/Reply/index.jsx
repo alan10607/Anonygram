@@ -10,7 +10,7 @@ import useThrottle from 'util/useThrottle';
 import ReplyBar from '../Content/Bar/ReplyBar';
 import ReplyInfo from '../Content/Info/ReplyInfo';
 import UploadImageBtn from './UploadImgBtn';
-import './reply.scss';
+import './Reply.scss';
 
 export default function Reply({ id }) {
   const inputRef = useRef();

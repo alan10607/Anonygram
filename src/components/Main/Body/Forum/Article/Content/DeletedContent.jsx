@@ -1,7 +1,7 @@
-import './content.scss';
 import DeletedBar from './Bar/DeletedBar';
 import DeletedWord from './Word/DeletedWord';
 import DeletedInfo from './Info/DeletedInfo';
+import './Content.scss';
 
 export default function DeletedContent({ id, no }) {
 

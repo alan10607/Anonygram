@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { ICON_USER } from 'config/constant';
-import './bar.scss';
+import './Bar.scss';
 
 export default function DeletedBar() {
   const { t } = useTranslation();

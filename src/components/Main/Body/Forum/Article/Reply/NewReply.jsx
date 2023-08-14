@@ -11,7 +11,7 @@ import useThrottle from 'util/useThrottle';
 import ReplyBar from '../Content/Bar/ReplyBar';
 import NewInfo from '../Content/Info/NewInfo';
 import UploadImageBtn from './UploadImgBtn';
-import './reply.scss';
+import './Reply.scss';
 
 export default function NewReply({ id = "new" }) {
   const [title, setTitle] = useState("");

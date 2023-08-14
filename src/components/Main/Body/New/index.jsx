@@ -1,5 +1,5 @@
 import NewReply from '../Forum/Article/Reply/NewReply';
-import './new.scss';
+import './New.scss';
 
 export default function New() {
   return (

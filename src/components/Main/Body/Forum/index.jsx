@@ -6,7 +6,7 @@ import { setAllArticles, setAllId } from 'redux/actions/forum';
 import forumRequest from 'service/request/forumRequest';
 import { REPLY_BOX, STATUS_TYPE } from 'config/constant';
 import Article from './Article';
-import './forum.scss';
+import './Forum.scss';
 
 export default function Forum() {
   const { forum } = useSelector(state => ({

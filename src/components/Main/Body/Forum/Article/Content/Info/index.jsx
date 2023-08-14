@@ -7,7 +7,7 @@ import { REPLY_BOX_ATTR } from 'config/constant';
 import { scrollTo } from 'util/inputHtmlUtil';
 import { getTimeFromStr } from 'util/timeUtil';
 import useThrottle from 'util/useThrottle';
-import './info.scss';
+import './Info.scss';
 
 export default function Info({ id, no }) {
   const { authorId, createDate, userId } = useSelector(state => ({

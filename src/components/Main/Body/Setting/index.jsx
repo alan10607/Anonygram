@@ -7,7 +7,7 @@ import userRequest from 'service/request/userRequest';
 import { ICON_USER } from 'config/constant';
 import { useUploadImage } from 'util/imageUtil';
 import useThrottle from 'util/useThrottle';
-import './setting.scss';
+import './Setting.scss';
 
 export default function Setting() {
   const { userId, username, email, isAnonymous, headUrl, language, theme } = useSelector(state => ({
@@ -34,10 +34,10 @@ export default function Setting() {
 
   const THEME_OPTIONS = [{
     name: t("text.setting.theme.dark"),
-    value: "dark"
+    value: "d"
   }, {
     name: t("text.setting.theme.light"),
-    value: "light"
+    value: "l"
   }];
 
   const uploadHead = useThrottle((event) => {

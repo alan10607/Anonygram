@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 import { ICON_LOGO } from "config/constant";
-import "./error.scss";
+import './Error.scss';
 
 export default function Error() {
   return (

@@ -1,7 +1,7 @@
 import { shallowEqual, useSelector } from 'react-redux';
-import { NavLink } from "react-router-dom";
+import { NavLink } from 'react-router-dom';
 import { ICON_ADD, ICON_FORUM, ICON_LOGO, ICON_SETTING } from 'config/constant';
-import "./head.scss";
+import './Head.scss';
 
 export default function Header() {
   const { username, isAnonyUser } = useSelector(state => ({
