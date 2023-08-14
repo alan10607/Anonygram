@@ -1,7 +1,8 @@
+import ValidationError from "Error/validationError";
 import i18next from "i18next";
 import { useDispatch } from "react-redux";
 import { setConsole } from "redux/actions/common";
-import ValidationError from "Error/validationError";
+import DOMPurify from 'dompurify';
 
 /* --- Input html to string --- */
 const htmlToString = async (inputElement) => {
@@ -42,7 +43,8 @@ export const useInputFilter = () => {
 
   const inputFilter = async (inputElement) => {
     try {
-      const string = await htmlToString(inputElement);
+      const sanitizedHtml = DOMPurify.sanitize(inputElement);
+      const string = await htmlToString(sanitizedHtml);
       return await checkWord(string);
     } catch (e) {
       if (e instanceof ValidationError) {

@@ -1,42 +1,45 @@
 # Anonygram React
 
 ## >> [*LIVE DEMO*](https://alan10607.github.io/Anonygram-Frontend/)
-> An anonymous social media, create through React front-end and Spring Boot back-end.
+> An anonymous social media, create through React frontend and Spring Boot backend.
 >
 > This is the front-end of Anonygram
 
 <br>
 
-## Build
-```
-npm run deploy   
-```
 
-## Components
+## Features
+### Overview
+- React 18 functional component
+- Redux with persist and thunk(async)
+- I18n and theme prefernece
+- Http-only cookie and CSRF token for authentication
+- Image uploadi
+
+
+### Components
 - Console
-- Login
-- Register
 - Error
-- Hub
-  - Art
-    - ArtCont
-    - Bar
-    - Cont
-    - Info
-    - Move
-    - Reply
-    - ReplyInput
-    - Word
-  - BigBox
+- Login
+- Main
   - Header
-  - New
-  - Setting
+  - Body
+    - Forum
+      - Article
+        - Content
+          - Bar
+          - Info
+          - Word
+        - Move
+        - Reply
+          - UploadImgBtn
+    - New
+    - Setting
 
-## Redux
-- post: Main data
-- common: Component controll
-- reply: Reply temp storage
-- user: User data from JWT
+### Redux
+- forum
+- common
+- user (persisted)
 
 ## Servics
 ```
@@ -50,5 +53,18 @@ npm run deploy
 | Authentication |        |  post api      |
 |  back-end      |        |  back-end      |
 +----------------+        +----------------+
+```
 
+## Libraries / Dependencies
+- axios
+- i18next
+- redux
+- sass
+- universal-cookie
+- gh-pages
+
+## Build
+Build on github page by gh-pages
+```
+npm run deploy   
 ```
