@@ -15,7 +15,7 @@ export default function Bar({ id, no }) {
 
   const toggleLike = useThrottle(() => {
     const updatedLike = !like;
-    forumRequest.likeContent(id, no, updatedLike)
+    forumRequest.updateContentLike(id, no, updatedLike)
       .then(() => dispatch(updateContentLike(id, no, updatedLike)))
       .catch(e => console.log(`Update content like to ${updatedLike} failed`, e));
   })

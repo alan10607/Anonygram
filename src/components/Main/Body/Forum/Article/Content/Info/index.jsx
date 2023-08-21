@@ -18,31 +18,25 @@ export default function Info({ id, no }) {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const deleteArticleOrContent = useThrottle(() => {
-    if (no === 0) {
-      httpDeleteArticle();
-    } else {
-      httpDeleteContent();
-    }
-  })
-
-  const httpDeleteArticle = () => {
-    forumRequest.deleteArticle(id)
-      .then(() => {
-        dispatch(deleteArticle(id));
-        dispatch(setConsole(t("tip.forum.article.delete.ok")));
-      })
-      .catch(e => dispatch(setConsole(t("tip.forum.article.delete.error"))));
-  }
-
-  const httpDeleteContent = () => {
+  const httpDeleteContent = useThrottle(() => {
     forumRequest.deleteContent(id, no)
       .then(() => {
-        dispatch(deleteContent(id, no));
-        dispatch(setConsole(t("tip.forum.content.delete.ok")));
+        if (no === 0) {
+          dispatch(deleteArticle(id));
+          dispatch(setConsole(t("tip.forum.article.delete.ok")));
+        } else {
+          dispatch(deleteContent(id, no));
+          dispatch(setConsole(t("tip.forum.content.delete.ok")));
+        }
       })
-      .catch(e => dispatch(setConsole(t("tip.forum.content.delete.error"))));
-  }
+      .catch(e => {
+        if (no === 0) {
+          dispatch(setConsole(t("tip.forum.article.delete.error")));
+        } else {
+          dispatch(setConsole(t("tip.forum.content.delete.error")))
+        }
+      });
+  })
 
   const openReplyBoxAndScroll = () => {
     dispatch(setReplyId(id));
@@ -54,7 +48,7 @@ export default function Info({ id, no }) {
     <div className="info">
       <div>@{no}, {getTimeFromStr(createDate)}</div>
       <div className="info-btn" onClick={openReplyBoxAndScroll} {...REPLY_BOX_ATTR}>{t("common.reply")}</div>
-      {userId === authorId && <div className="info-btn" onClick={deleteArticleOrContent}>{t("common.delete")}</div>}
+      {userId === authorId && <div className="info-btn" onClick={httpDeleteContent}>{t("common.delete")}</div>}
     </div>
   )
 }

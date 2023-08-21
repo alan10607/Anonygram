@@ -38,7 +38,7 @@ export default function NewReply({ id = "new" }) {
     return "";
   }
 
-  const httpSetContent = useThrottle(() => {
+  const httpCreateArticle = useThrottle(() => {
     const trimmedTitle = title.trim();
     const titleError = checkTitle(trimmedTitle);
     if (titleError !== "") {
@@ -47,7 +47,7 @@ export default function NewReply({ id = "new" }) {
     }
 
     inputFilter(inputRef.current)
-      .then(word => forumRequest.setArticle(trimmedTitle, word))
+      .then(word => forumRequest.createArticle(trimmedTitle, word))
       .then(article => {
         dispatch(deleteAllId());//reload forum page
         dispatch(setReplyHtml(id, "<div><br></div>"));
@@ -75,7 +75,7 @@ export default function NewReply({ id = "new" }) {
       <div className="reply-move">
         <UploadImageBtn id={id} />
         <div className="flex-empty"></div>
-        <div className="text-btn" onClick={httpSetContent}>{t("common.submit")}</div>
+        <div className="text-btn" onClick={httpCreateArticle}>{t("common.submit")}</div>
       </div>
     </div>
   )

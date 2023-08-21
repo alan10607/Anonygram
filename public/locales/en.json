@@ -19,7 +19,7 @@
   "text.register.backToLogin": "Back to Login",
   "text.setting.theme.dark": "Dark",
   "text.setting.theme.light": "Light",
-  "text.word.deleted": "- This comment has been deleted by the author -",
+  "text.word.deleted": "- This comment has been deleted -",
   "text.move.open.none": "This article has no comments yet",
   "text.move.open.all": "View all {{remain}} comments",
   "text.move.open.remain": "View {{remain}} remaining comments",

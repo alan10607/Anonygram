@@ -72,7 +72,7 @@ export const useUploadImage = () => {
       .then(file => convertFileToBase64(file))
       .then(base64 => buildImg(base64))
       .then(image => compressImg(image, imgQuality, imgMaxWidth))
-      .then(compressedBase64 => forumRequest.uploadImage(compressedBase64))
+      .then(compressedBase64 => forumRequest.createImage(compressedBase64))
       .then(res => {
         console.log("Upload image url", res.imageUrl);
         return Promise.resolve(res.imageUrl);

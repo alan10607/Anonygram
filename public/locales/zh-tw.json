@@ -19,7 +19,7 @@
   "text.register.backToLogin": "返回登入頁面",
   "text.setting.theme.dark": "深色",
   "text.setting.theme.light": "淺色",
-  "text.word.deleted": "- 本留言已被作者刪除 -",
+  "text.word.deleted": "- 本留言已被刪除 -",
   "text.move.open.none": "此文章尚無留言",
   "text.move.open.all": "查看全部 {{remain}} 則留言",
   "text.move.open.remain": "查看剩餘 {{remain}} 則留言",

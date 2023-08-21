@@ -51,7 +51,7 @@ export default function Forum() {
 
     queryLock.current = true;
 
-    forumRequest.getArticles(queryIdList)
+    forumRequest.getArticle(queryIdList, [0])
       .then(articles => dispatch(setAllArticles(articles)))
       .catch(e => {
         dispatch(setConsole(t("tip.forum.article.get.error")));

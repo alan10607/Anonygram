@@ -21,7 +21,7 @@ export default function Move({ id }) {
   const queryNoList = emptyNoList.slice(0, querySize);
 
   const getContents = useThrottle(() => {
-    forumRequest.getContents(id, queryNoList)
+    forumRequest.getArticle([id], queryNoList)
       .then(contents => dispatch(setAllContents(contents)))
       .catch(e => dispatch(setConsole(t("tip.forum.content.get.error"))));
   })

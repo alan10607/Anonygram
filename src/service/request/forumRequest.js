@@ -4,60 +4,41 @@ const getId = () => request.getMethod(
   `/forum/id`
 );
 
-const getArticles = (idList) => request.getMethod(
-  `/forum/articles/${idList.join(",")}`
+const getArticle = (idList, noList) => request.getMethod(
+  `/forum/articles/${idList.join(",")}/${noList.join(",")}`
 );
 
-const getArticle = (id) => request.getMethod(
-  `/forum/article/${id}`
-);
-
-const setArticle = (title, word) => request.postMethod(
+const createArticle = (title, word) => request.postMethod(
   `/forum/article/`,
   { title, word }
 );
 
-const deleteArticle = (id) => request.deleteMethod(
-  `/forum/article/${id}`
-);
-
-const getContents = (id, noList) => request.getMethod(
-  `/forum/contents/${id}/${noList.join(",")}`
-);
-
-const getContent = (id, no) => request.getMethod(
-  `/forum/contents/${id}/${no}`
-);
-
-const setContent = (id, word) => request.postMethod(
-  `/forum/content/${id}`,
+const createContent = (id, word) => request.postMethod(
+  `/forum/article/${id}`,
   { word }
 );
 
-const deleteContent = (id, no) => request.deleteMethod(
-  `/forum/content/${id}/${no}`
-);
-
-const likeContent = (id, no, like) => request.patchMethod(
-  `/forum/like/${id}/${no}`,
-  { like }
-)
-
-const uploadImage = (imageBase64) => request.postMethod(
+const createImage = (imageBase64) => request.postMethod(
   `/forum/image`,
   { imageBase64 }
 )
 
+const deleteContent = (id, no) => request.deleteMethod(
+  `/forum/article/${id}/${no}`
+);
+
+const updateContentLike = (id, no, like) => request.patchMethod(
+  `/forum/article/${id}/${no}/like`,
+  { like }
+)
+
+
 export default {
   getId,
-  getArticles,
   getArticle,
-  setArticle,
-  deleteArticle,
-  getContents,
-  getContent,
-  setContent,
+  createArticle,
+  createContent,
+  createImage,
   deleteContent,
-  likeContent,
-  uploadImage
+  updateContentLike,
 };
