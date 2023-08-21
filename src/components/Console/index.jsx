@@ -27,7 +27,7 @@ export default function Console() {
 
   return (
     <div>
-      <div id="console" disabled={!!console}>
+      <div id="console" disabled={console === ""}>
         <div>
           <div>{t("text.console.title")}</div>
           <div>{console}</div>

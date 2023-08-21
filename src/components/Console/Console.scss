@@ -1,4 +1,4 @@
-@import 'root.scss';
+@import 'App.scss';
 
 #console {
 	position: fixed;
@@ -33,15 +33,15 @@
 	background-color: #8d8d8c80;
 	z-index: 99999;
 
+	&[disabled] {
+		display: none;
+	}
+	
 	.loading-icon {
 		display: inline-block;
 		position: relative;
 		width: 80px;
 		height: 80px;
-
-		&[disabled] {
-			display: none;
-		}
 
 		div {
 			box-sizing: border-box;
