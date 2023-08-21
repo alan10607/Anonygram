@@ -84,6 +84,7 @@ export const useUploadImage = () => {
           console.log("Image load failed", e);
           dispatch(setConsole(i18next.t("tip.img.error")));
         }
+        return Promise.reject(e);
       })
       .finally(() => {
         event.target.value = "";//remove file

@@ -13,7 +13,7 @@ export default function Info({ id, no }) {
   const { authorId, createDate, userId } = useSelector(state => ({
     authorId: state.forum.get(id).contentList[no].authorId,
     createDate: state.forum.get(id).contentList[no].createDate,
-    userId: state.user.userId,
+    userId: state.user.id,
   }), shallowEqual);
   const dispatch = useDispatch();
   const { t } = useTranslation();

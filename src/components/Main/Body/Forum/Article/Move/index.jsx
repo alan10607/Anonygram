@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { setConsole, setReplyId } from 'redux/actions/common';
-import { setAllContents } from 'redux/actions/forum';
+import { setAllArticle, setAllContents } from 'redux/actions/forum';
 import forumRequest from 'service/request/forumRequest';
 import { REPLY_BOX_ATTR } from 'config/constant';
 import useThrottle from 'util/useThrottle';
@@ -22,7 +22,7 @@ export default function Move({ id }) {
 
   const getContents = useThrottle(() => {
     forumRequest.getArticle([id], queryNoList)
-      .then(contents => dispatch(setAllContents(contents)))
+      .then(contents => dispatch(setAllArticle(contents)))
       .catch(e => dispatch(setConsole(t("tip.forum.content.get.error"))));
   })
 
@@ -49,7 +49,7 @@ export default function Move({ id }) {
     <div className="move">
       {getOpenNode()}
       <div className="flex-empty"></div>
-      <div className="text-btn" onClick={openReply} {...REPLY_BOX_ATTR}>{t("add-cont")}</div>
+      <div className="text-btn" onClick={openReply} {...REPLY_BOX_ATTR}>{t("common.reply")}</div>
     </div>
   )
 }

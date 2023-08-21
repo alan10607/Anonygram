@@ -3,10 +3,8 @@ export const DELETE_ALL_ID = "deleteAllId";
 export const SET_ALL_ARTICLE = "setAllArticle";
 export const SET_ARTICLE = "setArticle";
 export const DELETE_ARTICLE = "deleteArticle";
-export const SET_ALL_CONTENT = "setAllContent";
-export const SET_CONTENT = "setContent";
-export const DELETE_CONTENT = "deleteContent"
-export const UPDATE_CONTENT_LIKE = "updateContentLike"
+export const DELETE_CONTENT = "deleteContent";
+export const UPDATE_CONTENT_LIKE = "updateContentLike";
 
 export const setAllId = (ids) => ({ 
   type: SET_ALL_ID, 
@@ -17,9 +15,9 @@ export const deleteAllId = () => ({
   type: DELETE_ALL_ID 
 });
 
-export const setAllArticles = (articles) => ({ 
+export const setAllArticle = (article) => ({ 
   type: SET_ALL_ARTICLE, 
-  data: articles 
+  data: article 
 });
 
 export const setArticle = (article) => ({ 
@@ -30,16 +28,6 @@ export const setArticle = (article) => ({
 export const deleteArticle = (id) => ({ 
   type: DELETE_ARTICLE, 
   data: { id } 
-});
-
-export const setAllContents = (contents) => ({ 
-  type: SET_ALL_CONTENT, 
-  data: contents 
-});
-
-export const setContent = (content) => ({ 
-  type: SET_CONTENT, 
-  data: content
 });
 
 export const deleteContent = (id, no) => ({ 

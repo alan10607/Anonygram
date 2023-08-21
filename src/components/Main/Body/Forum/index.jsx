@@ -2,11 +2,11 @@ import { Fragment, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { setConsole, setReplyId } from 'redux/actions/common';
-import { setAllArticles, setAllId } from 'redux/actions/forum';
+import { setAllArticle, setAllId } from 'redux/actions/forum';
 import forumRequest from 'service/request/forumRequest';
-import { REPLY_BOX, STATUS_TYPE } from 'config/constant';
 import Article from './Article';
 import './Forum.scss';
+import { REPLY_BOX, STATUS_TYPE } from 'config/constant';
 
 export default function Forum() {
   const { forum } = useSelector(state => ({
@@ -52,7 +52,7 @@ export default function Forum() {
     queryLock.current = true;
 
     forumRequest.getArticle(queryIdList, [0])
-      .then(articles => dispatch(setAllArticles(articles)))
+      .then(articles => dispatch(setAllArticle(articles)))
       .catch(e => {
         dispatch(setConsole(t("tip.forum.article.get.error")));
         queryLock.current = false;

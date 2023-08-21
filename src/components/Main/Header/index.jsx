@@ -11,7 +11,7 @@ export default function Header() {
   const user = (isAnonyUser ? "#" : "") + username;
 
   return (
-    <div className="header">
+    <div id="header">
       <img className="logo icon" src={ICON_LOGO} alt="ICON_LOGO" />
       <div className="flex-empty"></div>
       <NavLink to="/forum/index">

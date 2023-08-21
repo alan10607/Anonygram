@@ -5,7 +5,7 @@ const getId = () => request.getMethod(
 );
 
 const getArticle = (idList, noList) => request.getMethod(
-  `/forum/articles/${idList.join(",")}/${noList.join(",")}`
+  `/forum/article/${idList.join(",")}/${noList.join(",")}`
 );
 
 const createArticle = (title, word) => request.postMethod(
@@ -31,7 +31,6 @@ const updateContentLike = (id, no, like) => request.patchMethod(
   `/forum/article/${id}/${no}/like`,
   { like }
 )
-
 
 export default {
   getId,

@@ -87,7 +87,7 @@ export default function Setting() {
         <label className="upload-head-btn">
           {isAnonymous ?
             <img className="head icon" src={ICON_USER} alt="ICON_USER" disabled /> :
-            <img className="head" src={headUrl} alt="headUrl" />}
+            <img className="head" src={headUrl ? headUrl : ICON_USER} alt="headUrl" />}
           <input type="file" accept="image/*" onChange={uploadHead} disabled={isAnonymous} />
         </label>
         <div>

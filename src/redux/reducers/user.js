@@ -8,7 +8,7 @@ const initUserState = {
   isAnonymous: null,
   headUrl: "",
   language: "en",
-  theme: "dark"
+  theme: "d"
 };
 
 export default function userReducer(preState = initUserState, action) {
@@ -16,9 +16,9 @@ export default function userReducer(preState = initUserState, action) {
 
   switch (type) {
     case SET_USER:
-      data.isAnonymous = isAnonygramUser(data);
       const newState = Object.assign({}, preState, data);
       setLocalEnvironment(newState);
+      newState.isAnonymous = isAnonygramUser(newState);
       return newState;
 
     case DELETE_USER:

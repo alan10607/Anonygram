@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { setConsole, setReplyHtml, setReplyId } from 'redux/actions/common';
-import { setContent } from 'redux/actions/forum';
+import { setArticle, setContent } from 'redux/actions/forum';
 import forumRequest from 'service/request/forumRequest';
 import { REPLY_BOX_ATTR } from 'config/constant';
 import { pasteAsPlain, useInputFilter } from 'util/inputHtmlUtil';
@@ -33,7 +33,7 @@ export default function Reply({ id }) {
     inputFilter(inputRef.current)
       .then(word => forumRequest.createContent(id, word))
       .then(content => {
-        dispatch(setContent(content));
+        dispatch(setArticle(content));
         dispatch(setReplyId(""));
         dispatch(setReplyHtml(id, "<div><br></div>"));
       })

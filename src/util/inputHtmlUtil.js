@@ -43,9 +43,9 @@ export const useInputFilter = () => {
 
   const inputFilter = async (inputElement) => {
     try {
-      const sanitizedHtml = DOMPurify.sanitize(inputElement);
-      const string = await htmlToString(sanitizedHtml);
-      return await checkWord(string);
+      const string = await htmlToString(inputElement);
+      const purifiedString = DOMPurify.sanitize(string);
+      return await checkWord(purifiedString);
     } catch (e) {
       if (e instanceof ValidationError) {
         dispatch(setConsole(e.message));

@@ -5,8 +5,6 @@ import {
   SET_ALL_ARTICLE,
   SET_ARTICLE,
   DELETE_ARTICLE,
-  SET_ALL_CONTENT,
-  SET_CONTENT,
   DELETE_CONTENT,
   UPDATE_CONTENT_LIKE
 } from "../actions/forum";
@@ -27,27 +25,15 @@ export default function forumReducer(preState = initForumMap, action) {
       return initForumMap;
 
     case SET_ALL_ARTICLE:
-      data.forEach(art => newState.set(art.id, art));
+      data.forEach(article => addArticleToState(article, newState));
       return newState;
 
     case SET_ARTICLE:
-      newState.set(data.id, data);
+      addArticleToState(data, newState);
       return newState;
 
     case DELETE_ARTICLE:
-      newState.set(data.id, null);
-      return newState;
-
-    case SET_ALL_CONTENT:
-      data.forEach((cont) => {
-        newState.get(cont.id).contentSize = Math.max(newState.get(cont.id).contentSize, cont.no + 1);//update contentSize by no
-        newState.get(cont.id).contentList[cont.no] = cont;
-      });
-      return newState;
-
-    case SET_CONTENT:
-      newState.get(data.id).contentSize = Math.max(newState.get(data.id).contentSize, data.no + 1);//update contentSize by no
-      newState.get(data.id).contentList[data.no] = data;
+      newState.get(data.id).status = STATUS_TYPE.DELETED;
       return newState;
 
     case DELETE_CONTENT:
@@ -62,4 +48,20 @@ export default function forumReducer(preState = initForumMap, action) {
     default:
       return preState;
   }
+}
+
+const addArticleToState = (newArticle, stateMap) => {
+  const article = stateMap.get(newArticle.id) ? stateMap.get(newArticle.id) : {};
+  for (const key of Object.keys(newArticle)) {
+    if (key === "contentList") {
+      for (const newContent of newArticle.contentList) {
+        if (!article.contentList) article.contentList = [];
+        article.contentList[newContent.no] = newContent;
+      }
+    } else {
+      article[key] = newArticle[key];
+    }
+  }
+
+  stateMap.set(article.id, article);
 }

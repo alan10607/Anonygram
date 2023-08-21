@@ -6,8 +6,9 @@ import useThrottle from 'util/useThrottle';
 import './Bar.scss';
 
 export default function Bar({ id, no }) {
-  const { authorName, like, likes } = useSelector(state => ({
+  const { authorName, authorHeadUrl, like, likes } = useSelector(state => ({
     authorName: state.forum.get(id).contentList[no].authorName,
+    authorHeadUrl: state.forum.get(id).contentList[no].authorHeadUrl,
     like: state.forum.get(id).contentList[no].like,
     likes: state.forum.get(id).contentList[no].likes
   }), shallowEqual);
@@ -22,7 +23,7 @@ export default function Bar({ id, no }) {
 
   return (
     <div className="bar">
-      <img className="head icon" src={ICON_USER} alt="ICON_USER" />
+      <img className="head" src={authorHeadUrl ? authorHeadUrl : ICON_USER} alt="ICON_USER" />
       <div className="author">{authorName}</div>
       <div className="flex-empty"></div>
       <div className="like-icon" disabled={!like}>
