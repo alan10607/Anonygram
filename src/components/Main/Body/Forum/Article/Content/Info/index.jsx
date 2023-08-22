@@ -29,13 +29,7 @@ export default function Info({ id, no }) {
           dispatch(setConsole(t("tip.forum.content.delete.ok")));
         }
       })
-      .catch(e => {
-        if (no === 0) {
-          dispatch(setConsole(t("tip.forum.article.delete.error")));
-        } else {
-          dispatch(setConsole(t("tip.forum.content.delete.error")))
-        }
-      });
+      .catch(e => console.log(`Failed to delete content, id=${id}, no=${no}`, e));
   })
 
   const openReplyBoxAndScroll = () => {
