@@ -2,7 +2,7 @@ import { Fragment, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { setConsole, setReplyId } from 'redux/actions/common';
-import { setAllArticle, setAllId } from 'redux/actions/forum';
+import { setArticles, setIds } from 'redux/actions/forum';
 import { REPLY_BOX, STATUS_TYPE } from 'config/constant';
 import forumRequest from 'service/request/forumRequest';
 import Article from './Article';
@@ -23,7 +23,7 @@ export default function Forum() {
   useEffect(() => {
     if (forum.size === 0) {
       forumRequest.getId()
-        .then(res => dispatch(setAllId(res)))
+        .then(res => dispatch(setIds(res)))
         .catch(e => dispatch(setConsole(t("tip.forum.id.error"))));
     }
   }, [])
@@ -52,7 +52,7 @@ export default function Forum() {
     queryLock.current = true;
 
     forumRequest.getArticle(queryIdList, [0])
-      .then(articles => dispatch(setAllArticle(articles)))
+      .then(articles => dispatch(setArticles(articles)))
       .catch(e => {
         dispatch(setConsole(t("tip.forum.article.get.error")));
         queryLock.current = false;

@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { setConsole, setReplyId } from 'redux/actions/common';
-import { setAllArticle, setAllContents } from 'redux/actions/forum';
-import forumRequest from 'service/request/forumRequest';
+import { setReplyId } from 'redux/actions/common';
+import { setArticles } from 'redux/actions/forum';
 import { REPLY_BOX_ATTR } from 'config/constant';
+import forumRequest from 'service/request/forumRequest';
 import useThrottle from 'util/useThrottle';
 import './Move.scss';
 
@@ -22,7 +22,7 @@ export default function Move({ id }) {
 
   const httpGetContent = useThrottle(() => {
     forumRequest.getArticle([id], queryNoList)
-      .then(contents => dispatch(setAllArticle(contents)))
+      .then(contents => dispatch(setArticles(contents)))
       .catch(e => console.log("Failed to get contents", e));
   })
 

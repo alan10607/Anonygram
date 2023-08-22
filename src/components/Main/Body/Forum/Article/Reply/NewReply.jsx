@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import { setConsole, setReplyHtml } from 'redux/actions/common';
-import { deleteAllId } from 'redux/actions/forum';
+import { deleteIds } from 'redux/actions/forum';
 import forumRequest from 'service/request/forumRequest';
 import { WELCOME_PAGE } from 'config/constant';
 import { pasteAsPlain, useInputFilter } from 'util/inputHtmlUtil';
@@ -49,7 +49,7 @@ export default function NewReply({ id = "new" }) {
     inputFilter(inputRef.current)
       .then(word => forumRequest.createArticle(trimmedTitle, word))
       .then(article => {
-        dispatch(deleteAllId());//reload forum page
+        dispatch(deleteIds());//reload forum page
         dispatch(setReplyHtml(id, "<div><br></div>"));
         navigate(WELCOME_PAGE);
       })

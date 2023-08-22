@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { setConsole } from "redux/actions/common";
 import './Console.scss';
-import { setTheme } from "util/themeUtil";
 
 export default function Console() {
   const { console, loading } = useSelector(state => ({
@@ -25,10 +24,6 @@ export default function Console() {
       clearTimeout(closeTimeout);
     }
   }, [console])
-
-  useEffect(() => {
-    setTheme("d");
-  }, [])
 
   return (
     <div>
