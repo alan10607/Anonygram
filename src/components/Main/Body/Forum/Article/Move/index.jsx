@@ -20,10 +20,10 @@ export default function Move({ id }) {
   const emptyNoList = noList.filter(no => !contentList[no]);
   const queryNoList = emptyNoList.slice(0, querySize);
 
-  const getContents = useThrottle(() => {
+  const httpGetContent = useThrottle(() => {
     forumRequest.getArticle([id], queryNoList)
       .then(contents => dispatch(setAllArticle(contents)))
-      .catch(e => dispatch(setConsole(t("tip.forum.content.get.error"))));
+      .catch(e => console.log("Failed to get contents", e));
   })
 
   const openReply = () => {
@@ -39,10 +39,10 @@ export default function Move({ id }) {
 
     const remain = emptyNoList.length;
     if (queryNoList[0] === 1)//not open any yet
-      return <div className={"open"} onClick={getContents}>{t("text.move.open.all", { remain })}</div>
+      return <div className={"open"} onClick={httpGetContent}>{t("text.move.open.all", { remain })}</div>
 
     //open remain
-    return <div className={"open"} onClick={getContents}>{t("text.move.open.remain", { remain })}</div>
+    return <div className={"open"} onClick={httpGetContent}>{t("text.move.open.remain", { remain })}</div>
   }
 
   return (

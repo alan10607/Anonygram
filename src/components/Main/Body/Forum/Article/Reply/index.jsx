@@ -37,7 +37,7 @@ export default function Reply({ id }) {
         dispatch(setReplyId(""));
         dispatch(setReplyHtml(id, "<div><br></div>"));
       })
-      .catch(e => dispatch(setConsole(t("tip.forum.content.set.error"))))
+      .catch(e => "Failed to reply article", e)
   });
 
   return (

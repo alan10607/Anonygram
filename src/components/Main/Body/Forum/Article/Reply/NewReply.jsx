@@ -53,7 +53,7 @@ export default function NewReply({ id = "new" }) {
         dispatch(setReplyHtml(id, "<div><br></div>"));
         navigate(WELCOME_PAGE);
       })
-      .catch(e => dispatch(setConsole(t("tip.forum.article.set.error"))))
+      .catch(e => "Failed to create article", e)
   });
 
   return (

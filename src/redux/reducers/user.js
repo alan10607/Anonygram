@@ -1,7 +1,8 @@
 import i18n from 'i18next';
-import { SET_USER, DELETE_USER } from "../actions/user";
-import { setTheme } from 'util/themeUtil';
 import { isAnonygramUser } from 'util/authUtil';
+import { setTheme } from 'util/themeUtil';
+import { DELETE_USER, SET_USER } from "../actions/user";
+
 const initUserState = {
   id: null,
   username: "",
@@ -17,8 +18,8 @@ export default function userReducer(preState = initUserState, action) {
   switch (type) {
     case SET_USER:
       const newState = Object.assign({}, preState, data);
-      setLocalEnvironment(newState);
       newState.isAnonymous = isAnonygramUser(newState);
+      setLocalEnvironment(newState);
       return newState;
 
     case DELETE_USER:

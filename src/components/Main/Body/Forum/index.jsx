@@ -3,10 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { setConsole, setReplyId } from 'redux/actions/common';
 import { setAllArticle, setAllId } from 'redux/actions/forum';
+import { REPLY_BOX, STATUS_TYPE } from 'config/constant';
 import forumRequest from 'service/request/forumRequest';
 import Article from './Article';
 import './Forum.scss';
-import { REPLY_BOX, STATUS_TYPE } from 'config/constant';
 
 export default function Forum() {
   const { forum } = useSelector(state => ({
@@ -115,7 +115,6 @@ export default function Forum() {
 
   return (
     <div>
-      <div>2{idList.filter(id => forum.get(id)).length}</div>
       <Fragment>{getArticleNode()}</Fragment>
     </div>
   )

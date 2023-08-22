@@ -25,7 +25,7 @@ export default function commonReducer(preState = initState, action) {
       return Object.assign({}, preState);
 
     case ADD_REPLY_HTML:
-      const endBrExp = /<div><br><\/div>$/gi;
+      const endBrExp = /<div><br><\/div>$/i;
       let oldHtml = preState.replyHtml[data.id];
       oldHtml = oldHtml.replace(endBrExp, "");
       preState.replyHtml[data.id] = oldHtml + data.html + "<div><br></div>";

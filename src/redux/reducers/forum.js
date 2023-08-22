@@ -1,9 +1,9 @@
 import { STATUS_TYPE } from "config/constant";
 import {
   SET_ALL_ID,
-  DELETE_ALL_ID,
   SET_ALL_ARTICLE,
   SET_ARTICLE,
+  DELETE_ALL_ID,
   DELETE_ARTICLE,
   DELETE_CONTENT,
   UPDATE_CONTENT_LIKE
@@ -15,14 +15,11 @@ export default function forumReducer(preState = initForumMap, action) {
   const { type, data } = action;
   const newState = new Map(preState);
 
-  console.warn("Reducer get data, type=", type, "data=", data);
+  console.log("Reducer get data, type=", type, "data=", data);
   switch (type) {
     case SET_ALL_ID:
       data.forEach(id => newState.set(id, null));
       return newState;
-
-    case DELETE_ALL_ID:
-      return initForumMap;
 
     case SET_ALL_ARTICLE:
       data.forEach(article => addArticleToState(article, newState));
@@ -31,6 +28,9 @@ export default function forumReducer(preState = initForumMap, action) {
     case SET_ARTICLE:
       addArticleToState(data, newState);
       return newState;
+
+    case DELETE_ALL_ID:
+      return initForumMap;
 
     case DELETE_ARTICLE:
       newState.get(data.id).status = STATUS_TYPE.DELETED;

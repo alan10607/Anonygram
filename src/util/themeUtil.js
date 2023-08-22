@@ -12,7 +12,7 @@ const STYLE_NAME = [
 ];
 
 
-export const setTheme = (theme) => {
+export const setTheme = (theme = "d") => {
   const root = document.documentElement;
   const rootStyle = window.getComputedStyle(root);
   for (const name of STYLE_NAME) {

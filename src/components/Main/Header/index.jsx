@@ -1,15 +1,8 @@
-import { shallowEqual, useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
 import { ICON_ADD, ICON_FORUM, ICON_LOGO, ICON_SETTING } from 'config/constant';
+import { NavLink } from 'react-router-dom';
 import './Head.scss';
 
 export default function Header() {
-  const { username, isAnonyUser } = useSelector(state => ({
-    username: state.user.username,
-    isAnonumous: state.user.isAnonumous
-  }), shallowEqual);
-  const user = (isAnonyUser ? "#" : "") + username;
-
   return (
     <div id="header">
       <img className="logo icon" src={ICON_LOGO} alt="ICON_LOGO" />

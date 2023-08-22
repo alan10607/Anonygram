@@ -7,6 +7,7 @@ import Main from "components/Main";
 import Forum from "components/Main/Body/Forum";
 import New from "components/Main/Body/New";
 import Setting from "components/Main/Body/Setting";
+import { setTheme } from "util/themeUtil";
 import './App.scss';
 
 const routeConfig = [
@@ -51,7 +52,8 @@ const routeConfig = [
 ]
 
 export default function App() {
-  const element = useRoutes(routeConfig)
+  setTheme();
+  const element = useRoutes(routeConfig);
   return (
     <div>
       {element}
