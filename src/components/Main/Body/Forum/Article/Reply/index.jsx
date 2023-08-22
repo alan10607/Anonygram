@@ -37,7 +37,7 @@ export default function Reply({ id }) {
         dispatch(setReplyId(""));
         dispatch(setReplyHtml(id, "<div><br></div>"));
       })
-      .catch(e => "Failed to reply article", e)
+      .catch(e => console.log("Failed to reply article", e))
   });
 
   return (

@@ -8,6 +8,7 @@ import { ICON_USER } from 'config/constant';
 import { useUploadImage } from 'util/imageUtil';
 import useThrottle from 'util/useThrottle';
 import './Setting.scss';
+import { deleteIds } from 'redux/actions/forum';
 
 export default function Setting() {
   const { userId, username, email, isAnonymous, headUrl, language, theme } = useSelector(state => ({
@@ -69,6 +70,7 @@ export default function Setting() {
   });
 
   const logout = () => {
+    dispatch(deleteIds());
     dispatch(deleteUser());
     navigate("/login");
   }

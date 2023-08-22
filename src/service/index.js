@@ -63,7 +63,7 @@ axiosInstance.interceptors.response.use(res => {
   }
 
   console.error(`Response error: ${error.config.url}`,
-    error.response?.data?.error || error.message || error);
+    error.response?.data?.error || error.response?.data || error.message || error);
 
   return Promise.reject(error);
 })

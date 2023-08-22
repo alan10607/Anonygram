@@ -22,7 +22,7 @@ const htmlToString = (inputElement) => {
   return string;
 }
 
-const checkWord = async (string) => {
+const checkWord = (string) => {
   const maxLength = 3000;
   const length = string.length;
 
@@ -41,9 +41,9 @@ export const useInputFilter = () => {
   const inputFilter = (inputElement) => {
     try {
       const string = htmlToString(inputElement);
+      // const purifiedString = DOMPurify.sanitize(string)
       checkWord(string);
-
-      return Promise.resolve(DOMPurify.sanitize(string));
+      return Promise.resolve(string);
     } catch (e) {
       if (e instanceof ValidationError) {
         dispatch(setConsole(e.message));

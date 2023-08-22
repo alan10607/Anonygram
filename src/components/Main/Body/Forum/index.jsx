@@ -114,7 +114,7 @@ export default function Forum() {
   }
 
   return (
-    <div>
+    <div id="forum">
       <Fragment>{getArticleNode()}</Fragment>
     </div>
   )
