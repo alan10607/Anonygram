@@ -23,7 +23,9 @@ export default function Bar({ id, no }) {
 
   return (
     <div className="bar">
-      <img className="head" src={authorHeadUrl ? authorHeadUrl : ICON_USER} alt="ICON_USER" />
+      {authorHeadUrl ?
+        <img className="head" src={authorHeadUrl} alt="ICON_USER" /> :
+        <img className="head icon" src={ICON_USER} alt="ICON_USER" />}
       <div className="author">{authorName}</div>
       <div className="flex-empty"></div>
       <div className="like-icon" disabled={!like}>

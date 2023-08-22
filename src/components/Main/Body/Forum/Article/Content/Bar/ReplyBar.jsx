@@ -10,7 +10,9 @@ export default function ReplyBar() {
 
   return (
     <div className="bar">
-      <img className="head" src={headUrl ? headUrl : ICON_USER} alt="ICON_USER" />
+      {headUrl ?
+        <img className="head" src={headUrl} alt="ICON_USER" /> :
+        <img className="head icon" src={ICON_USER} alt="ICON_USER" />}
       <div className="author">{username}</div>
       <div className="flex-empty"></div>
     </div>
