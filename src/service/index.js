@@ -40,7 +40,6 @@ axiosInstance.interceptors.request.use(config => {
   cancelRepeatedRequest(config);
   setDoubleSubmitCsrf(config);
   setStartTime(config);
-  console.log("sending", config.url, config.headers)
   return config;
 }, error => {
   Promise.reject(error);

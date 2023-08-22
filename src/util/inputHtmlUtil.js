@@ -1,11 +1,11 @@
-import ValidationError from "Error/validationError";
+import DOMPurify from 'dompurify';
 import i18next from "i18next";
+import ValidationError from "Error/validationError";
 import { useDispatch } from "react-redux";
 import { setConsole } from "redux/actions/common";
-import DOMPurify from 'dompurify';
 
 /* --- Input html to string --- */
-const htmlToString = async (inputElement) => {
+const htmlToString = (inputElement) => {
   const row = [];
   for (const node of inputElement.childNodes) {
     switch (node.nodeName) {
@@ -23,7 +23,6 @@ const htmlToString = async (inputElement) => {
 }
 
 const checkWord = async (string) => {
-  string = string.trim();
   const maxLength = 3000;
   const length = string.length;
 
@@ -34,24 +33,24 @@ const checkWord = async (string) => {
   if (length > maxLength) {
     throw new ValidationError(i18next.t("tip.word.error.max", { maxLength, length }));
   }
-
-  return string;
 }
 
 export const useInputFilter = () => {
   const dispatch = useDispatch();
 
-  const inputFilter = async (inputElement) => {
+  const inputFilter = (inputElement) => {
     try {
-      const string = await htmlToString(inputElement);
-      const purifiedString = DOMPurify.sanitize(string);
-      return await checkWord(purifiedString);
+      const string = htmlToString(inputElement);
+      checkWord(string);
+
+      return Promise.resolve(DOMPurify.sanitize(string));
     } catch (e) {
       if (e instanceof ValidationError) {
         dispatch(setConsole(e.message));
       } else {
         console.log("InputFilter error", e);
       }
+      return Promise.reject(e);
     }
   }
 
