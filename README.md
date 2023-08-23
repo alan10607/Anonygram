@@ -10,50 +10,33 @@
 
 ## Features
 ### Overview
+- Trending article platform like Twitter
+- Surf article(sort by update time) and leave comment
+- User login or log in anonymously
+- Prefernece setting: headshot, language, theme
+
+## System Architecture
+[photo]
+
+### Server side Spring boot
+- RESTFul API web service
+- Trending articles sort by update time, implement by redis ZSET, update timeline time complexity almost O(1) because always add smaller score to ZSET (reverse timeline for score)
+- Impliement prevent cache issue: cache penetration(store empty value), cache breakdown(distribution lock) and cache avalanche(random expiration times)
+- Redis queue for sync data to DB
+- JWT and CSRF token for authentication
+- Imgur as image object store
+- Docker compose services (Spring Boot, MySql and Redis), currently deploy in AWS EC2
+
+#### Client side React
 - React 18 functional component
 - Redux with persist and thunk(async)
-- I18n and theme prefernece
-- Http-only cookie and CSRF token for authentication
-- Image uploadi
+- Image previewable input box
+- UI throttle and axios reduest pending
+- Content html filter to prevent XSS
 
+### UI Mockup
 
-### Components
-- Console
-- Error
-- Login
-- Main
-  - Header
-  - Body
-    - Forum
-      - Article
-        - Content
-          - Bar
-          - Info
-          - Word
-        - Move
-        - Reply
-          - UploadImgBtn
-    - New
-    - Setting
-
-### Redux
-- forum
-- common
-- user (persisted)
-
-## Servics
-```
-+-------------+  payload  +-------------+
-|  Login Com  | --------> |   Art Com   |
-+-------------+           +-------------+
-      ^                          ^
-      |                          |
-      v                          v
-+----------------+        +----------------+
-| Authentication |        |  post api      |
-|  back-end      |        |  back-end      |
-+----------------+        +----------------+
-```
+## QA Test
 
 ## Libraries / Dependencies
 - axios
@@ -63,7 +46,7 @@
 - universal-cookie
 - gh-pages
 
-## Build
+## Memo
 Build on github page by gh-pages
 ```
 npm run deploy   
