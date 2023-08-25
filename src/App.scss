@@ -1,36 +1,36 @@
 :root {
-  --bg-body-l: #e0e0e0;
-  --bg-heavy-l: #ffffff;
-  --bg-normal-l: #f2f2f2;
-  --bg-mid-l: #ececec;
-  --bg-light-l:#a4a4a4;
-  --bg-loginBtn-l: #0095f6;
-  --color-normal-l: #262626;
-  --color-mid-l: #545454;
-  --color-light-l: #8e8e8e;
-  --icon-filter-l: invert(0%) sepia(93%) saturate(0%) hue-rotate(229deg) brightness(93%) contrast(107%);
+  --bg-body-light: #e0e0e0;
+  --bg-heavy-light: #ffffff;
+  --bg-normal-light: #f2f2f2;
+  --bg-mid-light: #ececec;
+  --bg-light-light:#a4a4a4;
+  --bg-loginBtn-light: #0095f6;
+  --color-normal-light: #262626;
+  --color-mid-light: #545454;
+  --color-light-light: #8e8e8e;
+  --icon-filter-light: invert(0%) sepia(93%) saturate(0%) hue-rotate(229deg) brightness(93%) contrast(107%);
 
-  --bg-body-d: #000000;
-  --bg-heavy-d: #111111;
-  --bg-normal-d: #131313;
-  --bg-mid-d: #1a1a1a;
-  --bg-light-d:#545454;
-  --bg-loginBtn-d: #111111;
-  --color-normal-d: #ececec;
-  --color-mid-d: #efefef;
-  --color-light-d: #aaaaaa;
-  --icon-filter-d: invert(100%) sepia(57%) saturate(41%) hue-rotate(308deg) brightness(113%) contrast(87%);
+  --bg-body-dark: #000000;
+  --bg-heavy-dark: #111111;
+  --bg-normal-dark: #131313;
+  --bg-mid-dark: #1a1a1a;
+  --bg-light-dark:#545454;
+  --bg-loginBtn-dark: #111111;
+  --color-normal-dark: #ececec;
+  --color-mid-dark: #efefef;
+  --color-light-dark: #aaaaaa;
+  --icon-filter-dark: invert(100%) sepia(57%) saturate(41%) hue-rotate(308deg) brightness(113%) contrast(87%);
 
-  --bg-body: var(--bg-body);
-  --bg-heavy: var(--bg-heavy);
-  --bg-normal: var(--bg-normal);
-  --bg-mid: var(--bg-mid);
-  --bg-light: var(--bg-light);
-  --bg-loginBtn: var(--bg-loginBtn);
-  --color-normal: var(--color-normal);
-  --color-mid: var(--color-mid);
-  --color-light: var(--color-light);
-  --icon-filter: var(--icon-filter);
+  --bg-body: var(--bg-body-dark);
+  --bg-heavy: var(--bg-heavy-dark);
+  --bg-normal: var(--bg-normal-dark);
+  --bg-mid: var(--bg-mid-dark);
+  --bg-light: var(--bg-light-dark);
+  --bg-loginBtn: var(--bg-loginBtn-dark);
+  --color-normal: var(--color-normal-dark);
+  --color-mid: var(--color-mid-dark);
+  --color-light: var(--color-light-dark);
+  --icon-filter: var(--icon-filter-dark);
 }
 
 $color-word-a: #639cf9;

@@ -13,6 +13,7 @@
 	}
 
 	> :last-child {
-		height: calc(100vh - 20px - $nav-height);
+		height: calc(100vh - $nav-height);
+    padding-bottom: 20px;
 	}
 }

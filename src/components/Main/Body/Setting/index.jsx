@@ -2,13 +2,13 @@ import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setConsole } from 'redux/actions/common';
+import { deleteIds } from 'redux/actions/forum';
 import { deleteUser, setUser } from 'redux/actions/user';
 import userRequest from 'service/request/userRequest';
-import { ICON_USER } from 'config/constant';
 import { useUploadImage } from 'util/imageUtil';
 import useThrottle from 'util/useThrottle';
+import { ICON_USER } from 'config/constant';
 import './Setting.scss';
-import { deleteIds } from 'redux/actions/forum';
 
 export default function Setting() {
   const { userId, username, email, isAnonymous, headUrl, language, theme } = useSelector(state => ({
@@ -35,16 +35,19 @@ export default function Setting() {
 
   const THEME_OPTIONS = [{
     name: t("text.setting.theme.dark"),
-    value: "d"
+    value: "dark"
   }, {
     name: t("text.setting.theme.light"),
-    value: "l"
+    value: "light"
   }];
 
   const uploadHead = useThrottle((event) => {
     uploadImage(event)
       .then(imageUrl => userRequest.updateHeadUrl(imageUrl))
-      .then(user => dispatch(setUser(user)))
+      .then(user => {
+        dispatch(setUser(user));
+        dispatch(deleteIds());
+      })
       .catch(e => dispatch(setConsole(t("tip.setting.headUrl.error"))));
   })
 
