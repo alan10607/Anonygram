@@ -1,8 +1,9 @@
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { updateContentLike } from 'redux/actions/forum';
 import forumRequest from 'service/request/forumRequest';
-import { ICON_LIKE, ICON_USER } from 'config/constant';
+import { ICON_LIKE } from 'config/constant';
 import useThrottle from 'util/useThrottle';
+import HeadIcon from './HeadIcon';
 import './Bar.scss';
 
 export default function Bar({ id, no }) {
@@ -23,9 +24,7 @@ export default function Bar({ id, no }) {
 
   return (
     <div className="bar">
-      {authorHeadUrl ?
-        <img className="head" src={authorHeadUrl} alt="ICON_USER" /> :
-        <img className="head icon" src={ICON_USER} alt="ICON_USER" />}
+      <HeadIcon headUrl={authorHeadUrl} />
       <div className="author">{authorName}</div>
       <div className="flex-empty"></div>
       <div className="like-icon" disabled={!like}>

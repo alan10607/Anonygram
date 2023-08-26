@@ -23,18 +23,10 @@ export default function userReducer(preState = initUserState, action) {
       return newState;
 
     case DELETE_USER:
-      const tmp = {
-        id: null,
-        username: "",
-        isAnonymous: null,
-        headUrl: ""
-      }
-      const deletedUserState = Object.assign({}, preState, tmp);
-      setLocalEnvironment(deletedUserState);
-      return deletedUserState;
+      setLocalEnvironment(initUserState);
+      return initUserState;
 
     default:
-      setTheme(preState.theme);
       return preState;
   }
 }

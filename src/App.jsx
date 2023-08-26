@@ -1,4 +1,7 @@
+import { useEffect } from "react";
 import { useRoutes } from "react-router-dom";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { setUser } from "redux/actions/user";
 import Console from "components/Console";
 import Error from "components/Error";
 import Login from "components/Login";
@@ -51,6 +54,16 @@ const routeConfig = [
 ]
 
 export default function App() {
+  const { theme } = useSelector(state => ({
+    theme: state.user.theme
+  }), shallowEqual);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setUser({theme}));
+    console.log("Init theme as", theme);
+  }, [])
+  
   const element = useRoutes(routeConfig);
   return (
     <div>

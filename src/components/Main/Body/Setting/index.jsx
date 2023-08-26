@@ -7,7 +7,7 @@ import { deleteUser, setUser } from 'redux/actions/user';
 import userRequest from 'service/request/userRequest';
 import { useUploadImage } from 'util/imageUtil';
 import useThrottle from 'util/useThrottle';
-import { ICON_USER } from 'config/constant';
+import HeadIcon from '../Forum/Article/Content/Bar/HeadIcon';
 import './Setting.scss';
 
 export default function Setting() {
@@ -89,12 +89,8 @@ export default function Setting() {
   return (
     <div id="setting">
       <div className="user-info">
-        <label className="upload-head-btn">
-          {isAnonymous ?
-            <img className="head icon" src={ICON_USER} alt="ICON_USER" disabled /> :
-            (headUrl ?
-              <img className="head" src={headUrl} alt="ICON_USER" /> :
-              <img className="head icon" src={ICON_USER} alt="ICON_USER" />)}
+        <label className="upload-head-btn" disabled={isAnonymous}>
+          <HeadIcon headUrl={headUrl} />
           <input type="file" accept="image/*" onChange={uploadHead} disabled={isAnonymous} />
         </label>
         <div>

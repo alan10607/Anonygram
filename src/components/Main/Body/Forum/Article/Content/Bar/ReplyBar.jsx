@@ -1,5 +1,5 @@
 import { shallowEqual, useSelector } from 'react-redux';
-import { ICON_USER } from 'config/constant';
+import HeadIcon from './HeadIcon';
 import './Bar.scss';
 
 export default function ReplyBar() {
@@ -10,9 +10,7 @@ export default function ReplyBar() {
 
   return (
     <div className="bar">
-      {headUrl ?
-        <img className="head" src={headUrl} alt="ICON_USER" /> :
-        <img className="head icon" src={ICON_USER} alt="ICON_USER" />}
+      <HeadIcon headUrl={headUrl} />
       <div className="author">{username}</div>
       <div className="flex-empty"></div>
     </div>

@@ -11,7 +11,7 @@ export default function Console() {
   }), shallowEqual);
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const consoleShowSec = 2;
+  const consoleShowSec = 3;
 
   useEffect(() => {
     if (!console) return;
@@ -29,7 +29,8 @@ export default function Console() {
     <div>
       <div id="console" disabled={console === ""}>
         <div>
-          <div>{t("text.console.title")}</div>
+          <div className="console-title">{t("text.console.title")}</div>
+          <div className="line"></div>
           <div>{console}</div>
         </div>
       </div>

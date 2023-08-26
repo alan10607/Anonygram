@@ -4,7 +4,7 @@
 	display: flex;
 	flex-direction: column;
 	align-items: stretch;
-  background-color: var(--bg-heavy);
+	background-color: var(--bg-heavy);
 
 	select {
 		padding: 2px 8px;
@@ -21,17 +21,19 @@
 		.upload-head-btn {
 			flex: 0 1 auto;
 
+			&[disabled] {
+				img {
+					cursor: initial;
+				}
+			}
+
 			img {
 				width: 110px;
 				height: 110px;
 				margin-right: 12px;
 				border-radius: 100%;
 				cursor: pointer;
-    		object-fit: cover;
-
-				&[disabled] {
-					cursor: initial;
-				}
+				object-fit: cover;
 			}
 
 			input {
