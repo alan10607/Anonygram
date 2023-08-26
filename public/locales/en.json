@@ -42,9 +42,7 @@
   "tip.forum.id.error": "It seems that the instant noodles have overturned on the machine. Please try again later.",
   "tip.forum.article.get.error": "Looks like some articles are not loading. Please try refreshing the page.",
   "tip.forum.article.delete.ok": "The article has been deleted.",
-
   "tip.forum.content.delete.ok": "The comment has been deleted.",
- 
   "tip.img.error": "Failed to upload image. Please try again later.",
   "tip.img.error.empty": "The selected image is empty.",
   "tip.img.error.format": "Image format error.",
