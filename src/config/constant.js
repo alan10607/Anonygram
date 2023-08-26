@@ -11,7 +11,7 @@ console.log(String.raw`
 `);
 
 /* --- Backend url --- */
-export const VERSION = "v0501";
+export const VERSION = "v20230826";
 export const WELCOME_PAGE = "/forum/index";
 
 /* --- Backend url --- */
