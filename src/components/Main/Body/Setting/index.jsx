@@ -30,7 +30,7 @@ export default function Setting() {
     value: "en"
   }, {
     name: "繁體中文",
-    value: "zh-TW"
+    value: "zh-tw"
   }];
 
   const THEME_OPTIONS = [{
