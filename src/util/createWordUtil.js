@@ -4,8 +4,9 @@ import { BX_EXP, IMG_URL_EXP, URL_EXP } from "config/regexp";
 let k = 0;
 let id = "";
 
+/* --- convert word to react virtual DOM --- */
 const createWord = (inputId, word) => {
-  k = 0;;//TO-DO: need test that is init will restart??
+  k = 0;
   id = inputId
   const allLine = [];
   word.split("\n").forEach((row, i) => {

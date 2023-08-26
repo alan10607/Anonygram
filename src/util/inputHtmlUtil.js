@@ -23,7 +23,7 @@ const htmlToString = (inputElement) => {
 }
 
 const checkWord = (string) => {
-  const maxLength = 3000;
+  const maxLength = 5000;
   const length = string.length;
 
   if (length === 0) {
