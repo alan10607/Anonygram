@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/Anonygram-Frontend/static/css/main.b2a458ec.css",
-    "main.js": "/Anonygram-Frontend/static/js/main.165921fc.js",
+    "main.css": "/Anonygram-Frontend/static/css/main.3eb5e78f.css",
+    "main.js": "/Anonygram-Frontend/static/js/main.29f4ee2a.js",
     "index.html": "/Anonygram-Frontend/index.html",
     "static/media/getFetch.cjs": "/Anonygram-Frontend/static/media/getFetch.40f37ddea2378391108f.cjs",
-    "main.b2a458ec.css.map": "/Anonygram-Frontend/static/css/main.b2a458ec.css.map",
-    "main.165921fc.js.map": "/Anonygram-Frontend/static/js/main.165921fc.js.map"
+    "main.3eb5e78f.css.map": "/Anonygram-Frontend/static/css/main.3eb5e78f.css.map",
+    "main.29f4ee2a.js.map": "/Anonygram-Frontend/static/js/main.29f4ee2a.js.map"
   },
   "entrypoints": [
-    "static/css/main.b2a458ec.css",
-    "static/js/main.165921fc.js"
+    "static/css/main.3eb5e78f.css",
+    "static/js/main.29f4ee2a.js"
   ]
 }
