@@ -1,6 +1,6 @@
 # Anonygram React
 
-## >> [*LIVE DEMO*](https://alan10607.github.io/Anonygram-Frontend/)
+## >> [*LIVE DEMO*](https://alan10607.github.io/Anonygram/)
 > An anonymous social media, create through React frontend and Spring Boot backend.
 >
 > This is the front-end of Anonygram
