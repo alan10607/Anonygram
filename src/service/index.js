@@ -23,10 +23,6 @@ const cancelRepeatedRequest = (config) => {
 const setDoubleSubmitCsrf = (config) => {
   const csrfToken = crypto.randomUUID();
   setCookie("X-CSRF-TOKEN", csrfToken, 60);
-  alert("Authorization=" + getCookie("Authorization") 
-  +"Authorization2=" + getCookie("Authorization2") 
-  +"Authorization3=" + getCookie("Authorization3") 
-  +"X-CSRF-TOKEN"+ getCookie("X-CSRF-TOKEN"));
   config.headers["X-CSRF-TOKEN"] = csrfToken;
 }
 
