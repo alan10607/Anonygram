@@ -1,5 +1,5 @@
 import axios from "axios";
-import { setCookie } from "util/cookieUtil";
+import { getCookie, setCookie } from "util/cookieUtil";
 import { BACKEND_API_URL } from "config/constant";
 import { locationLocalTo } from "util/locationUtil";
 import { addPending, removePending } from "./pending";
@@ -22,7 +22,12 @@ const cancelRepeatedRequest = (config) => {
 
 const setDoubleSubmitCsrf = (config) => {
   const csrfToken = crypto.randomUUID();
-  setCookie("X-CSRF-TOKEN", csrfToken, 1);
+  setCookie("X-CSRF-TOKEN", csrfToken, 60);
+  setCookie("Authorization", csrfToken, 60);
+  alert("Authorization=" + getCookie("Authorization") 
+  +"Authorization2=" + getCookie("Authorization2") 
+  +"Authorization3=" + getCookie("Authorization3") 
+  +"X-CSRF-TOKEN"+ getCookie("X-CSRF-TOKEN"));
   config.headers["X-CSRF-TOKEN"] = csrfToken;
 }
 

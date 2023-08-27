@@ -10,7 +10,6 @@ export const setCookie = (key, value, expiredSecond) => {
   cookies.set(key, value, {
     path: "/",
     maxAge: 60 * expiredSecond,
-    secure: true,
-    sameSite: "None"
+    secure: true
   });
 }
