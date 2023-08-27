@@ -1,5 +1,3 @@
-import i18next from "i18next";
-
 /* --- Banner --- */
 console.log(String.raw`
     ___  _   __ ___  _   __  __ ____ ____  ___  __  ___

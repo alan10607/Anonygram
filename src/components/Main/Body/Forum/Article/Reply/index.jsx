@@ -1,11 +1,11 @@
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { setConsole, setReplyHtml, setReplyId } from 'redux/actions/common';
-import { setArticle, setContent } from 'redux/actions/forum';
+import { setReplyHtml, setReplyId } from 'redux/actions/common';
+import { setArticle } from 'redux/actions/forum';
 import forumRequest from 'service/request/forumRequest';
-import { REPLY_BOX_ATTR } from 'config/constant';
 import { pasteAsPlain, useInputFilter } from 'util/inputHtmlUtil';
+import { REPLY_BOX_ATTR } from 'config/constant';
 import useThrottle from 'util/useThrottle';
 import ReplyBar from '../Content/Bar/ReplyBar';
 import ReplyInfo from '../Content/Info/ReplyInfo';

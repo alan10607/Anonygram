@@ -1,7 +1,7 @@
 import i18next from "i18next";
 
 export const getTimeFromStr = (dateStr) => {
-  if (dateStr == "") return "";
+  if (dateStr === "") return "";
 
   const date = new Date(dateStr);
   const now = new Date();
