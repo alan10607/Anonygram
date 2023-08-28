@@ -74,7 +74,11 @@ export default function Setting() {
 
   const logout = () => {
     dispatch(deleteIds());
-    dispatch(deleteUser());
+    if (isAnonymous) {
+      dispatch(deleteUserExceptTokens());
+    } else {
+      dispatch(deleteUser());
+    }
     navigate("/login");
   }
 

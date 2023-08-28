@@ -1,8 +1,11 @@
 import axios from "axios";
-import { getCookie, setCookie } from "util/cookieUtil";
+import store from "redux/store";
 import { BACKEND_API_URL } from "config/constant";
+import { setUser } from "redux/actions/user";
+import { setCookie } from "util/cookieUtil";
 import { locationLocalTo } from "util/locationUtil";
 import { addPending, removePending } from "./pending";
+
 
 const axiosInstance = axios.create({
   baseURL: BACKEND_API_URL,
@@ -36,9 +39,29 @@ const getDurationTime = (config) => {
   return endTime - startTime;
 }
 
+const setJwtTokens = (config) => {
+  const state = store.getState();
+  const tokens = state?.user?.tokens;
+  if (tokens) {
+    for (const [k, v] of Object.entries(tokens)) {
+      config[k] = v;
+    }
+  }
+}
+
+const saveJwtTokens = (headers) => {
+  const setJwt = headers["Set-Jwt"];
+  if (setJwt) {
+    const tokens = JSON.parse(setJwt);
+    store.dispatch(setUser({ tokens }));
+    console.log("Save JWT tokens");
+  }
+}
+
 axiosInstance.interceptors.request.use(config => {
   cancelRepeatedRequest(config);
   setDoubleSubmitCsrf(config);
+  setJwtTokens(config);
   setStartTime(config);
   return config;
 }, error => {
@@ -47,6 +70,7 @@ axiosInstance.interceptors.request.use(config => {
 
 axiosInstance.interceptors.response.use(res => {
   removePending(res.config);
+  saveJwtTokens(res.headers);
 
   console.log(`>> Request in ${getDurationTime(res.config)}ms for ${res.config.url}`);
   return res.data;

@@ -8,7 +8,7 @@ import ValidationError from "Error/validationError";
 const imgQuality = 1, imgMaxWidth = 450;
 
 /* --- image convert and compress --- */
-const checkTargetFiles = async (files) => {
+const getFile = (files) => {
   if (!files || files.length === 0 || !files[0]) {
     throw new ValidationError(i18next.t("tip.img.error.empty"));
   }
@@ -30,7 +30,7 @@ const convertFileToBase64 = (file) => {
   });
 }
 
-const buildImg = (base64) => {
+const buildImage = (base64) => {
   return new Promise((resolve, reject) => {
     const image = new Image();
     image.src = base64;//src in <img> can be Base64 string
@@ -39,7 +39,7 @@ const buildImg = (base64) => {
   });
 }
 
-const compressImg = (image, quality, maxWidth) => {
+const compressImage = (image, quality, maxWidth) => {
   return new Promise((resolve, reject) => {
     let width = image.width, height = image.height;
     if (width > maxWidth) {
@@ -68,10 +68,10 @@ export const useUploadImage = () => {
   const uploadImage = (event) => {
     dispatch(setLoading(true));
 
-    return checkTargetFiles(event.target.files)
+    return getFile(event.target.files)
       .then(file => convertFileToBase64(file))
-      .then(base64 => buildImg(base64))
-      .then(image => compressImg(image, imgQuality, imgMaxWidth))
+      .then(base64 => buildImage(base64))
+      .then(image => compressImage(image, imgQuality, imgMaxWidth))
       .then(compressedBase64 => forumRequest.createImage(compressedBase64))
       .then(res => {
         console.log("Upload image url", res.imageUrl);

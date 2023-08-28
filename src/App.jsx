@@ -54,16 +54,18 @@ const routeConfig = [
 ]
 
 export default function App() {
-  const { theme } = useSelector(state => ({
+  const { language, theme } = useSelector(state => ({
+    language: state.user.language,
     theme: state.user.theme
   }), shallowEqual);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setUser({theme}));
-    console.log("Init theme as", theme);
+    const user = { language, theme };
+    dispatch(setUser(user));
+    console.log("Init local enviroment", user);
   }, [])
-  
+
   const element = useRoutes(routeConfig);
   return (
     <div>
