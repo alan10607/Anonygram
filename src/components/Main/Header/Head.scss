@@ -16,9 +16,20 @@
 	}
 
 	>a {
+    margin-top: 4px;
 
-		&.active:after{
+		&:after {
 			@include line;
+			width: calc(100% - 2px);
+			border-bottom-width: 1px;
+		}
+		
+		&:not(.active):after {
+			border-bottom-color: #00000000;
+		}
+
+		+a {
+			margin-left: 30px;
 		}
 
 		img {

@@ -3,7 +3,7 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setConsole } from 'redux/actions/common';
 import { deleteIds } from 'redux/actions/forum';
-import { deleteUser, setUser } from 'redux/actions/user';
+import { deleteUser, deleteUserExceptTokens, setUser } from 'redux/actions/user';
 import userRequest from 'service/request/userRequest';
 import { useUploadImage } from 'util/imageUtil';
 import useThrottle from 'util/useThrottle';

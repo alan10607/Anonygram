@@ -43,12 +43,14 @@ const setJwtTokens = (config) => {
   const state = store.getState();
   const tokens = state?.user?.tokens;
   if (tokens) {
-    Object.entries(tokens).forEach((k, v) => config[k] = v);
+    for (const [tokenName, value] of Object.entries(tokens)) {
+      config.headers[tokenName] = `Bearer ${value}`;
+    }
   }
 }
 
 const saveJwtTokens = (headers) => {
-  const setJwt = headers["Set-Jwt"];
+  const setJwt = headers["set-jwt"] || headers["Set-Jwt"];
   if (setJwt) {
     const tokens = JSON.parse(setJwt);
     store.dispatch(setUser({ tokens }));
