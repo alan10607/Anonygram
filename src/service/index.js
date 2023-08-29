@@ -42,6 +42,7 @@ const getDurationTime = (config) => {
 const setJwtTokens = (config) => {
   const state = store.getState();
   const tokens = state?.user?.tokens;
+  alert("test set tokens:" + tokens);
   if (tokens) {
     for (const [tokenName, value] of Object.entries(tokens)) {
       config.headers[tokenName] = `Bearer ${value}`;
@@ -51,6 +52,7 @@ const setJwtTokens = (config) => {
 
 const saveJwtTokens = (headers) => {
   const setJwt = headers["set-jwt"] || headers["Set-Jwt"];
+  alert("test get jwt:" + setJwt);
   if (setJwt) {
     const tokens = JSON.parse(setJwt);
     store.dispatch(setUser({ tokens }));
