@@ -16,8 +16,9 @@
 	}
 
 	>a {
-		+a {
-			margin-left: 30px;
+
+		&.active:after{
+			@include line;
 		}
 
 		img {

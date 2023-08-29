@@ -60,7 +60,7 @@ const replaceTargetToMark = (line, m) => {
 }
 
 const createImg = (imgUrl) => <img key={k++} src={imgUrl} alt={imgUrl} />;
-const createA = (url) => <a key={k++} href={url} target="_blank" rel="noreferrer">{url}</a>;
+const createA = (url) => <a key={k++} href={url} target="_blank" rel="content link">{url}</a>;
 const createBx = (id, bx) => <span key={k++} className="bx" onClick={goToBx(id, bx.substr(1))}>{bx}</span>;
 const createSpan = (str) => <span key={k++}>{str}</span>;
 const createBr = () => <br key={k++}></br>;

@@ -43,9 +43,7 @@ const setJwtTokens = (config) => {
   const state = store.getState();
   const tokens = state?.user?.tokens;
   if (tokens) {
-    for (const [k, v] of Object.entries(tokens)) {
-      config[k] = v;
-    }
+    Object.entries(tokens).forEach((k, v) => config[k] = v);
   }
 }
 
