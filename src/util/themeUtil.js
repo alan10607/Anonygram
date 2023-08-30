@@ -30,4 +30,4 @@ const fixMobilePhoneHeight = () => {
   console.log("Update window height", innerHeight);
 }
 
-window.addEventListener("fixMobilePhoneHeight", fixMobilePhoneHeight);
+window.addEventListener("resize", fixMobilePhoneHeight);

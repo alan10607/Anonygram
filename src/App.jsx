@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useRoutes } from "react-router-dom";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { setUser } from "redux/actions/user";
 import Console from "components/Console";
 import Error from "components/Error";
@@ -54,16 +55,21 @@ const routeConfig = [
 ]
 
 export default function App() {
-  const { language, theme } = useSelector(state => ({
+  const { userId, language, theme } = useSelector(state => ({
+    userId: state.user.id,
     language: state.user.language,
     theme: state.user.theme
   }), shallowEqual);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const user = { language, theme };
-    dispatch(setUser(user));
+    dispatch(setUser({ language, theme }));
     console.log("Init local enviroment", user);
+    if(userId){
+      navigate(WELCOME_PAGE);
+      console.log("Already login, navigate to forum");
+    }
   }, [])
 
   const element = useRoutes(routeConfig);

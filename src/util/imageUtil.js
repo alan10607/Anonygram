@@ -39,27 +39,25 @@ const buildImg = (base64) => {
   });
 }
 
-const compressImg = (image, quality, maxWidth) => {
-  return new Promise((resolve, reject) => {
-    let width = image.width, height = image.height;
-    if (width > maxWidth) {
-      const scale = maxWidth / width;
-      width *= scale;
-      height *= scale;
-    }
-    console.log(`Resize img from (width/height) ${image.width}/${image.height} => ${width}/${height}`);
+const compressImg = async (image, quality, maxWidth) => {
+  let width = image.width, height = image.height;
+  if (width > maxWidth) {
+    const scale = maxWidth / width;
+    width *= scale;
+    height *= scale;
+  }
+  console.log(`Resize img from (width/height) ${image.width}/${image.height} => ${width}/${height}`);
 
-    const canvas = document.createElement("canvas");
-    canvas.width = width;
-    canvas.height = height;
-    const context = canvas.getContext("2d");
-    context.drawImage(image, 0, 0, width, height);
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
+  const context = canvas.getContext("2d");
+  context.drawImage(image, 0, 0, width, height);
 
-    const newImg = canvas.toDataURL("image/jpeg", quality);//quality = compression ratio, 1 = no compress 
-    const newBase64 = newImg.replace(/^data:image\/\w+;base64,/g, "");
-    console.log("After compressed, image size=" + Math.round(0.75 * newBase64.length / 1000) + "kb");//byte size is almost 0.75 of base64
-    resolve(newBase64);
-  });
+  const newImg = canvas.toDataURL("image/jpeg", quality);//quality = compression ratio, 1 = no compress 
+  const newBase64 = newImg.replace(/^data:image\/\w+;base64,/g, "");
+  console.log("After compressed, image size=" + Math.round(0.75 * newBase64.length / 1000) + "kb");//byte size is almost 0.75 of base64
+  return newBase64;
 };
 
 export const useUploadImage = () => {
