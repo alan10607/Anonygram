@@ -12,7 +12,7 @@
 ## System Architecture
 _Check these links to find repositories of this system: [*Backend (Spring Boot)*](https://alan10607.github.io/Anonygram/), [*Frontend (React)*](https://alan10607.github.io/Anonygram/)_
 
-[photo]
+<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/system.jpg"/>
 
 ## Features
 ### Overview
@@ -49,6 +49,8 @@ Display in monile phone
 - Setting page
 
 - Login index
+
+- Another theme
 
 ## QA Test
 
