@@ -40,15 +40,24 @@ _Check these links to find repositories of this system: [*Backend (Spring Boot)*
 Display in monile phone
 ### Trending Articles Page
 _Article list with contents. Can be expanded to show more contents_
-  |Article list|Expanded article with contents|Reply box under contents|Deleted contents|
-  |---|---|---|---|
-  |<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/article4.jpg" width="300"/>|<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/article.jpg" width="300"/>|<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/article2.jpg" width="300"/>|<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/article3.jpg" width="300"/>|
+  |Article list|Expanded article with contents|
+  |---|---|
+  |<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/article4.jpg" width="300"/>|<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/article.jpg" width="300"/>|
+
+  |Reply box under contents|Deleted contents|
+  |---|---|
+  |<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/article2.jpg" width="300"/>|<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/article3.jpg" width="300"/>|
 
 
 ### Add new article page & Setting page
-  |Image-previewable input box|After creating new article|Setting page|Setting preference selected|
-  |---|---|---|---|
-  |<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/new.jpg" width="300"/>|<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/new2.jpg" width="300"/>|<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/setting.jpg" width="300"/>|<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/setting2.jpg" width="300"/>|
+  |Image-previewable input box|After creating new article|
+  |---|---|
+  |<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/new.jpg" width="300"/>|<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/new2.jpg" width="300"/>|<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/setting.jpg" width="300"/>|
+
+  |Setting page|Setting preference selected|
+  |---|---|
+  |<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/setting.jpg" width="300"/>|<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/setting2.jpg" width="300"/>|
+  Setting page|Setting preference selected|
 
 
 ### Index
@@ -56,10 +65,12 @@ _Article list with contents. Can be expanded to show more contents_
   |---|---|
   |<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/login.jpg" width="300"/>|<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/login2.jpg" width="300"/>|
 
+
 ### Another theme
   |Trending articles page|Add new article page|Setting page|
   |---|---|---|
   |<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/article-light.jpg" width="300"/>|<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/new-light.jpg" width="300"/>|<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/setting-light.jpg" width="300"/>|
+
 
 ## QA Test
 
