@@ -1,56 +1,65 @@
-# Anonygram React
+# Anonygram
 
-## >> [*LIVE DEMO*](https://alan10607.github.io/Anonygram/)
-> An trending article web platform create through React frontend and Spring Boot backend.
->
-> This is the front-end of Anonygram
+### >> [*LIVE DEMO*](https://alan10607.github.io/Anonygram/)
+> A trending article web platform created using Backend (Spring Boot) and Frontend (React)
 
-<br>
 
 
 
 ## System Architecture
-_Check these links to find repositories of this system: [*Backend (Spring Boot)*](https://alan10607.github.io/Anonygram/), [*Frontend (React)*](https://alan10607.github.io/Anonygram/)_
+_Check these links to find repositories of this system: [*Backend (Spring Boot)*](https://github.com/alan10607/Anonygram-Backend), [*Frontend (React)*](https://github.com/alan10607/Anonygram)_
 
 <img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/system.jpg"/>
 
 ## Features
 ### Overview
-- Trending article platform like Twitter
-- Surf article(sort by update time) and leave comment
-- User login or log in anonymously
-- Prefernece setting: headshot, language, theme
+- A trending article platform similar to Twitter
+- Browse articles (sorted by update time) and leave comments
+- User login or anonymous login
+- Preference settings: profile picture, language, theme
 
 ### Features Details
 #### Server side - Spring boot
-- RESTFul API web service with OpenAPI3 document (swagger) 
-- Trending articles sort by update time, implement by redis ZSET, update timeline time complexity almost O(1) because always add smaller score to ZSET (reverse timeline for score)
-- Impliement prevent cache issue: cache penetration(store empty value), cache breakdown(distribution lock) and cache avalanche(random expiration times)
-- Redis queue for sync data to DB
+- RESTFul API web service with OpenAPI3 document (Swagger) 
+- Trending articles sorted by update time, implemented using Redis ZSET. update timeline time complexity is nearly O(1) because always adds smaller score to ZSET (reverse timeline for score)
+- Implementation of cache issue prevention: cache penetration (storing empty values), cache breakdown (distribution lock), and cache avalanche (random expiration times)
+- Redis queue for synchronizing data to DB
 - JWT and CSRF token for authentication
-- Imgur as image object store
-- Docker compose services (Spring Boot, MySql and Redis), currently deploy in AWS EC2
+- Imgur used as image objects store
+- Docker compose services (Spring Boot, MySql and Redis), currently deploy on AWS EC2
 
 #### Client side - React
-- React 18 functional component
-- Redux with persist and thunk(async)
-- Image previewable input box
-- UI throttle and axios reduest pending
+- React 18 functional components
+- Redux with persistence and thunk (asynchronous actions)
+- Image-previewable input box
+- UI throttle and Axios pending request
 - Content html filter to prevent XSS
+
 
 ## UI Mockup
 Display in monile phone
-- Trending articles page, article list with contents and can be open out more
-  <img src="https://raw.githubusercontent.com/alan10607/webGame/master/docs/demo4.jpg" width="300"/>
+### Trending Articles Page
+_Article list with contents. Can be expanded to show more contents_
+  |Article list|Expanded article with contents|Reply box under contents|Deleted contents|
+  |---|---|---|---|
+  |<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/article4.jpg" width="300"/>|<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/article.jpg" width="300"/>|<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/article2.jpg" width="300"/>|<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/article3.jpg" width="300"/>|
 
 
-- Add new content page, input box is image previewable
+### Add new article page & Setting page
+  |Image-previewable input box|After creating new article|Setting page|Setting preference selected|
+  |---|---|---|---|
+  |<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/new.jpg" width="300"/>|<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/new2.jpg" width="300"/>|<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/setting.jpg" width="300"/>|<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/setting2.jpg" width="300"/>|
 
-- Setting page
 
-- Login index
+### Index
+  |Login page|Registration page|
+  |---|---|
+  |<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/login.jpg" width="300"/>|<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/login2.jpg" width="300"/>|
 
-- Another theme
+### Another theme
+  |Trending articles page|Add new article page|Setting page|
+  |---|---|---|
+  |<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/article-light.jpg" width="300"/>|<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/new-light.jpg" width="300"/>|<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/setting-light.jpg" width="300"/>|
 
 ## QA Test
 
@@ -60,7 +69,6 @@ OS = Ubuntu, memoey = 1G + 3G(swap), disk = 64G
 
 1. Test for query content size = (10 articles * 10 contents), TPS=
 2. Test for query content size = (1 articles * 1 contents), TPS=
-
 
 
 ## Libraries / Dependencies
