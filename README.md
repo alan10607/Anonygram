@@ -1,4 +1,16 @@
 # Anonygram
+<p align="center">
+	<a href="https://github.com/alan10607/Anonygram" target="_blank">
+        <img src="https://img.shields.io/badge/Github-Anonygram Frontend-green">
+	</a>
+	<a href="https://github.com/alan10607/Anonygram-Backend" target="_blank">
+        <img src="https://img.shields.io/badge/Github-Anonygram Backend-blue">
+	</a>
+    <img src="https://img.shields.io/badge/React-18.2.0-lightgray">
+    <img src="https://img.shields.io/badge/Spring Boot-2.7.3-lightgray">
+    <img src="https://img.shields.io/badge/Redis-7.0.4-lightgray">
+    <img src="https://img.shields.io/badge/MySql-8.0.30-lightgray">
+</p>
 
 ### >> [*LIVE DEMO*](https://alan10607.github.io/Anonygram/)
 > A trending article web platform created using Backend (Spring Boot) and Frontend (React)
