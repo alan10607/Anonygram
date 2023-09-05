@@ -37,7 +37,8 @@ _Check these links to find repositories of this system: [*Backend (Spring Boot)*
 _Check other APIs in backend [OpenAPI](https://13.112.45.117/swagger) document_
 
 #### GET:/forum/article/{idList}/{noList} 
-- Example GET:/forum/article/8b9df0a3-2f54-41ee-bbac-fe160d1800c5,d9f82031-4702-4453-9160-e64616dddef7/0,1,2
+Example:   
+- GET:/forum/article/8b9df0a3-2f54-41ee-bbac-fe160d1800c5,d9f82031-4702-4453-9160-e64616dddef7/0,1,2
 ```
 [
     {
@@ -119,7 +120,6 @@ _Check other APIs in backend [OpenAPI](https://13.112.45.117/swagger) document_
 ## UI Mockup
 Display in monile phone
 ### Trending Articles Page
-_Article list with contents. Can be expanded to show more contents_
   |Article list|Expanded article with contents|
   |---|---|
   |<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/article4.jpg" width="300"/>|<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/article.jpg" width="300"/>|
@@ -127,7 +127,7 @@ _Article list with contents. Can be expanded to show more contents_
   |Reply box under contents|Deleted contents|
   |---|---|
   |<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/article2.jpg" width="300"/>|<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/article3.jpg" width="300"/>|
-
+<br>
 
 ### Add new article page & Setting page
   |Image-previewable input box|After creating new article|
@@ -137,13 +137,13 @@ _Article list with contents. Can be expanded to show more contents_
   |Setting page|Setting preference selected|
   |---|---|
   |<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/setting.jpg" width="300"/>|<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/setting2.jpg" width="300"/>|
-
+<br>
 
 ### Index
   |Login page|Registration page|
   |---|---|
   |<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/login.jpg" width="300"/>|<img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/login2.jpg" width="300"/>|
-
+<br>
 
 ### Another theme
   |Trending articles page|Add new article page|Setting page|
