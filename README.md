@@ -34,7 +34,7 @@ _Check these links to find repositories of this system: [*Backend (Spring Boot)*
 - Content html filter to prevent XSS
 
 ## Query API
-_Check other API in Anonymous backend [OpenAPI](https://13.112.45.117/swagger) document_
+_Check other APIs in backend [OpenAPI](https://13.112.45.117/swagger) document_
 
 #### GET:/forum/article/{idList}/{noList} 
 - Example GET:/forum/article/8b9df0a3-2f54-41ee-bbac-fe160d1800c5,d9f82031-4702-4453-9160-e64616dddef7/0,1,2
