@@ -33,7 +33,7 @@
   "text.time.now": "剛剛",
   "tip.login.error": "登入失敗, Email或密碼不正確",
   "tip.login.anonymous.error": "登入失敗, 請稍後再試",
-  "tip.register.error": "註冊失敗, 請稍後再試",
+  "tip.register.error": "註冊失敗, Email已經註冊",
   "tip.register.email.error": "無效的電子郵件格式",
   "tip.register.username.error": "使用者名稱不能為空",
   "tip.register.password.error": "密碼應至少為 6 個字符長, 只能包含英文字母、數字或特殊字符 - . @ $ ! % * # ? &",
