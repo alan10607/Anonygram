@@ -1,13 +1,10 @@
-import { useEffect, useState } from "react";
+import { ICON_LOGO, VERSION, WELCOME_PAGE } from "config/constant";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { setUser } from "redux/actions/user";
 import authRequest from "service/request/authRequest";
-import otherRequest from "service/request/otherRequest";
-import { BACKEND_API_URL, ICON_LOGO, VERSION, WELCOME_PAGE } from "config/constant";
-import { locationTo } from "util/locationUtil";
-import { isAnonygramUser } from "util/authUtil";
 import './Login.scss';
 
 export default function Login() {
@@ -17,16 +14,6 @@ export default function Login() {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const dispatch = useDispatch();
-
-  useEffect(() => {//For testing, check user SSL confirmation
-    otherRequest.ssl()
-      .then(() => { })
-      .catch(e => {//If does not conform SSL then redirect to the backend
-        const sslUrl = `${BACKEND_API_URL}/ssl?callbackUrl=${window.location.href}`;
-        console.log("Redirect backend for ssl", sslUrl)
-        locationTo(sslUrl);
-      });
-  }, []);
 
   const login = (event) => {
     event.preventDefault();
@@ -39,19 +26,8 @@ export default function Login() {
       .catch(e => setHint(t("tip.login.error")));
   }
 
-  const anonymousLogin = async (event) => {
-    try {
-      const oldUser = await authRequest.test();
-      if (isAnonygramUser(oldUser)) {
-        dispatch(setUser(oldUser));
-      } else {
-        const user = await authRequest.anonymous();
-        dispatch(setUser(user));
-      }
-      navigate(WELCOME_PAGE);
-    } catch (e) {
-      setHint(t("tip.login.anonymous.error"));
-    }
+  const anonymousLogin = (event) => {
+    navigate(WELCOME_PAGE);
   };
 
   return (

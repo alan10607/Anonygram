@@ -1,7 +1,7 @@
 import i18n from 'i18next';
 import { isAnonygramUser } from 'util/authUtil';
 import { setTheme } from 'util/themeUtil';
-import { DELETE_USER, DELETE_USER_EXCEPT_TOKENS, SET_USER } from "../actions/user";
+import { DELETE_USER, SET_USER } from "../actions/user";
 
 const initUserState = {
   tokens: null,//for situation when phone's browser rejects cross-site cookies
@@ -26,11 +26,6 @@ export default function userReducer(preState = initUserState, action) {
     case DELETE_USER:
       setLocalEnvironment(initUserState);
       return initUserState;
-
-    case DELETE_USER_EXCEPT_TOKENS:
-      const remainTokensState = Object.assign({}, initUserState, { tokens: preState.tokens });
-      setLocalEnvironment(remainTokensState);
-      return remainTokensState;
 
     default:
       return preState;

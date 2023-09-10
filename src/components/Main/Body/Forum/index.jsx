@@ -9,8 +9,9 @@ import Article from './Article';
 import './Forum.scss';
 
 export default function Forum() {
-  const { forum } = useSelector(state => ({
-    forum: state.forum
+  const { forum, userId } = useSelector(state => ({
+    forum: state.forum,
+    userId: state.user.id
   }), shallowEqual);
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -21,12 +22,12 @@ export default function Forum() {
 
   /* --- Loading id & article --- */
   useEffect(() => {
-    if (forum.size === 0) {
+    if (userId && forum.size === 0) {//init after get userId
       forumRequest.getId()
         .then(res => dispatch(setIds(res)))
         .catch(e => dispatch(setConsole(t("tip.forum.id.error"))));
     }
-  }, [])
+  }, [userId])
 
   useEffect(() => {
     queryLock.current = false;//redux state update means that query finished

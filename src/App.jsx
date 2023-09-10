@@ -1,9 +1,3 @@
-import { useEffect } from "react";
-import { useRoutes } from "react-router-dom";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { setUser } from "redux/actions/user";
-import { WELCOME_PAGE } from "config/constant";
 import Console from "components/Console";
 import Error from "components/Error";
 import Login from "components/Login";
@@ -12,12 +6,22 @@ import Main from "components/Main";
 import Forum from "components/Main/Body/Forum";
 import New from "components/Main/Body/New";
 import Setting from "components/Main/Body/Setting";
+import { BACKEND_API_URL } from "config/constant";
+import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { useRoutes, Navigate } from "react-router-dom";
+import { setConsole } from "redux/actions/common";
+import { setUser } from "redux/actions/user";
+import { locationTo } from "util/locationUtil";
+import authRequest from "service/request/authRequest";
+import otherRequest from "service/request/otherRequest";
 import './App.scss';
 
 const routeConfig = [
   {
     path: "/",
-    element: <Login />,
+    element: <Navigate to="/forum/index" replace/>
   },
   {
     path: "/login",
@@ -62,17 +66,32 @@ export default function App() {
     theme: state.user.theme
   }), shallowEqual);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const { t } = useTranslation();
+
+  useEffect(() => {//For testing, check user SSL confirmation
+    otherRequest.ssl()
+      .then(() => {})
+      .catch(e => {//If does not conform SSL then redirect to the backend
+        const sslUrl = `${BACKEND_API_URL}/ssl?callbackUrl=${window.location.href}`;
+        console.log("Redirect backend for ssl", sslUrl)
+        locationTo(sslUrl);
+      });
+  }, []);
 
   useEffect(() => {
-    const user = { language, theme };
-    dispatch(setUser(user));
-    console.log("Init local enviroment", user);
-    if(userId){
-      navigate(WELCOME_PAGE);
-      console.log("Already login, navigate to forum");
+    if (!userId) {
+      authRequest.anonymous()
+      .then(user => {
+        dispatch(setUser(user))
+        console.log("Auto anonymous login userId:", user.id);
+      })
+      .catch(e => dispatch(setConsole(t("tip.login.anonymous.error"))))
+    }else{
+      const userPreference = { language, theme };
+      dispatch(setUser(userPreference));
+      console.log("Login userId:", userId, ", user preference:", userPreference);
     }
-  }, [])
+  }, [userId]);
 
   const element = useRoutes(routeConfig);
   return (

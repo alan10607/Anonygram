@@ -72,13 +72,14 @@ export default function Setting() {
     }
   });
 
+  const toLogin = () => {
+    dispatch(deleteIds());
+    navigate("/login");
+  }
+
   const logout = () => {
     dispatch(deleteIds());
-    if (isAnonymous) {
-      dispatch(deleteUserExceptTokens());
-    } else {
-      dispatch(deleteUser());
-    }
+    dispatch(deleteUser());
     navigate("/login");
   }
 
@@ -118,7 +119,9 @@ export default function Setting() {
         </select>
       </div>
       <div className="flex-empty"></div>
-      <input className="logout" type="button" onClick={logout} value={t("common.logout")} ></input>
+      {isAnonymous ?
+        <input className="logout" type="button" onClick={toLogin} value={t("common.login")} ></input> :
+        <input className="logout" type="button" onClick={logout} value={t("common.logout")} ></input>}
     </div>
   )
 

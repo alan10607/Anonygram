@@ -27,7 +27,6 @@ export const setTheme = (theme = "dark") => {
 const fixMobilePhoneHeight = () => {
   const innerHeight = window.innerHeight;
   document.documentElement.style.setProperty("--window-height", `${innerHeight}px`);
-  console.log("Update window height", innerHeight);
 }
 
 window.addEventListener("resize", fixMobilePhoneHeight);
