@@ -1,6 +1,5 @@
 package com.ag.domain.util;
 
-import com.ag.domain.model.ForumUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
