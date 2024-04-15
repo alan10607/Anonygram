@@ -1,0 +1,10 @@
+<script type="text/javascript">
+const params = new URLSearchParams(window.location.search);
+const method = params.get("to");
+const hash = window.location.hash.substring(1);//get hash parameters after '#'
+if(!method){
+  alert("Redirect failed, miss 'to' parameter");
+}else{
+  window.location.href = `${window.location.origin}${method}?${hash}`;
+}
+</script>

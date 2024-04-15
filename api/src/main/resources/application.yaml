@@ -1,0 +1,93 @@
+spring:
+  application:
+    name: Anonygram
+  profiles:
+    active: ${ACTIVE:dev}
+  # =================================
+  # Database
+  # =================================
+  jpa:
+    # DB platform used by Hibernate
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    properties:
+      hibernate:
+        dialect:
+          # Database engine, use innodb for transaction
+          storage_engine: innodb
+        # Format the printed SQL or not
+        format_sql: true
+    hibernate:
+      # How to execute the ddl command when the service starts
+      ddl-auto: update
+    # Print SQL in log or not
+    show-sql: false
+
+  # =================================
+  # Redis
+  # =================================
+  redis:
+    database: 0
+    timeout: 2000
+    lettuce:
+      pool:
+        # Max size of active connection, -1 mean no limit
+        max-active: 100
+        # Max size of waiting connection, -1 mean no limit
+        max-wait: -1
+        # Max size of idle connection
+        max-idle: 5
+        # Min size of idle connection
+        min-idle: 0
+
+  # =================================
+  # Thymeleaf
+  # =================================
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    encoding: UTF-8
+    # Page is cached, should be true, test for false
+    cache: false
+
+  # =================================
+  # Rest
+  # =================================
+  jackson:
+    # No null value in response format
+    default-property-inclusion: NON_NULL
+
+# =================================
+# Log
+# =================================
+logging:
+  config: classpath:logback-spring.xml
+
+# =================================
+# Open API Document
+# =================================
+springdoc:
+  swagger-ui:
+    # Set swagger url short cut
+    path: /swagger
+
+# =================================
+# Https
+# =================================
+server:
+  port: 443
+  ssl:
+    enabled: true
+    key-alias: anonygram_ssl
+    key-store: classpath:anonygram_ssl.p12
+    key-store-type: PKCS12
+    key-password: alan10607
+    key-store-password: alan10607
+
+# =================================
+# Imgur
+# =================================
+imgur:
+  client:
+    accessTokenUrl: https://api.imgur.com/oauth2/token
+    authorizeUrl: https://api.imgur.com/oauth2/authorize
+    uploadUrl: https://api.imgur.com/3/upload

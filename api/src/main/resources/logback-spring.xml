@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- scan: Reload when the configuration file is modified, the default is true -->
+<configuration scan="true">
+    <springProperty name="APP_NAME" source="spring.application.name" defaultValue="server" />
+    <springProperty name="LOG_PATH" source="logging.path" defaultValue="./log" />
+    <property name="FILE_PATH" value="${LOG_PATH}/${APP_NAME}-log.%d{yyyy-MM-dd}.%i.log" />
+
+    <!--
+    %date: Date time
+    %thread: Thread name
+    %-5level: Log level pad right to in 5 character
+    %logger{36}: Package and class where the log message occurred, max length is {36}
+    %M: Method where the log message occurred, may impact performance
+    %msg: Log message
+
+    Console color:
+    %magenta() Output color
+    %highlight(): Auto log level color
+    -->
+    <property name="LOG_PATTERN" value="%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M - %msg%n" />
+    <property name="LOG_PATTERN_WITH_COLOR" value="%date{yyyy-MM-dd HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger{36}.%M - %msg%n" />
+
+    <!-- Console output -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${LOG_PATTERN_WITH_COLOR}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- File output, RollingFileAppender is used to split files -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${FILE_PATH}</fileNamePattern>
+            <!-- Keep 15 days history -->
+            <maxHistory>15</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- Max size of each file -->
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Set output level -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+    </root>
+
+</configuration>

@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    url: jdbc:mysql://ag-mysql:3306/ag?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8
+    username: root
+    password: root
+  redis:
+    host: ag-redis
+    port: 6379
+    password: root
+  cors:
+    frontend: https://alan10607.github.io/
+
+logging:
+  path: /log
+
+imgur:
+  client:
+    clientId: eded92adbc0fab0
+    clientSecret: df9529b0b964bcede52760d688e4c57190a8842f
+    albumId: WcBFFA5
