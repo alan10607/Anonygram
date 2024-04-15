@@ -3,41 +3,6 @@ spring:
     name: Anonygram
   profiles:
     active: ${ACTIVE:dev}
-  # =================================
-  # Database
-  # =================================
-  jpa:
-    # DB platform used by Hibernate
-    database-platform: org.hibernate.dialect.MySQL8Dialect
-    properties:
-      hibernate:
-        dialect:
-          # Database engine, use innodb for transaction
-          storage_engine: innodb
-        # Format the printed SQL or not
-        format_sql: true
-    hibernate:
-      # How to execute the ddl command when the service starts
-      ddl-auto: update
-    # Print SQL in log or not
-    show-sql: false
-
-  # =================================
-  # Redis
-  # =================================
-  redis:
-    database: 0
-    timeout: 2000
-    lettuce:
-      pool:
-        # Max size of active connection, -1 mean no limit
-        max-active: 100
-        # Max size of waiting connection, -1 mean no limit
-        max-wait: -1
-        # Max size of idle connection
-        max-idle: 5
-        # Min size of idle connection
-        min-idle: 0
 
   # =================================
   # Thymeleaf
@@ -47,14 +12,7 @@ spring:
     suffix: .html
     encoding: UTF-8
     # Page is cached, should be true, test for false
-    cache: false
-
-  # =================================
-  # Rest
-  # =================================
-  jackson:
-    # No null value in response format
-    default-property-inclusion: NON_NULL
+    # cache: false
 
 # =================================
 # Log
@@ -87,7 +45,15 @@ server:
 # Imgur
 # =================================
 imgur:
-  client:
-    accessTokenUrl: https://api.imgur.com/oauth2/token
-    authorizeUrl: https://api.imgur.com/oauth2/authorize
-    uploadUrl: https://api.imgur.com/3/upload
+  authorizeUrl: https://api.imgur.com/oauth2/authorize
+  tokenUrl: https://api.imgur.com/oauth2/token
+  uploadUrl: https://api.imgur.com/3/upload
+
+# =================================
+# Forum Admin
+# =================================
+forum:
+  admin:
+    username: alan
+    email: alan@com
+    password: alan
