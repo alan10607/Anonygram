@@ -14,7 +14,7 @@ import { useRoutes, Navigate } from "react-router-dom";
 import { setConsole } from "redux/actions/common";
 import { setUser } from "redux/actions/user";
 import { locationTo } from "util/locationUtil";
-import authRequest from "service/request/authRequest";
+import tokenRequest from "service/request/tokenRequest";
 import otherRequest from "service/request/otherRequest";
 import './App.scss';
 
@@ -67,16 +67,6 @@ export default function App() {
   }), shallowEqual);
   const dispatch = useDispatch();
   const { t } = useTranslation();
-
-  useEffect(() => {//For testing, check user SSL confirmation
-    otherRequest.ssl()
-      .then(() => {})
-      .catch(e => {//If does not conform SSL then redirect to the backend
-        const sslUrl = `${BACKEND_API_URL}/ssl?callbackUrl=${window.location.href}`;
-        console.log("Redirect backend for ssl", sslUrl)
-        locationTo(sslUrl);
-      });
-  }, []);
 
   useEffect(() => {
     if (!userId) {

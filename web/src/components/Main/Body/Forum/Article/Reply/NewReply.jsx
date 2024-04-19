@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import { setConsole, setReplyHtml } from 'redux/actions/common';
-import { deleteIds } from 'redux/actions/forum';
-import forumRequest from 'service/request/forumRequest';
+import { setIds } from 'redux/actions/forum';
+import articleRequest from 'service/request/articleRequest';
 import { WELCOME_PAGE } from 'config/constant';
 import { pasteAsPlain, useInputFilter } from 'util/inputHtmlUtil';
 import useThrottle from 'util/useThrottle';
@@ -31,7 +31,7 @@ export default function NewReply({ id = "new" }) {
   }, [replyHtml])
 
   const checkTitle = (title) => {
-    const maxLength = 3000;
+    const maxLength = 100;
     const length = title.length;
     if (length === 0) return t("tip.title.error.empty");
     if (length > maxLength) return t("tip.title.error.max", { maxLength, length });
@@ -47,9 +47,9 @@ export default function NewReply({ id = "new" }) {
     }
 
     inputFilter(inputRef.current)
-      .then(word => forumRequest.createArticle(trimmedTitle, word))
+      .then(word => articleRequest.createArticle(trimmedTitle, word))
       .then(article => {
-        dispatch(deleteIds());//reload forum page
+        dispatch(setIds(null));//reload forum page
         dispatch(setReplyHtml(id, "<div><br></div>"));
         navigate(WELCOME_PAGE);
       })

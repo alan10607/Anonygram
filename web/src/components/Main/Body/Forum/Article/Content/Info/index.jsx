@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { addReplyHtml, setConsole, setReplyId } from 'redux/actions/common';
 import { deleteArticle, deleteContent } from 'redux/actions/forum';
-import forumRequest from 'service/request/forumRequest';
+import articleRequest from 'service/request/articleRequest';
 import { REPLY_BOX_ATTR } from 'config/constant';
 import { scrollTo } from 'util/inputHtmlUtil';
 import { getTimeFromStr } from 'util/timeUtil';
@@ -19,7 +19,7 @@ export default function Info({ id, no }) {
   const { t } = useTranslation();
 
   const httpDeleteContent = useThrottle(() => {
-    forumRequest.deleteContent(id, no)
+    articleRequest.deleteArticle(id, no)
       .then(() => {
         if (no === 0) {
           dispatch(deleteArticle(id));

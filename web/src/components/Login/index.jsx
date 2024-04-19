@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { setUser } from "redux/actions/user";
-import authRequest from "service/request/authRequest";
+import authRequest from "service/request/tokenRequest";
 import './Login.scss';
 
 export default function Login() {

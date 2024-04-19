@@ -2,15 +2,15 @@ import { Fragment, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { setConsole, setReplyId } from 'redux/actions/common';
-import { setArticles, setIds } from 'redux/actions/forum';
+import { setForums, setIds } from 'redux/actions/forum';
 import { REPLY_BOX, STATUS_TYPE } from 'config/constant';
-import forumRequest from 'service/request/forumRequest';
+import queryRequest from 'service/request/queryRequest';
 import Article from './Article';
 import './Forum.scss';
 
 export default function Forum() {
   const { forum, userId } = useSelector(state => ({
-    forum: state.forum,
+    forum: state.forum, 
     userId: state.user.id
   }), shallowEqual);
   const dispatch = useDispatch();
@@ -23,8 +23,8 @@ export default function Forum() {
   /* --- Loading id & article --- */
   useEffect(() => {
     if (userId && forum.size === 0) {//init after get userId
-      forumRequest.getId()
-        .then(res => dispatch(setIds(res)))
+      queryRequest.getArticleIds()
+        .then(ids => dispatch(setIds(ids)))
         .catch(e => dispatch(setConsole(t("tip.forum.id.error"))));
     }
   }, [userId])
@@ -52,8 +52,8 @@ export default function Forum() {
 
     queryLock.current = true;
 
-    forumRequest.getArticle(queryIdList, [0])
-      .then(articles => dispatch(setArticles(articles)))
+    queryRequest.getArticles(queryIdList)
+      .then(forums => dispatch(setForums(forums)))
       .catch(e => {
         dispatch(setConsole(t("tip.forum.article.get.error")));
         queryLock.current = false;

@@ -1,11 +1,11 @@
-export const SET_USER = "setUser";
-export const DELETE_USER = "deleteUser";
+export const SET_USER = "SET_USER";
+export const DELETE_USER = "DELETE_USER";
 
 export const setUser = (user) => ({
   type: SET_USER,
   data: user
 });
 
-export const deleteUser = () => ({
+export const deleteAll = () => ({
   type: DELETE_USER
 });

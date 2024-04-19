@@ -1,22 +1,18 @@
 import request from ".";
 
-const updateLanguage = (language) => request.patchMethod(
-  `/user`,
-  { language }
-);
-
-const updateTheme = (theme) => request.patchMethod(
-  `/user`,
-  { theme }
-);
-
-const updateHeadUrl = (headUrl) => request.patchMethod(
-  `/user`,
-  { headUrl }
-);
-
 export default {
-  updateLanguage,
-  updateTheme,
-  updateHeadUrl
+  get: (userId) =>
+    request.getMethod(`/user/${userId}`),
+
+  create: (username, email, password) =>
+    request.postMethod(`/user`, { username, email, password }),
+
+  updateLanguage: (language) =>
+    request.patchMethod(`/user`, { language }),
+
+  updateTheme: (theme) =>
+    request.patchMethod(`/user`, { theme }),
+
+  updateHeadUrl: (headUrl) =>
+    request.patchMethod(`/user`, { headUrl }),
 };
