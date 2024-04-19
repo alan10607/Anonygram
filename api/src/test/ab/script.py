@@ -25,9 +25,9 @@ def post(path, file):
 def run_ab_test(path, file_name=None):
     print(f"================= ApacheBench start for {path} =================")
     if file_name is None:
-        subprocess.run(["ab", "-n", "1000", "-c", "100", base_url + path], check=False)
+        subprocess.run(["ab", "-n", "100", "-c", "10", base_url + path], check=False)
     else:
-        subprocess.run(["ab", "-n", "1000", "-c", "100", "-p", body_file_path / file_name, "-T", "application/json", base_url + path], check=False)
+        subprocess.run(["ab", "-n", "100", "-c", "10", "-p", body_file_path / file_name, "-T", "application/json", base_url + path], check=False)
     print(f"================= ApacheBench done for {path} ==================")
 
 
@@ -53,8 +53,8 @@ def test_query_article():
         for j in range(9):
             firstArticle = post(f"/article/{articleId}", "reply_article.json")
 
-    run_ab_test(f"/query/articles/{','.join(articleIds)}")
-    run_ab_test(f"/query/article/{articleId}?page=1")
+    run_ab_test(f"/forums/{','.join(articleIds)}")
+    run_ab_test(f"/forum/{articleId}?page=1")
     run_ab_test(f"/query/article?query=ocean")
 
 

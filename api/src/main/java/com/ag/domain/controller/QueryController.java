@@ -1,7 +1,6 @@
 package com.ag.domain.controller;
 
 import com.ag.domain.dto.ArticleDTO;
-import com.ag.domain.dto.QueryDTO;
 import com.ag.domain.dto.UserDTO;
 import com.ag.domain.service.QueryService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,21 +23,6 @@ public class QueryController {
     @ResponseStatus(HttpStatus.OK)
     public List<String> queryArticleIds() {
         return queryService.queryArticleIds();
-    }
-
-    @GetMapping("/articles/{articleIdList}")
-    @Operation(summary = "Query multi first article")
-    @ResponseStatus(HttpStatus.OK)
-    public List<QueryDTO> queryMultiArticle(@PathVariable("articleIdList") List<String> articleIdList) {
-        return queryService.queryMultiArticle(articleIdList, 0);
-    }
-
-    @GetMapping("/article/{articleId}")
-    @Operation(summary = "Query article with page")
-    @ResponseStatus(HttpStatus.OK)
-    public QueryDTO queryArticle(@PathVariable("articleId") String articleId,
-                                 @RequestParam("page") int page) {
-        return queryService.queryArticle(articleId, page);
     }
 
     @GetMapping("/article")

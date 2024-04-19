@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -36,18 +37,6 @@ public class ArticleService extends CrudServiceImpl<Article> {
 
     @Override
     protected Article getImpl(Article article) {
-        Article firstArticle = articleRepository.findById(new Article(article.getArticleId(), 0).getId())
-                .filter(a -> a.getStatus() == ArticleStatus.NORMAL)
-                .orElse(null);
-
-        if (firstArticle == null) {
-            return null;
-        }
-
-        if (article.getNo() == 0) {
-            return firstArticle;
-        }
-
         return articleRepository.findById(article.getId())
                 .filter(a -> a.getStatus() == ArticleStatus.NORMAL)
                 .orElse(null);
@@ -96,9 +85,24 @@ public class ArticleService extends CrudServiceImpl<Article> {
     protected Article deleteImpl(Article article) {
         Article existing = articleRepository.findById(article.getId())
                 .orElseThrow(() -> new EntityNotFoundException(Article.class));
-        existing.setStatus(ArticleStatus.DELETED);
-        existing.setUpdatedTime(TimeUtil.now());
-        return articleRepository.save(existing);
+        LocalDateTime now = TimeUtil.now();
+
+        if (existing.getNo() == 0) {
+            List<Article> existingArticles = articleRepository.findByArticleId(existing.getArticleId());
+            existingArticles.forEach(a -> {
+                a.setStatus(ArticleStatus.THREAD_DELETED);
+                a.setUpdatedTime(now);
+            });
+            articleRepository.saveAll(existingArticles);
+
+            existing.setStatus(ArticleStatus.THREAD_DELETED);
+            existing.setUpdatedTime(now);
+            return existing;
+        } else {
+            existing.setStatus(ArticleStatus.DELETED);
+            existing.setUpdatedTime(now);
+            return articleRepository.save(existing);
+        }
     }
 
     @Override
@@ -113,7 +117,6 @@ public class ArticleService extends CrudServiceImpl<Article> {
             validateTitle(article);
         } else if (article.isCreatingReplyArticle()) {
             validateArticleId(article);
-            validateFirstArticleStatusIsNormal(article);
         } else {
             throw new AnonygramRuntimeException("Illegal article id and no when creating");
         }
@@ -141,20 +144,14 @@ public class ArticleService extends CrudServiceImpl<Article> {
         ValidationUtil.assertInRange(article.getNo(), 0, null, "No must >= 0");
     }
 
-    void validateFirstArticleStatusIsNormal(Article article) {
-        Article firstArticle = articleRepository.findById(new Article(article.getArticleId(), 0).getId())
-                .orElseThrow(() -> new EntityNotFoundException(Article.class));
-        ValidationUtil.assertTrue(firstArticle.getStatus() == ArticleStatus.NORMAL, "First article's status is not normal");
-    }
-
-    void validateWord(Article article) {//TODO: please update front end
+    void validateWord(Article article) {
         ValidationUtil.assertInLength(article.getWord(), MAX_WORD_LENGTH, "Word length must in {} bytes and not blank", MAX_WORD_LENGTH);
     }
 
     void validateTitle(Article article) {
         if (article.isCreatingFirstArticle()) {
             ValidationUtil.assertInLength(article.getTitle(), MAX_TITLE_LENGTH, "Title length must in {} bytes and not blank", MAX_TITLE_LENGTH);
-        } else if (article.isCreatingReplyArticle()){
+        } else if (article.isCreatingReplyArticle()) {
             ValidationUtil.assertTrue(article.getTitle() == null, "Title must null if it is not first article");
         }
     }

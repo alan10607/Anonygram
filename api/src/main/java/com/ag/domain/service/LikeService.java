@@ -91,7 +91,7 @@ public class LikeService extends CrudServiceImpl<Like> {
 
     void validateArticleIsExist(Like like) {
         Article article = articleService.get(like.getArticleId(), like.getNo());
-        ValidationUtil.assertTrue(article != null, "Article not found for article id and no");
+        ValidationUtil.assertTrue(article != null, "Article not found when like");
     }
 
 }
