@@ -2,6 +2,7 @@ package com.ag.domain.config;
 
 import com.ag.domain.config.filter.AnonymousFilter;
 import com.ag.domain.config.filter.JwtFilter;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,8 +21,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @Slf4j
@@ -33,6 +32,9 @@ public class SecurityConfig {
     private final AnonymousFilter anonymousFilter;
     private static final String ERROR_PAGE_PATH = "/err";
 
+    @Value("${spring.cors.frontend}")
+    private String frontendUrl;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
@@ -40,21 +42,19 @@ public class SecurityConfig {
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(anonymousFilter, AnonymousAuthenticationFilter.class)
                 .sessionManagement(customizer -> customizer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .cors(cors -> cors.configurationSource(this::corsConfiguration))
         ;
         return http.build();
     }
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource(@Value("${spring.cors.frontend}") String frontendUrl) {
+    public CorsConfiguration corsConfiguration(HttpServletRequest request) {
         log.info("CORS allowed origin frontend url={}", frontendUrl);
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedOrigin(frontendUrl);
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
         configuration.setAllowCredentials(true);
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
+        return configuration;
     }
 
     /**
