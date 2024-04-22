@@ -89,7 +89,7 @@ public class ForumService {
                             .collect(Collectors.toList()));
                 }
                 return forumDTO;
-            case DELETED, THREAD_DELETED, UNKNOWN:
+            case DELETED, UNKNOWN:
             default:
                 return new ForumDTO(articleId, status);
         }
@@ -102,7 +102,7 @@ public class ForumService {
                 prepareAuthorInfo(result);
                 prepareLikeInfo(result);
                 return result;
-            case DELETED, THREAD_DELETED, UNKNOWN:
+            case DELETED, UNKNOWN:
             default:
                 return new ArticleDTO(article.getArticleId(), article.getNo(), article.getStatus());
         }

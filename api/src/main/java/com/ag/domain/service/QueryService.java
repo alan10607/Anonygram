@@ -43,7 +43,7 @@ public class QueryService {
 
     public List<ArticleDTO> queryArticle(String keyword) {
         validateKeyword(keyword);
-        return articleQueryHandler.searchByWordOrTitle(keyword)
+        return articleQueryHandler.searchFirstArticleByWordOrTitle(keyword)
                 .stream()
                 .map(forumService::prepareArticle)
                 .collect(Collectors.toList());

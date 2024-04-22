@@ -1,5 +1,6 @@
 package com.ag.domain.service;
 
+import com.ag.domain.constant.ArticleStatus;
 import com.ag.domain.exception.AgValidationException;
 import com.ag.domain.model.Article;
 import com.ag.domain.repository.ArticleRepository;
@@ -15,6 +16,7 @@ import org.mockito.MockedStatic;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import static com.ag.domain.TestUtil.*;
@@ -79,6 +81,28 @@ class ArticleServiceTest {
 
         // Act & Assert
         assertThrows(AgValidationException.class, () -> articleService.validateNo(article));
+    }
+
+    @Test
+    void validateFirstArticleStatusIsNormal_should_succeed_because_status_is_normal() {
+        // Arrange
+        Article article = generateArticle();
+        article.setStatus(ArticleStatus.NORMAL);
+        when(articleRepository.findById(article.getId())).thenReturn(Optional.of(article));
+
+        // Act & Assert
+        assertDoesNotThrow(() -> articleService.validateFirstArticleStatusIsNormal(article));
+    }
+
+    @Test
+    void validateFirstArticleStatusIsNormal_should_failed_because_status_is_not_normal() {
+        // Arrange
+        Article article = generateArticle();
+        article.setStatus(ArticleStatus.DELETED);
+        when(articleRepository.findById(article.getId())).thenReturn(Optional.of(article));
+
+        // Act & Assert
+        assertThrows(AgValidationException.class, () -> articleService.validateFirstArticleStatusIsNormal(article));
     }
 
     @Test

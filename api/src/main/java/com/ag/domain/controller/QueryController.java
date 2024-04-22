@@ -26,7 +26,7 @@ public class QueryController {
     }
 
     @GetMapping("/article")
-    @Operation(summary = "Query article by searching the keyword in word or title")
+    @Operation(summary = "Query first article by searching the keyword in word or title")
     @ResponseStatus(HttpStatus.OK)
     public List<ArticleDTO> queryArticle(@RequestParam("query") String keyword) {
         return queryService.queryArticle(keyword);

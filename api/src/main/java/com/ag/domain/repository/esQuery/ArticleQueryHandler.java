@@ -74,9 +74,10 @@ public class ArticleQueryHandler extends QueryHandler<Article> {
         return searchAggregation(AGGREGATION_LATEST_ARTICLES, aggregation);
     }
 
-    public List<Article> searchByWordOrTitle(String keyword) {
+    public List<Article> searchFirstArticleByWordOrTitle(String keyword) {
         BoolQuery boolQuery = QueryBuilders.bool()
                 .must(QueryBuilders.multiMatch(builder -> builder.fields(List.of(Article.COL_WORD, Article.COL_TITLE)).query(keyword)))
+                .must(QueryBuilders.term(builder -> builder.field(Article.COL_NO).value(0)))
                 .must(QueryBuilders.term(builder -> builder.field(Article.COL_STATUS).value(ArticleStatus.NORMAL.value)))
                 .build();
 
