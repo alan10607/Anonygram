@@ -4,7 +4,7 @@ import './Info.scss';
 
 export default function ReplyInfo({ id }) {
   const { contentSize } = useSelector(state => ({
-    contentSize: state.forum.get(id).contentSize
+    contentSize: state.forums[id].count
   }), shallowEqual);
 
   return (

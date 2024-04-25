@@ -6,6 +6,6 @@ export const setUser = (user) => ({
   data: user
 });
 
-export const deleteAll = () => ({
+export const deleteUser = () => ({
   type: DELETE_USER
 });

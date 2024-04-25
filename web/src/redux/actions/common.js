@@ -3,6 +3,7 @@ export const SET_REPLY_HTML = "setReplyHtml";
 export const ADD_REPLY_HTML = "addReplyHtml";
 export const SET_CONSOLE = "setConsole";
 export const SET_LOADING = "setLoading";
+export const SET_ARTICLE_IDS = "SET_ARTICLE_IDS";
 
 export const setReplyId = (id) => ({
   type: SET_REPLY_ID,
@@ -27,4 +28,9 @@ export const setConsole = (message) => ({
 export const setLoading = (show) => ({
   type: SET_LOADING,
   data: show
+});
+
+export const setArticleIds = (ids) => ({
+  type: SET_ARTICLE_IDS,
+  data: ids
 });

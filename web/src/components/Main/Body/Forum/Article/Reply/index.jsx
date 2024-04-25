@@ -2,8 +2,9 @@ import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { setReplyHtml, setReplyId } from 'redux/actions/common';
-import { setArticle } from 'redux/actions/forum';
+import { setForum } from 'redux/actions/forums';
 import articleRequest from 'service/request/articleRequest';
+import forumRequest from 'service/request/forumRequest';
 import { pasteAsPlain, useInputFilter } from 'util/inputHtmlUtil';
 import { REPLY_BOX_ATTR } from 'config/constant';
 import useThrottle from 'util/useThrottle';
@@ -31,10 +32,10 @@ export default function Reply({ id }) {
   
   const httpCreateContent = useThrottle(() => {
     inputFilter(inputRef.current)
-      .then(word => articleRequest.createReplyArticle(id, word))
-      .then(article => queryRequest.getArticle(article.articleId, article.no))
-      .then(article => {
-        dispatch(setArticle(article));
+      .then(word => articleRequest.createReply(id, word))
+      .then(article => forumRequest.get(article.articleId, article.no))
+      .then(forum => {
+        dispatch(setForum(forum));
         dispatch(setReplyId(""));
         dispatch(setReplyHtml(id, "<div><br></div>"));
       })

@@ -6,22 +6,24 @@ import Main from "components/Main";
 import Forum from "components/Main/Body/Forum";
 import New from "components/Main/Body/New";
 import Setting from "components/Main/Body/Setting";
-import { BACKEND_API_URL } from "config/constant";
+import { JWT_TOKEN } from "config/constant";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { useRoutes, Navigate } from "react-router-dom";
 import { setConsole } from "redux/actions/common";
-import { setUser } from "redux/actions/user";
+import { setUser, deleteUser } from "redux/actions/user";
 import { locationTo } from "util/locationUtil";
 import tokenRequest from "service/request/tokenRequest";
-import otherRequest from "service/request/otherRequest";
 import './App.scss';
+import userRequest from "service/request/userRequest";
+import useLocalStorage from "util/localStorageUtil";
+import { validate } from "uuid";
 
 const routeConfig = [
   {
     path: "/",
-    element: <Navigate to="/forum/index" replace/>
+    element: <Navigate to="/forum/index" replace />
   },
   {
     path: "/login",
@@ -60,28 +62,19 @@ const routeConfig = [
 ]
 
 export default function App() {
-  const { userId, language, theme } = useSelector(state => ({
-    userId: state.user.id,
-    language: state.user.language,
-    theme: state.user.theme
-  }), shallowEqual);
   const dispatch = useDispatch();
   const { t } = useTranslation();
-
+  const [jwt] = useLocalStorage(JWT_TOKEN);
+  
   useEffect(() => {
-    if (!userId) {
-      authRequest.anonymous()
-      .then(user => {
-        dispatch(setUser(user))
-        console.log("Auto anonymous login userId:", user.id);
-      })
-      .catch(e => dispatch(setConsole(t("tip.login.anonymous.error"))))
-    }else{
-      const userPreference = { language, theme };
-      dispatch(setUser(userPreference));
-      console.log("Login userId:", userId, ", user preference:", userPreference);
-    }
-  }, [userId]);
+    dispatch(deleteUser());
+    tokenRequest.get()
+      .then(user => validate(user.id) ?
+        userRequest.get(user.id) :
+        Promise.resolve({ id: user.id, username: user.id, isAnonymous: true }))
+      .then(user => dispatch(setUser(user)))
+      .catch(e => console.info("User set as anonymous"))
+  }, [jwt]);
 
   const element = useRoutes(routeConfig);
   return (

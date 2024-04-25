@@ -8,16 +8,16 @@ import Reply from './Reply';
 import './Article.scss';
 
 export default function Article({ id }) {
-  const { title, contentList } = useSelector(state => ({
-    title: state.forum.get(id).title,
-    contentList: state.forum.get(id).contentList
+  const { title, articles } = useSelector(state => ({
+    title: state.forums[id].articles[0].title,
+    articles: state.forums[id].articles
   }), shallowEqual);
 
-  const getContentNode = (contentList) => {
+  const getContentNode = (articles) => {
     const allContent = [];
-    for (let no = 0; no < contentList.length; ++no) {
+    for (let no = 0; no < articles.length; ++no) {
       const key = `${id}_${no}`;
-      const content = contentList[no];
+      const content = articles[no];
       if (!content) continue;//not load yet
       
       if (content.status === STATUS_TYPE.NORMAL) {
@@ -32,7 +32,7 @@ export default function Article({ id }) {
   return (
     <div id={id} className="art">
       <div className="title">{title}</div>
-      <Fragment>{getContentNode(contentList)}</Fragment>
+      <Fragment>{getContentNode(articles)}</Fragment>
       <Move id={id} />
       <Reply id={id} />
     </div>

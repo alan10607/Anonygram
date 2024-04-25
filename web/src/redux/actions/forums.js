@@ -1,6 +1,5 @@
 export const SET_FORUMS = "SET_FORUMS";
-export const SET_IDS = "SET_IDS";
-export const DELETE_FORUMS_AND_IDS = "DELETE_FORUMS_AND_IDS";
+export const DELETE_FORUMS = "DELETE_FORUMS";
 
 export const setForums = (forums) => ({
   type: SET_FORUMS,
@@ -12,22 +11,16 @@ export const setForum = (forum) => ({
   data: [forum]
 });
 
-export const setArticle = (article) => ({
+export const setForumArticle = (article) => ({
   type: SET_FORUMS,
   data: [{
-    articleId: articleList[0].articleId,
-    articleList: [article]
+    articleId: article.articleId,
+    articles: [article]
   }]
 });
 
-export const setIds = (ids) => ({
-  type: SET_IDS,
-  data: ids
-});
-
-
-export const deleteAll = () => ({
-  type: DELETE_FORUMS_AND_IDS,
+export const deleteForums = () => ({
+  type: DELETE_FORUMS,
 });
 
 

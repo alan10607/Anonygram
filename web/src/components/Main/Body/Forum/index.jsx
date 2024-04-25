@@ -2,32 +2,34 @@ import { Fragment, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { setConsole, setReplyId } from 'redux/actions/common';
-import { setForums, setIds } from 'redux/actions/forum';
+import { setForums } from 'redux/actions/forums';
+import { setArticleIds } from 'redux/actions/common';
 import { REPLY_BOX, STATUS_TYPE } from 'config/constant';
 import queryRequest from 'service/request/queryRequest';
 import Article from './Article';
 import './Forum.scss';
+import forumRequest from 'service/request/forumRequest';
 
 export default function Forum() {
-  const { forum, userId } = useSelector(state => ({
-    forum: state.forum, 
+  const { idList, forums, userId } = useSelector(state => ({
+    idList: state.common.articleIds,
+    forums: state.forums,
     userId: state.user.id
   }), shallowEqual);
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const querySize = 10;
-  const idList = useMemo(() => [...forum.keys()], [forum]);
-  const queryIdList = useMemo(() => idList.filter(id => !forum.get(id)).slice(0, querySize), [idList, forum]);
+  const queryIdList = useMemo(() => idList.filter(id => !forums[id]).slice(0, querySize), [idList, forums]);
   const queryLock = useRef(false);
 
   /* --- Loading id & article --- */
   useEffect(() => {
-    if (userId && forum.size === 0) {//init after get userId
+    if (idList.length === 0) {//init after get userId
       queryRequest.getArticleIds()
-        .then(ids => dispatch(setIds(ids)))
+        .then(articleIds => dispatch(setArticleIds(articleIds)))
         .catch(e => dispatch(setConsole(t("tip.forum.id.error"))));
     }
-  }, [userId])
+  }, [idList])
 
   useEffect(() => {
     queryLock.current = false;//redux state update means that query finished
@@ -52,7 +54,7 @@ export default function Forum() {
 
     queryLock.current = true;
 
-    queryRequest.getArticles(queryIdList)
+    forumRequest.getMulti(queryIdList)
       .then(forums => dispatch(setForums(forums)))
       .catch(e => {
         dispatch(setConsole(t("tip.forum.article.get.error")));
@@ -103,11 +105,11 @@ export default function Forum() {
 
   /* --- Create view --- */
   const getArticleNode = () => {
-    console.log(`Article loaded: ${idList.filter(id => forum.get(id)).length} / ${idList.length}`);
+    console.log(`Article loaded: ${idList.filter(id => forums[id]).length} / ${idList.length}`);
     const allArticle = [];
-    for (const [id, article] of forum) {
-      if (!article) continue;//not load yet
-      if (article.status !== STATUS_TYPE.NORMAL) continue;
+    for (const id of idList) {
+      if (!forums[id]) continue;//not load yet
+      if (forums[id].status !== STATUS_TYPE.NORMAL) continue;
 
       allArticle.push(<Article key={id} id={id} />);
     }

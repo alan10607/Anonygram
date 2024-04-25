@@ -1,12 +1,15 @@
+import { DELETE_FORUMS } from "redux/actions/forums";
 import {
   SET_REPLY_ID,
   SET_REPLY_HTML,
   ADD_REPLY_HTML,
   SET_CONSOLE,
-  SET_LOADING
+  SET_LOADING,
+  SET_ARTICLE_IDS
 } from "../actions/common";
 
 const initState = {
+  articleIds: [],
   replyId: "",
   replyHtml: {},
   console: "",
@@ -36,6 +39,12 @@ export default function commonReducer(preState = initState, action) {
 
     case SET_LOADING:
       return Object.assign({}, preState, { loading: data });
+
+    case SET_ARTICLE_IDS:
+      return Object.assign({}, preState, { articleIds: data });
+
+    case DELETE_FORUMS:
+      return Object.assign({}, preState, { articleIds: [] });
 
     default:
       return preState;

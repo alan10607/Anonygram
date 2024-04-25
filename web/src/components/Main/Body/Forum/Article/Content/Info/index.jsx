@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { addReplyHtml, setConsole, setReplyId } from 'redux/actions/common';
-import { deleteArticle, deleteContent } from 'redux/actions/forum';
+import { setForumArticle } from 'redux/actions/forums';
 import articleRequest from 'service/request/articleRequest';
 import { REPLY_BOX_ATTR } from 'config/constant';
 import { scrollTo } from 'util/inputHtmlUtil';
@@ -11,8 +11,8 @@ import './Info.scss';
 
 export default function Info({ id, no }) {
   const { authorId, createDate, userId } = useSelector(state => ({
-    authorId: state.forum.get(id).contentList[no].authorId,
-    createDate: state.forum.get(id).contentList[no].createDate,
+    authorId: state.forums[id].articles[no].authorId,
+    createDate: state.forums[id].articles[no].createDate,
     userId: state.user.id,
   }), shallowEqual);
   const dispatch = useDispatch();
@@ -22,10 +22,10 @@ export default function Info({ id, no }) {
     articleRequest.deleteArticle(id, no)
       .then(() => {
         if (no === 0) {
-          dispatch(deleteArticle(id));
+          dispatch(setForumArticle({ articleId: id, no: no }));
           dispatch(setConsole(t("tip.forum.article.delete.ok")));
         } else {
-          dispatch(deleteContent(id, no));
+          dispatch(setForumArticle({ articleId: id, no: no }));
           dispatch(setConsole(t("tip.forum.content.delete.ok")));
         }
       })

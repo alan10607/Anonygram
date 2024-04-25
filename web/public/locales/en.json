@@ -32,7 +32,6 @@
   "text.time.secs.ago": "{{seconds}} seconds ago",
   "text.time.now": "now",
   "tip.login.error": "Login failed. Email or password is not correct.",
-  "tip.login.anonymous.error": "Login failed. Please try again later.",
   "tip.register.error": "Registration failed. Email already registered.",
   "tip.register.email.error": "Invalid email format.",
   "tip.register.username.error": "Username cannot be empty.",

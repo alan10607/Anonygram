@@ -1,10 +1,11 @@
 import axios from "axios";
 import store from "redux/store";
-import { BACKEND_API_URL } from "config/constant";
+import { BACKEND_API_URL, JWT_TOKEN } from "config/constant";
 import { setUser } from "redux/actions/user";
 import { setCookie } from "util/cookieUtil";
 import { locationLocalTo } from "util/locationUtil";
 import { addPending, removePending } from "./pending";
+import { getLocalStorage } from "util/localStorageUtil";
 
 
 const axiosInstance = axios.create({
@@ -40,12 +41,9 @@ const getDurationTime = (config) => {
 }
 
 const setJwtTokens = (config) => {
-  const state = store.getState();
-  const tokens = state?.user?.tokens;
-  if (tokens) {
-    for (const [tokenName, value] of Object.entries(tokens)) {
-      config.headers[tokenName] = `Bearer ${value}`;
-    }
+  const token = getLocalStorage(JWT_TOKEN);
+  if (token) {
+    config.headers["Authorization"] = `Bearer ${token}`;
   }
 }
 
@@ -72,7 +70,7 @@ axiosInstance.interceptors.response.use(res => {
   removePending(res.config);
   saveJwtTokens(res.headers);
 
-  console.log(`>> Request in ${getDurationTime(res.config)}ms for ${res.config.url}`);
+  console.log(`>> Request in ${getDurationTime(res.config)}ms for ${res.config.method.toUpperCase()}:${res.config.url}`);
   return res.data;
 }, error => {
   if (axios.isCancel(error)) {

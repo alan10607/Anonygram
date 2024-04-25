@@ -5,7 +5,7 @@ import './Word.scss';
 
 export default function Word({ id, no }) {
   const { word } = useSelector(state => ({
-    word: state.forum.get(id).contentList[no].word
+    word: state.forums[id].articles[no].word
   }), shallowEqual);
   const wordMemo = useMemo(() => createWord(id, word), []);
 

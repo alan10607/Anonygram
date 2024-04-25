@@ -3,8 +3,9 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { setUser } from "redux/actions/user";
-import authRequest from "service/request/tokenRequest";
+import tokenRequest from "service/request/tokenRequest";
+import { setLocalStorage } from "util/localStorageUtil";
+import { JWT_TOKEN } from "config/constant";
 import './Login.scss';
 
 export default function Login() {
@@ -18,9 +19,10 @@ export default function Login() {
   const login = (event) => {
     event.preventDefault();
 
-    authRequest.login(email, password)
-      .then(user => {
-        dispatch(setUser(user));
+    tokenRequest.create(email, password)
+      .then(tokens => {
+        debugger
+        setLocalStorage(JWT_TOKEN, tokens.accessToken);
         navigate(WELCOME_PAGE);
       })
       .catch(e => setHint(t("tip.login.error")));

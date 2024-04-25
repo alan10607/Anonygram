@@ -1,7 +1,7 @@
 import i18next from "i18next";
 import { useDispatch } from "react-redux";
 import { setConsole, setLoading } from "redux/actions/common";
-import forumRequest from "service/request/forumRequest";
+import imageRequest from "service/request/imageRequest";
 import { MIME_IMAGE_EXP } from "config/regexp";
 import ValidationError from "Error/validationError";
 
@@ -70,10 +70,10 @@ export const useUploadImage = () => {
       .then(file => convertFileToBase64(file))
       .then(base64 => buildImg(base64))
       .then(image => compressImg(image, imgQuality, imgMaxWidth))
-      .then(compressedBase64 => forumRequest.createImage(compressedBase64))
+      .then(compressedBase64 => imageRequest.create(compressedBase64))
       .then(res => {
-        console.log("Upload image url", res.imageUrl);
-        return Promise.resolve(res.imageUrl);
+        console.log("Upload image url", res.url);
+        return Promise.resolve(res.url);
       })
       .catch(e => {
         if (e instanceof ValidationError) {

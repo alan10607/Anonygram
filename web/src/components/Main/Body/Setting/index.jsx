@@ -2,13 +2,15 @@ import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setConsole } from 'redux/actions/common';
-import { deleteIds } from 'redux/actions/forum';
+import { deleteForums } from 'redux/actions/forums';
 import { deleteUser, deleteUserExceptTokens, setUser } from 'redux/actions/user';
 import userRequest from 'service/request/userRequest';
 import { useUploadImage } from 'util/imageUtil';
 import useThrottle from 'util/useThrottle';
 import HeadIcon from '../Forum/Article/Content/Bar/HeadIcon';
 import './Setting.scss';
+import { setLocalStorage } from 'util/localStorageUtil';
+import { JWT_TOKEN } from 'config/constant';
 
 export default function Setting() {
   const { userId, username, email, isAnonymous, headUrl, language, theme } = useSelector(state => ({
@@ -46,7 +48,7 @@ export default function Setting() {
       .then(imageUrl => userRequest.updateHeadUrl(imageUrl))
       .then(user => {
         dispatch(setUser(user));
-        dispatch(deleteIds());
+        dispatch(deleteForums());
       })
       .catch(e => dispatch(setConsole(t("tip.setting.headUrl.error"))));
   })
@@ -73,13 +75,14 @@ export default function Setting() {
   });
 
   const toLogin = () => {
-    dispatch(deleteIds());
+    dispatch(deleteForums());
+    setLocalStorage(JWT_TOKEN, null);
     navigate("/login");
   }
 
   const logout = () => {
-    dispatch(deleteIds());
-    dispatch(deleteUser());
+    dispatch(deleteForums());
+    setLocalStorage(JWT_TOKEN, null);
     navigate("/login");
   }
 

@@ -7,12 +7,12 @@ export default {
   create: (username, email, password) =>
     request.postMethod(`/user`, { username, email, password }),
 
-  updateLanguage: (language) =>
-    request.patchMethod(`/user`, { language }),
+  updateLanguage: (userId, language) =>
+    request.patchMethod(`/user/${userId}`, { language }),
 
-  updateTheme: (theme) =>
-    request.patchMethod(`/user`, { theme }),
+  updateTheme: (userId, theme) =>
+    request.patchMethod(`/user/${userId}`, { theme }),
 
-  updateHeadUrl: (headUrl) =>
-    request.patchMethod(`/user`, { headUrl }),
+  updateHeadUrl: (userId, headUrl) =>
+    request.patchMethod(`/user/${userId}`, { headUrl }),
 };

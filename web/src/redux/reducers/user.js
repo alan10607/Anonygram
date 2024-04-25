@@ -1,12 +1,11 @@
 import i18n from 'i18next';
-import { isAnonygramUser } from 'util/authUtil';
 import { setTheme } from 'util/themeUtil';
 import { DELETE_USER, SET_USER } from "../actions/user";
 
 const initUserState = {
-  tokens: null,
   id: null,
   username: "",
+  isAnonymous: false,
   headUrl: "",
   language: "en",
   theme: "dark"
