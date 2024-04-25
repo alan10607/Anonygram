@@ -2,10 +2,8 @@ package com.ag.domain.config;
 
 import com.ag.domain.config.filter.AnonymousFilter;
 import com.ag.domain.config.filter.JwtFilter;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.server.ConfigurableWebServerFactory;
 import org.springframework.boot.web.server.ErrorPage;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
@@ -20,7 +18,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 @Configuration
 @Slf4j
@@ -30,10 +28,8 @@ import org.springframework.web.cors.CorsConfiguration;
 public class SecurityConfig {
     private final JwtFilter jwtFilter;
     private final AnonymousFilter anonymousFilter;
+    private final CorsConfigurationSource corsConfigurationSource;
     private static final String ERROR_PAGE_PATH = "/err";
-
-    @Value("${spring.cors.frontend}")
-    private String frontendUrl;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -42,19 +38,9 @@ public class SecurityConfig {
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(anonymousFilter, AnonymousAuthenticationFilter.class)
                 .sessionManagement(customizer -> customizer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .cors(cors -> cors.configurationSource(this::corsConfiguration))
+                .cors(cors -> cors.configurationSource(corsConfigurationSource))
         ;
         return http.build();
-    }
-
-    public CorsConfiguration corsConfiguration(HttpServletRequest request) {
-        log.info("CORS allowed origin frontend url={}", frontendUrl);
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin(frontendUrl);
-        configuration.addAllowedHeader("*");
-        configuration.addAllowedMethod("*");
-        configuration.setAllowCredentials(true);
-        return configuration;
     }
 
     /**
