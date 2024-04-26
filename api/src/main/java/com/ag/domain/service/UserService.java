@@ -63,7 +63,7 @@ public class UserService extends CrudServiceImpl<ForumUser> implements UserDetai
     @Override
     protected ForumUser createImpl(ForumUser user) {
         LocalDateTime now = TimeUtil.now();
-        if(user.getRoles().isEmpty()){
+        if(user.getRoles() == null || user.getRoles().isEmpty()){
             user.setRoles(Collections.singletonList(UserRole.ROLE_NORMAL));
         }
 
