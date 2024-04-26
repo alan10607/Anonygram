@@ -1,13 +1,14 @@
 import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { addReplyHtml, setConsole, setReplyId } from 'redux/actions/common';
-import { setForumArticle } from 'redux/actions/forums';
+import { setForum, setForumArticle } from 'redux/actions/forums';
 import articleRequest from 'service/request/articleRequest';
 import { REPLY_BOX_ATTR } from 'config/constant';
 import { scrollTo } from 'util/inputHtmlUtil';
 import { getTimeFromStr } from 'util/timeUtil';
 import useThrottle from 'util/useThrottle';
 import './Info.scss';
+import forumRequest from 'service/request/forumRequest';
 
 export default function Info({ id, no }) {
   const { authorId, createDate, userId } = useSelector(state => ({
@@ -19,13 +20,13 @@ export default function Info({ id, no }) {
   const { t } = useTranslation();
 
   const httpDeleteContent = useThrottle(() => {
-    articleRequest.deleteArticle(id, no)
-      .then(() => {
+    articleRequest.delete(id, no)
+      .then(() => forumRequest.get(id, no))
+      .then(forum => {
+        dispatch(setForum(forum));
         if (no === 0) {
-          dispatch(setForumArticle({ articleId: id, no: no }));
           dispatch(setConsole(t("tip.forum.article.delete.ok")));
         } else {
-          dispatch(setForumArticle({ articleId: id, no: no }));
           dispatch(setConsole(t("tip.forum.content.delete.ok")));
         }
       })

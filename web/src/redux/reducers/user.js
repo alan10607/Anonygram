@@ -17,6 +17,8 @@ export default function userReducer(preState = initUserState, action) {
   switch (type) {
     case SET_USER:
       const newState = Object.assign({}, preState, data);
+      newState.isAnonymous = !newState.email;
+      newState.username = newState.isAnonymous ? newState.id : newState.username;
       setLocalEnvironment(newState);
       return newState;
 

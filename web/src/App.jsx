@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { useRoutes, Navigate } from "react-router-dom";
 import { setConsole } from "redux/actions/common";
-import { setUser, deleteUser } from "redux/actions/user";
+import { setUser, deleteUser, putUser } from "redux/actions/user";
 import { locationTo } from "util/locationUtil";
 import tokenRequest from "service/request/tokenRequest";
 import './App.scss';
@@ -62,19 +62,22 @@ const routeConfig = [
 ]
 
 export default function App() {
+  const { userId } = useSelector(state => ({
+    userId: state.user.id
+  }), shallowEqual);
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const [jwt] = useLocalStorage(JWT_TOKEN);
   
   useEffect(() => {
     dispatch(deleteUser());
+
     tokenRequest.get()
       .then(user => validate(user.id) ?
         userRequest.get(user.id) :
-        Promise.resolve({ id: user.id, username: user.id, isAnonymous: true }))
+        Promise.resolve(user))
       .then(user => dispatch(setUser(user)))
       .catch(e => console.info("User set as anonymous"))
-  }, [jwt]);
+  }, []);
 
   const element = useRoutes(routeConfig);
   return (

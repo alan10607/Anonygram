@@ -5,6 +5,7 @@ import authRequest from 'service/request/tokenRequest';
 import { ICON_LOGO } from 'config/constant';
 import { EMAIL_EXP, PASSWORD_EXP } from 'config/regexp';
 import './Login.scss';
+import userRequest from 'service/request/userRequest';
 
 export default function Register() {
   const [username, setUsername] = useState("");
@@ -22,7 +23,7 @@ export default function Register() {
       return setHint(errorStr);
     }
 
-    authRequest.register(username, email, password)
+    userRequest.create(username, email, password)
       .then(() => waitThenGo(3))
       .catch(e => setHint(t("tip.register.error")));
   }

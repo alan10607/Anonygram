@@ -11,6 +11,7 @@ import HeadIcon from '../Forum/Article/Content/Bar/HeadIcon';
 import './Setting.scss';
 import { setLocalStorage } from 'util/localStorageUtil';
 import { JWT_TOKEN } from 'config/constant';
+import tokenRequest from 'service/request/tokenRequest';
 
 export default function Setting() {
   const { userId, username, email, isAnonymous, headUrl, language, theme } = useSelector(state => ({
@@ -45,7 +46,8 @@ export default function Setting() {
 
   const uploadHead = useThrottle((event) => {
     uploadImage(event)
-      .then(imageUrl => userRequest.updateHeadUrl(imageUrl))
+      .then(imageUrl => userRequest.updateHeadUrl(userId, imageUrl))
+      .then(image => userRequest.get(userId))
       .then(user => {
         dispatch(setUser(user));
         dispatch(deleteForums());
@@ -57,8 +59,8 @@ export default function Setting() {
     if (isAnonymous) {
       dispatch(setUser({ language }))
     } else {
-      userRequest.updateLanguage(language)
-        .then(user => dispatch(setUser(user)))
+      userRequest.updateLanguage(userId, language)
+        .then(user => dispatch(setUser({language})))
         .catch(e => console.log("Update language failed", e));
     }
   });
@@ -68,22 +70,24 @@ export default function Setting() {
       dispatch(setUser({ theme }))
       return;
     } else {
-      userRequest.updateTheme(theme)
-        .then(user => dispatch(setUser(user)))
+      userRequest.updateTheme(userId, theme)
+        .then(user => dispatch(setUser({theme})))
         .catch(e => console.log("Update theme failed", e))
     }
   });
 
-  const toLogin = () => {
-    dispatch(deleteForums());
-    setLocalStorage(JWT_TOKEN, null);
-    navigate("/login");
-  }
 
   const logout = () => {
-    dispatch(deleteForums());
     setLocalStorage(JWT_TOKEN, null);
-    navigate("/login");
+    dispatch(deleteUser());
+
+    tokenRequest.get()
+      .then(user => {
+        dispatch(setUser(user))
+        dispatch(deleteForums());
+        navigate("/login");
+      })
+      .catch(e => console.error("Logout error", e));
   }
 
   const getOptionNode = (optionArray) => {
@@ -123,7 +127,7 @@ export default function Setting() {
       </div>
       <div className="flex-empty"></div>
       {isAnonymous ?
-        <input className="logout" type="button" onClick={toLogin} value={t("common.login")} ></input> :
+        <input className="logout" type="button" onClick={logout} value={t("common.login")} ></input> :
         <input className="logout" type="button" onClick={logout} value={t("common.logout")} ></input>}
     </div>
   )
