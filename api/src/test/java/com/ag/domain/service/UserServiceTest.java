@@ -190,6 +190,46 @@ class UserServiceTest {
     }
 
     @Test
+    void validateUpdatePassword_should_success_because_length_within_max_limit() {
+        // Arrange
+        ForumUser user = generateUser();
+        user.setPassword(generateRandomString(UserService.MAX_PASSWORD_LENGTH));
+
+        // Act & Assert
+        assertDoesNotThrow(() -> userService.validateUpdatePassword(user));
+    }
+
+    @Test
+    void validateUpdatePassword_should_success_because_us_null() {
+        // Arrange
+        ForumUser user = generateUser();
+        user.setPassword(null);
+
+        // Act & Assert
+        assertDoesNotThrow(() -> userService.validateUpdatePassword(user));
+    }
+
+    @Test
+    void validateUpdatePassword_should_failed_because_length_exceeds_max_limit() {
+        // Arrange
+        ForumUser user = generateUser();
+        user.setPassword(generateRandomString(UserService.MAX_PASSWORD_LENGTH + 1));
+
+        // Act & Assert
+        assertThrows(AgValidationException.class, () -> userService.validateUpdatePassword(user));
+    }
+
+    @Test
+    void validateUpdatePassword_should_failed_because_is_blank() {
+        // Arrange
+        ForumUser user = generateUser();
+        user.setPassword("");
+
+        // Act & Assert
+        assertThrows(AgValidationException.class, () -> userService.validateUpdatePassword(user));
+    }
+
+    @Test
     void validateRoles_should_success_because_only_normal_role() {
         // Arrange
         ForumUser user = generateUser();

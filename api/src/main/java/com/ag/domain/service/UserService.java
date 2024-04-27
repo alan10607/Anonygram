@@ -57,13 +57,13 @@ public class UserService extends CrudServiceImpl<ForumUser> implements UserDetai
 
     @Override
     protected ForumUser getImpl(ForumUser user) {
-        return userRepository.findById(user.getId()).orElse(null);
+        return maskPassword(userRepository.findById(user.getId()).orElse(null));
     }
 
     @Override
     protected ForumUser createImpl(ForumUser user) {
         LocalDateTime now = TimeUtil.now();
-        if(user.getRoles() == null || user.getRoles().isEmpty()){
+        if (user.getRoles() == null || user.getRoles().isEmpty()) {
             user.setRoles(Collections.singletonList(UserRole.ROLE_NORMAL));
         }
 
@@ -77,7 +77,7 @@ public class UserService extends CrudServiceImpl<ForumUser> implements UserDetai
                 .updatedTime(now)
                 .build();
 
-        return userRepository.save(user);
+        return maskPassword(userRepository.save(user));
     }
 
     @Override
@@ -86,19 +86,19 @@ public class UserService extends CrudServiceImpl<ForumUser> implements UserDetai
                 .orElseThrow(() -> new EntityNotFoundException(ForumUser.class));
         existing.setUsername(user.getUsername());
         existing.setEmail(user.getEmail());
-        existing.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        existing.setPassword(user.getPassword() == null ? existing.getPassword() : bCryptPasswordEncoder.encode(user.getPassword()));
         existing.setRoles(user.getRoles());
         existing.setHeadUrl(user.getHeadUrl());
         existing.setLanguage(user.getLanguage());
         existing.setTheme(user.getTheme());
         existing.setUpdatedTime(TimeUtil.now());
-        return userRepository.save(existing);
+        return maskPassword(userRepository.save(existing));
     }
 
     @Override
     protected ForumUser deleteImpl(ForumUser user) {
         userRepository.deleteById(user.getId());
-        return user;
+        return maskPassword(user);
     }
 
     @Override
@@ -121,7 +121,7 @@ public class UserService extends CrudServiceImpl<ForumUser> implements UserDetai
     protected void beforeUpdateAndPatch(ForumUser user) {
         validateUsername(user);
         validateEmail(user);
-        validatePassword(user);
+        validateUpdatePassword(user);
         validateRoles(user);
         validateHeadUrl(user);
         validateLanguage(user);
@@ -132,6 +132,13 @@ public class UserService extends CrudServiceImpl<ForumUser> implements UserDetai
     @Override
     protected void beforeDelete(ForumUser user) {
         validateHavePermission(user);
+    }
+
+    private ForumUser maskPassword(ForumUser user) {
+        if (user != null) {
+            user.setPassword(null);
+        }
+        return user;
     }
 
     void validateId(ForumUser user) {
@@ -150,6 +157,10 @@ public class UserService extends CrudServiceImpl<ForumUser> implements UserDetai
 
     void validatePassword(ForumUser user) {
         ValidationUtil.assertInLength(user.getPassword(), MAX_PASSWORD_LENGTH, "Password length must in {} bytes and not blank", MAX_PASSWORD_LENGTH);
+    }
+
+    void validateUpdatePassword(ForumUser user) {
+        ValidationUtil.assertInLengthOrNull(user.getPassword(), MAX_PASSWORD_LENGTH, "Password length must in {} bytes or empty", MAX_PASSWORD_LENGTH);
     }
 
     void validateRoles(ForumUser user) {

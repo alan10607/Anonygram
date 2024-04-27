@@ -22,7 +22,7 @@ public class UserController {
     @Operation(summary = "Get a user")
     @ResponseStatus(HttpStatus.OK)
     public UserDTO get(@PathVariable("userId") String userId) {
-        return outputFilter(userService.get(userId));
+        return PojoFiledUtil.convertObject(userService.get(userId), UserDTO.class);
     }
 
     @PostMapping()
@@ -30,7 +30,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     public UserDTO create(@RequestBody UserDTO userDTO) {
         ForumUser user = PojoFiledUtil.convertObject(userDTO, ForumUser.class);
-        return outputFilter(userService.create(user));
+        return PojoFiledUtil.convertObject(userService.create(user), UserDTO.class);
     }
 
     @PatchMapping("/{userId}")
@@ -42,16 +42,6 @@ public class UserController {
         ForumUser user = PojoFiledUtil.convertObject(userDTO, ForumUser.class);
         user.setId(userId);
         userService.patch(user);
-    }
-
-    private UserDTO outputFilter(ForumUser user) {
-        if (user == null) {
-            return null;
-        } else {
-            UserDTO userDTO = PojoFiledUtil.convertObject(user, UserDTO.class);
-            userDTO.setPassword(null);
-            return userDTO;
-        }
     }
 
 }
