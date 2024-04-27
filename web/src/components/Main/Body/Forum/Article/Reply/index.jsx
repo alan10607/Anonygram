@@ -1,17 +1,18 @@
+import { REPLY_BOX_ATTR } from 'config/constant';
+import ValidationError from 'error/ValidationError';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { setReplyHtml, setReplyId } from 'redux/actions/common';
+import { setConsole, setReplyHtml, setReplyId } from 'redux/actions/common';
 import { setForum } from 'redux/actions/forums';
 import articleRequest from 'service/request/articleRequest';
 import forumRequest from 'service/request/forumRequest';
-import { pasteAsPlain, useInputFilter } from 'util/inputHtmlUtil';
-import { REPLY_BOX_ATTR } from 'config/constant';
+import { pasteAsPlain, wordFilter } from 'util/inputHtmlUtil';
 import useThrottle from 'util/useThrottle';
 import ReplyBar from '../Content/Bar/ReplyBar';
 import ReplyInfo from '../Content/Info/ReplyInfo';
-import UploadImageBtn from './UploadImgBtn';
 import './Reply.scss';
+import UploadImageBtn from './UploadImgBtn';
 
 export default function Reply({ id }) {
   const inputRef = useRef();
@@ -22,17 +23,27 @@ export default function Reply({ id }) {
   const isOpen = replyId === id;
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const inputFilter = useInputFilter();
 
   useEffect(() => {//init input html
-    if(!replyHtml){
+    if (!replyHtml) {
       dispatch(setReplyHtml(id, "<div><br></div>"));
     }
   }, [replyHtml])
-  
-  const httpCreateContent = useThrottle(() => {
-    inputFilter(inputRef.current)
-      .then(word => articleRequest.createReply(id, word))
+
+  const createReplyArticle = useThrottle(() => {
+    let processedWord;
+    try {
+      processedWord = wordFilter(inputRef.current);
+    } catch (e) {
+      if (e instanceof ValidationError) {
+        dispatch(setConsole(e.message));
+      } else {
+        console.log("InputFilter error", e);
+      }
+      return;
+    }
+
+    articleRequest.createReply(id, processedWord)
       .then(article => forumRequest.get(article.articleId, article.no))
       .then(forum => {
         dispatch(setForum(forum));
@@ -56,7 +67,7 @@ export default function Reply({ id }) {
       <div className="reply-move">
         <UploadImageBtn id={id} />
         <div className="flex-empty"></div>
-        <div className="text-btn" onClick={httpCreateContent}>{t("common.submit")}</div>
+        <div className="text-btn" onClick={createReplyArticle}>{t("common.submit")}</div>
       </div>
     </div>
   )

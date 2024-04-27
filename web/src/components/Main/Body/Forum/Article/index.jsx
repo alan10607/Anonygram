@@ -8,12 +8,11 @@ import Reply from './Reply';
 import './Article.scss';
 
 export default function Article({ id }) {
-  const { title, articles } = useSelector(state => ({
-    title: state.forums[id].articles[0].title,
+  const { articles } = useSelector(state => ({
     articles: state.forums[id].articles
   }), shallowEqual);
 
-  const getContentNode = (articles) => {
+  const getContentNode = () => {
     const allContent = [];
     for (let no = 0; no < articles.length; ++no) {
       const key = `${id}_${no}`;
@@ -31,8 +30,7 @@ export default function Article({ id }) {
 
   return (
     <div id={id} className="art">
-      <div className="title">{title}</div>
-      <Fragment>{getContentNode(articles)}</Fragment>
+      <Fragment>{getContentNode()}</Fragment>
       <Move id={id} />
       <Reply id={id} />
     </div>

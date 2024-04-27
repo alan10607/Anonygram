@@ -8,7 +8,7 @@ const initState = {};
 
 export default function forumReducer(preState = initState, action) {
   const { type, data } = action;
-  console.log("REDUX=====\n", action)
+
   switch (type) {
     case SET_FORUMS:
       let newState = Object.assign({}, preState);

@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { setConsole, setLoading } from "redux/actions/common";
 import imageRequest from "service/request/imageRequest";
 import { MIME_IMAGE_EXP } from "config/regexp";
-import ValidationError from "Error/validationError";
+import ValidationError from "error/ValidationError";
 
 const imgQuality = 1, imgMaxWidth = 450;
 

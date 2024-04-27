@@ -1,11 +1,10 @@
 import { shallowEqual, useSelector } from 'react-redux';
-import HeadIcon from './HeadIcon';
 import './Bar.scss';
+import HeadIcon from './HeadIcon';
 
 export default function ReplyBar() {
-  const { username, headUrl } = useSelector(state => ({
-    username: state.user.username,
-    headUrl: state.user.headUrl
+  const { user: { username, headUrl } } = useSelector(state => ({
+    user: state.user
   }), shallowEqual);
 
   return (

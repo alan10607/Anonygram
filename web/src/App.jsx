@@ -6,19 +6,11 @@ import Main from "components/Main";
 import Forum from "components/Main/Body/Forum";
 import New from "components/Main/Body/New";
 import Setting from "components/Main/Body/Setting";
-import { JWT_TOKEN } from "config/constant";
 import { useEffect } from "react";
-import { useTranslation } from "react-i18next";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { useRoutes, Navigate } from "react-router-dom";
-import { setConsole } from "redux/actions/common";
-import { setUser, deleteUser, putUser } from "redux/actions/user";
-import { locationTo } from "util/locationUtil";
-import tokenRequest from "service/request/tokenRequest";
+import { shallowEqual, useSelector } from "react-redux";
+import { Navigate, useRoutes } from "react-router-dom";
+import useFetchUserRedux from "util/useFetchUserRedux";
 import './App.scss';
-import userRequest from "service/request/userRequest";
-import useLocalStorage from "util/localStorageUtil";
-import { validate } from "uuid";
 
 const routeConfig = [
   {
@@ -65,18 +57,10 @@ export default function App() {
   const { userId } = useSelector(state => ({
     userId: state.user.id
   }), shallowEqual);
-  const dispatch = useDispatch();
-  const { t } = useTranslation();
-  
-  useEffect(() => {
-    dispatch(deleteUser());
+  const fetchUser = useFetchUserRedux();
 
-    tokenRequest.get()
-      .then(user => validate(user.id) ?
-        userRequest.get(user.id) :
-        Promise.resolve(user))
-      .then(user => dispatch(setUser(user)))
-      .catch(e => console.info("User set as anonymous"))
+  useEffect(() => {
+    fetchUser();
   }, []);
 
   const element = useRoutes(routeConfig);

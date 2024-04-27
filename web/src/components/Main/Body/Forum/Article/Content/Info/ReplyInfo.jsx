@@ -3,13 +3,13 @@ import { getNowTime } from 'util/timeUtil';
 import './Info.scss';
 
 export default function ReplyInfo({ id }) {
-  const { contentSize } = useSelector(state => ({
-    contentSize: state.forums[id].count
+  const { count } = useSelector(state => ({
+    count: state.forums[id].count
   }), shallowEqual);
 
   return (
     <div className="info">
-      <div>@{contentSize}, {getNowTime()} </div>
+      <div>@{count}, {getNowTime()} </div>
     </div>
   )
 }

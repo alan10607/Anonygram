@@ -1,35 +1,27 @@
-import { ICON_LOGO, VERSION, WELCOME_PAGE } from "config/constant";
+import { ICON_LOGO, JWT_TOKEN, VERSION, WELCOME_PAGE } from "config/constant";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import tokenRequest from "service/request/tokenRequest";
-import userRequest from "service/request/userRequest";
 import { setLocalStorage } from "util/localStorageUtil";
-import { JWT_TOKEN } from "config/constant";
+import useFetchUserRedux from "util/useFetchUserRedux";
 import './Login.scss';
-import { deleteUser, setUser, updateUser } from "redux/actions/user";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [hint, setHint] = useState("");
   const navigate = useNavigate();
+  const fetchUser = useFetchUserRedux();
   const { t } = useTranslation();
-  const dispatch = useDispatch();
 
   const login = (event) => {
     event.preventDefault();
 
-    dispatch(deleteUser());
     tokenRequest.create(email, password)
       .then(tokens => {
         setLocalStorage(JWT_TOKEN, tokens.accessToken);
-        return tokenRequest.get();
-      })
-      .then(user => userRequest.get(user.id))
-      .then(user => { 
-        dispatch(setUser(user))
+        fetchUser();
         navigate(WELCOME_PAGE);
       })
       .catch(e => setHint(t("tip.login.error")));

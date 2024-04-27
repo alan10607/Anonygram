@@ -5,9 +5,8 @@ import { setConsole } from "redux/actions/common";
 import './Console.scss';
 
 export default function Console() {
-  const { console, loading } = useSelector(state => ({
-    console: state.common.console,
-    loading: state.common.loading
+  const { common: { console, loading } } = useSelector(state => ({
+    common: state.common
   }), shallowEqual);
   const dispatch = useDispatch();
   const { t } = useTranslation();

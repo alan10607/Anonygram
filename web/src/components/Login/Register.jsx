@@ -1,11 +1,10 @@
+import { ICON_LOGO } from 'config/constant';
+import { EMAIL_EXP, PASSWORD_EXP } from 'config/regexp';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from "react-router-dom";
-import authRequest from 'service/request/tokenRequest';
-import { ICON_LOGO } from 'config/constant';
-import { EMAIL_EXP, PASSWORD_EXP } from 'config/regexp';
-import './Login.scss';
 import userRequest from 'service/request/userRequest';
+import './Login.scss';
 
 export default function Register() {
   const [username, setUsername] = useState("");

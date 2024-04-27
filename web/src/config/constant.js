@@ -13,16 +13,13 @@ export const VERSION = "v20230908";
 export const WELCOME_PAGE = "/forum/index";
 
 /* --- Backend url --- */
-const CLOUD_URL = "https://13.112.45.117";
+const CLOUD_URL = "https://127.0.0.1";
 const TEST_URL = "https://localhost";
 export const BACKEND_API_URL = window.location.host.indexOf("localhost") === -1 ? CLOUD_URL : TEST_URL;
 console.log("BACKEND_API_URL:", BACKEND_API_URL);
 
 /* --- LocalStorage --- */
-export const LOCAL_SETTING = "ag-local";
 export const JWT_TOKEN = "ag-jwt";
-export const LANG = "ag-lang";
-export const THEME = "ag-theme";
 
 /* --- Pic --- */
 const PUBLIC_URL = process.env.PUBLIC_URL;

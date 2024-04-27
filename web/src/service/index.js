@@ -58,7 +58,7 @@ const saveJwtTokens = (headers) => {
 
 axiosInstance.interceptors.request.use(config => {
   cancelRepeatedRequest(config);
-  setDoubleSubmitCsrf(config);
+  // setDoubleSubmitCsrf(config);
   setJwtTokens(config);
   setStartTime(config);
   return config;

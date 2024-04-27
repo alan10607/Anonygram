@@ -1,32 +1,27 @@
+import { JWT_TOKEN } from 'config/constant';
 import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setConsole } from 'redux/actions/common';
 import { deleteForums } from 'redux/actions/forums';
-import { deleteUser, deleteUserExceptTokens, setUser } from 'redux/actions/user';
+import { setUser } from 'redux/actions/user';
 import userRequest from 'service/request/userRequest';
 import { useUploadImage } from 'util/imageUtil';
+import { setLocalStorage } from 'util/localStorageUtil';
+import useFetchUserRedux from 'util/useFetchUserRedux';
 import useThrottle from 'util/useThrottle';
 import HeadIcon from '../Forum/Article/Content/Bar/HeadIcon';
 import './Setting.scss';
-import { setLocalStorage } from 'util/localStorageUtil';
-import { JWT_TOKEN } from 'config/constant';
-import tokenRequest from 'service/request/tokenRequest';
 
 export default function Setting() {
-  const { userId, username, email, isAnonymous, headUrl, language, theme } = useSelector(state => ({
-    userId: state.user.id,
-    username: state.user.username,
-    email: state.user.email,
-    isAnonymous: state.user.isAnonymous,
-    headUrl: state.user.headUrl,
-    language: state.user.language,
-    theme: state.user.theme,
+  const { user: { id: userId, username, email, isAnonymous, headUrl, language, theme } } = useSelector(state => ({
+    user: state.user
   }), shallowEqual);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
   const uploadImage = useUploadImage();
+  const fetchUser = useFetchUserRedux();
 
   const LANGUAGE_OPTIONS = [{
     name: "English",
@@ -60,7 +55,7 @@ export default function Setting() {
       dispatch(setUser({ language }))
     } else {
       userRequest.updateLanguage(userId, language)
-        .then(user => dispatch(setUser({language})))
+        .then(user => dispatch(setUser({ language })))
         .catch(e => console.log("Update language failed", e));
     }
   });
@@ -71,23 +66,15 @@ export default function Setting() {
       return;
     } else {
       userRequest.updateTheme(userId, theme)
-        .then(user => dispatch(setUser({theme})))
+        .then(user => dispatch(setUser({ theme })))
         .catch(e => console.log("Update theme failed", e))
     }
   });
 
-
   const logout = () => {
     setLocalStorage(JWT_TOKEN, null);
-    dispatch(deleteUser());
-
-    tokenRequest.get()
-      .then(user => {
-        dispatch(setUser(user))
-        dispatch(deleteForums());
-        navigate("/login");
-      })
-      .catch(e => console.error("Logout error", e));
+    fetchUser();
+    navigate("/login");
   }
 
   const getOptionNode = (optionArray) => {
@@ -126,9 +113,11 @@ export default function Setting() {
         </select>
       </div>
       <div className="flex-empty"></div>
-      {isAnonymous ?
-        <input className="logout" type="button" onClick={logout} value={t("common.login")} ></input> :
-        <input className="logout" type="button" onClick={logout} value={t("common.logout")} ></input>}
+      <input className="logout"
+        type="button"
+        onClick={logout}
+        value={isAnonymous ? t("common.login") : t("common.logout")}
+      ></input>
     </div>
   )
 

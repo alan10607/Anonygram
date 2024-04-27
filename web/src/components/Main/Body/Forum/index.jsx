@@ -1,20 +1,18 @@
+import { REPLY_BOX, STATUS_TYPE } from 'config/constant';
 import { Fragment, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { setConsole, setReplyId } from 'redux/actions/common';
+import { setArticleIds, setConsole, setReplyId } from 'redux/actions/common';
 import { setForums } from 'redux/actions/forums';
-import { setArticleIds } from 'redux/actions/common';
-import { REPLY_BOX, STATUS_TYPE } from 'config/constant';
+import forumRequest from 'service/request/forumRequest';
 import queryRequest from 'service/request/queryRequest';
 import Article from './Article';
 import './Forum.scss';
-import forumRequest from 'service/request/forumRequest';
 
 export default function Forum() {
-  const { idList, forums, userId } = useSelector(state => ({
+  const { idList, forums } = useSelector(state => ({
     idList: state.common.articleIds,
-    forums: state.forums,
-    userId: state.user.id
+    forums: state.forums
   }), shallowEqual);
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -24,7 +22,7 @@ export default function Forum() {
 
   /* --- Loading id & article --- */
   useEffect(() => {
-    if (idList.length === 0) {//init after get userId
+    if (idList.length === 0) {//init idList
       queryRequest.getArticleIds()
         .then(articleIds => dispatch(setArticleIds(articleIds)))
         .catch(e => dispatch(setConsole(t("tip.forum.id.error"))));

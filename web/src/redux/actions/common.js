@@ -1,8 +1,8 @@
-export const SET_REPLY_ID = "setReplyId";
-export const SET_REPLY_HTML = "setReplyHtml";
-export const ADD_REPLY_HTML = "addReplyHtml";
-export const SET_CONSOLE = "setConsole";
-export const SET_LOADING = "setLoading";
+export const SET_REPLY_ID = "SET_REPLY_ID";
+export const SET_REPLY_HTML = "SET_REPLY_HTML";
+export const ADD_REPLY_HTML = "ADD_REPLY_HTML";
+export const SET_CONSOLE = "SET_CONSOLE";
+export const SET_LOADING = "SET_LOADING";
 export const SET_ARTICLE_IDS = "SET_ARTICLE_IDS";
 
 export const setReplyId = (id) => ({

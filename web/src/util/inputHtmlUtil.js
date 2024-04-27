@@ -1,8 +1,6 @@
-import DOMPurify from 'dompurify';
+// import DOMPurify from 'dompurify';
+import ValidationError from "error/ValidationError";
 import i18next from "i18next";
-import ValidationError from "Error/validationError";
-import { useDispatch } from "react-redux";
-import { setConsole } from "redux/actions/common";
 
 /* --- Input html to string --- */
 const htmlToString = (inputElement) => {
@@ -35,26 +33,31 @@ const checkWord = (string) => {
   }
 }
 
-export const useInputFilter = () => {
-  const dispatch = useDispatch();
+const checkTitle = (string) => {
+  const maxLength = 100;
+  const length = string.length;
 
-  const inputFilter = (inputElement) => {
-    try {
-      const string = htmlToString(inputElement);
-      // const purifiedString = DOMPurify.sanitize(string)
-      checkWord(string);
-      return Promise.resolve(string);
-    } catch (e) {
-      if (e instanceof ValidationError) {
-        dispatch(setConsole(e.message));
-      } else {
-        console.log("InputFilter error", e);
-      }
-      return Promise.reject(e);
-    }
+  if (length === 0) {
+    if (length === 0)
+      throw new ValidationError(i18next.t("tip.title.error.empty"));
   }
 
-  return inputFilter;
+  if (length > maxLength) {
+    throw new ValidationError(i18next.t("tip.title.error.max", { maxLength, length }));
+  }
+}
+
+export const wordFilter = (inputElement) => {
+  const string = htmlToString(inputElement);
+  // const purifiedString = DOMPurify.sanitize(string)
+  checkWord(string);
+  return string;
+}
+
+export const titleFilter = (title) => {
+  title = title.trim();
+  checkTitle(title);
+  return title;
 }
 
 /* --- Paste auto to plain text --- */

@@ -1,3 +1,5 @@
+import { WELCOME_PAGE } from 'config/constant';
+import ValidationError from 'error/ValidationError';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
@@ -5,13 +7,12 @@ import { useNavigate } from "react-router-dom";
 import { setConsole, setReplyHtml } from 'redux/actions/common';
 import { deleteForums } from 'redux/actions/forums';
 import articleRequest from 'service/request/articleRequest';
-import { WELCOME_PAGE } from 'config/constant';
-import { pasteAsPlain, useInputFilter } from 'util/inputHtmlUtil';
+import { pasteAsPlain, titleFilter, wordFilter } from 'util/inputHtmlUtil';
 import useThrottle from 'util/useThrottle';
 import ReplyBar from '../Content/Bar/ReplyBar';
 import NewInfo from '../Content/Info/NewInfo';
-import UploadImageBtn from './UploadImgBtn';
 import './Reply.scss';
+import UploadImageBtn from './UploadImgBtn';
 
 export default function NewReply({ id = "new" }) {
   const [title, setTitle] = useState("");
@@ -22,32 +23,28 @@ export default function NewReply({ id = "new" }) {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const inputFilter = useInputFilter();
 
   useEffect(() => {//init input html
-    if(!replyHtml){
+    if (!replyHtml) {
       dispatch(setReplyHtml(id, "<div><br></div>"));
     }
   }, [replyHtml])
 
-  const checkTitle = (title) => {
-    const maxLength = 100;
-    const length = title.length;
-    if (length === 0) return t("tip.title.error.empty");
-    if (length > maxLength) return t("tip.title.error.max", { maxLength, length });
-    return "";
-  }
-
-  const httpCreateArticle = useThrottle(() => {
-    const trimmedTitle = title.trim();
-    const titleError = checkTitle(trimmedTitle);
-    if (titleError !== "") {
-      dispatch(setConsole(titleError));
-      return
+  const createArticle = useThrottle(() => {
+    let processedTitle, processedWord;
+    try {
+      processedTitle = titleFilter(title);
+      processedWord = wordFilter(inputRef.current);
+    } catch (e) {
+      if (e instanceof ValidationError) {
+        dispatch(setConsole(e.message));
+      } else {
+        console.log("InputFilter error", e);
+      }
+      return;
     }
 
-    inputFilter(inputRef.current)
-      .then(word => articleRequest.create(trimmedTitle, word))
+    articleRequest.create(processedTitle, processedWord)
       .then(article => {
         dispatch(deleteForums());//reload forum page
         dispatch(setReplyHtml(id, "<div><br></div>"));
@@ -75,7 +72,7 @@ export default function NewReply({ id = "new" }) {
       <div className="reply-move">
         <UploadImageBtn id={id} />
         <div className="flex-empty"></div>
-        <div className="text-btn" onClick={httpCreateArticle}>{t("common.submit")}</div>
+        <div className="text-btn" onClick={createArticle}>{t("common.submit")}</div>
       </div>
     </div>
   )

@@ -1,4 +1,3 @@
-import React from "react";
 import { ICON_LOGO } from "config/constant";
 import './Error.scss';
 
