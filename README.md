@@ -1,9 +1,9 @@
 # Anonygram
 <p align="center">
-	<a href="https://github.com/alan10607/Anonygram" target="_blank">
+	<a href="https://github.com/alan10607/Anonygram/tree/master/web" target="_blank">
         <img src="https://img.shields.io/badge/Github-Anonygram Frontend-green">
 	</a>
-	<a href="https://github.com/alan10607/Anonygram-Backend" target="_blank">
+	<a href="https://github.com/alan10607/Anonygram/tree/master/api" target="_blank">
         <img src="https://img.shields.io/badge/Github-Anonygram Backend-blue">
 	</a>
     <img src="https://img.shields.io/badge/React-18.2.0-lightgray">
@@ -17,7 +17,6 @@
 
 
 ## System Architecture
-_Check these links to find repositories of this system: [*Backend (Spring Boot)*](https://github.com/alan10607/Anonygram-Backend), [*Frontend (React)*](https://github.com/alan10607/Anonygram)_
 
 <img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/system.jpg"/>
 
