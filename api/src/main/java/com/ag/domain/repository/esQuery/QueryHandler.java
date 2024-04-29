@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 public abstract class QueryHandler<T> {
     @Autowired
     protected ElasticsearchOperations elasticsearchOperations;
-    private static final Pageable DEFAULT_PAGEABLE = Pageable.ofSize(30);
+    private static final Pageable DEFAULT_PAGEABLE = Pageable.ofSize(50);
     private static final SortOptions DEFAULT_SORT_OPTIONS = SortOptionsBuilders.score()
             .order((SortOrder.Desc))
             .build()
