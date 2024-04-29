@@ -53,8 +53,8 @@ def test_query_article():
         for j in range(9):
             firstArticle = post(f"/article/{articleId}", "reply_article.json")
 
-    run_ab_test(f"/forums/{','.join(articleIds)}")
-    run_ab_test(f"/forum/{articleId}?page=1")
+    run_ab_test(f"/discussions/{','.join(articleIds)}")
+    run_ab_test(f"/discussion/{articleId}?page=1")
     run_ab_test(f"/query/article?query=ocean")
 
 

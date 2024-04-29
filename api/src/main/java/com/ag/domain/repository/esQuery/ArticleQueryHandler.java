@@ -78,7 +78,7 @@ public class ArticleQueryHandler extends QueryHandler<Article> {
         BoolQuery boolQuery = QueryBuilders.bool()
                 .must(QueryBuilders.multiMatch(builder -> builder.fields(List.of(Article.COL_WORD, Article.COL_TITLE)).query(keyword)))
                 .must(QueryBuilders.term(builder -> builder.field(Article.COL_NO).value(0)))
-                .must(QueryBuilders.term(builder -> builder.field(Article.COL_STATUS).value(ArticleStatus.NORMAL.value)))
+                .must(QueryBuilders.term(builder -> builder.field(Article.COL_STATUS).value(ArticleStatus.NORMAL.name())))
                 .build();
 
         return search(boolQuery);

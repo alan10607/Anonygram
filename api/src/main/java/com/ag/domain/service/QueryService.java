@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 public class QueryService {
     private final ArticleQueryHandler articleQueryHandler;
     private final UserQueryHandler userQueryHandler;
-    private final ForumService forumService;
+    private final DiscussionService discussionService;
 
     private final Cache<String, List<String>> articleCache = CacheBuilder.newBuilder()
             .expireAfterAccess(5, TimeUnit.SECONDS)
@@ -45,7 +45,7 @@ public class QueryService {
         validateKeyword(keyword);
         return articleQueryHandler.searchFirstArticleByWordOrTitle(keyword)
                 .stream()
-                .map(forumService::prepareArticle)
+                .map(discussionService::prepareArticle)
                 .collect(Collectors.toList());
     }
 

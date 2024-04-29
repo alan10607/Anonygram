@@ -2,7 +2,7 @@ package com.ag.domain.service;
 
 import com.ag.domain.constant.ArticleStatus;
 import com.ag.domain.dto.ArticleDTO;
-import com.ag.domain.dto.ForumDTO;
+import com.ag.domain.dto.DiscussionDTO;
 import com.ag.domain.model.Article;
 import com.ag.domain.model.ForumUser;
 import com.ag.domain.model.Like;
@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 @Slf4j
-public class ForumService {
+public class DiscussionService {
     private final ArticleQueryHandler articleQueryHandler;
     private final LikeQueryHandler likeQueryHandler;
     private final ArticleRepository articleRepository;
@@ -47,7 +47,7 @@ public class ForumService {
         }
     }
 
-    public ForumDTO getByPage(String articleId, int page) {
+    public DiscussionDTO getByPage(String articleId, int page) {
         validateArticleId(articleId);
         validatePage(page);
         ArticleNoPage articleNoPage = new ArticleNoPage(page);
@@ -55,7 +55,7 @@ public class ForumService {
         return get(articleId, articleNoPage.getStart(), articleNoPage.getEnd());
     }
 
-    public List<ForumDTO> get(List<String> articleIdList, int no) {
+    public List<DiscussionDTO> get(List<String> articleIdList, int no) {
         validateArticleIdList(articleIdList);
 
         return articleIdList.stream()
@@ -63,35 +63,35 @@ public class ForumService {
                 .collect(Collectors.toList());
     }
 
-    public ForumDTO get(String articleId, int no) {
+    public DiscussionDTO get(String articleId, int no) {
         return get(articleId, no, no);
     }
 
-    private ForumDTO get(String articleId, int noGte, int noLte) {
+    private DiscussionDTO get(String articleId, int noGte, int noLte) {
         validateArticleId(articleId);
 
         ArticleStatus status = getFirstArticleStatus(articleId);
         switch (status) {
             case NORMAL:
-                ForumDTO forumDTO = new ForumDTO(articleId, ArticleStatus.NORMAL);
-                forumDTO.setCount(articleRepository.countByArticleId(articleId));
-                if (forumDTO.getCount() <= noGte) {
-                    forumDTO.setArticles(Collections.emptyList());
+                DiscussionDTO discussionDTO = new DiscussionDTO(articleId, ArticleStatus.NORMAL);
+                discussionDTO.setCount(articleRepository.countByArticleId(articleId));
+                if (discussionDTO.getCount() <= noGte) {
+                    discussionDTO.setArticles(Collections.emptyList());
                 } else if (noGte == noLte) {
-                    forumDTO.setArticles(articleRepository.findById(new Article(articleId, noGte).getId())
+                    discussionDTO.setArticles(articleRepository.findById(new Article(articleId, noGte).getId())
                             .map(this::prepareArticle)
                             .map(Collections::singletonList)
                             .orElse(Collections.emptyList()));
                 } else {
-                    forumDTO.setArticles(articleQueryHandler.searchByArticleIdAndNo(articleId, noGte, noLte)
+                    discussionDTO.setArticles(articleQueryHandler.searchByArticleIdAndNo(articleId, noGte, noLte)
                             .stream()
                             .map(this::prepareArticle)
                             .collect(Collectors.toList()));
                 }
-                return forumDTO;
+                return discussionDTO;
             case DELETED, UNKNOWN:
             default:
-                return new ForumDTO(articleId, status);
+                return new DiscussionDTO(articleId, status);
         }
     }
 

@@ -14,13 +14,13 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ForumDTO {
+public class DiscussionDTO {
     private String articleId;
     private ArticleStatus status;
     private Integer count;
     private List<ArticleDTO> articles;
 
-    public ForumDTO(String articleId, ArticleStatus status) {
+    public DiscussionDTO(String articleId, ArticleStatus status) {
         this.articleId = articleId;
         this.status = status;
     }
