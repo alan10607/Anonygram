@@ -1,4 +1,4 @@
-import { ICON_ADD, ICON_FORUM, ICON_LOGO, ICON_SETTING } from 'config/constant';
+import { ICON_ADD, ICON_FORUM, ICON_LOGO, ICON_QUERY, ICON_SETTING } from 'config/constant';
 import { NavLink } from 'react-router-dom';
 import './Head.scss';
 
@@ -12,6 +12,9 @@ export default function Header() {
       </NavLink>
       <NavLink to="/forum/new">
         <img className="icon" src={ICON_ADD} alt="ICON_SETTING" />
+      </NavLink>
+      <NavLink to="/forum/query">
+        <img className="icon" src={ICON_QUERY} alt="ICON_SETTING" />
       </NavLink>
       <NavLink to="/forum/setting">
         <img className="icon" src={ICON_SETTING} alt="ICON_SETTING" />

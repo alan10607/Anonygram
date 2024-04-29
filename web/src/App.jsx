@@ -5,6 +5,7 @@ import Register from "components/Login/Register";
 import Main from "components/Main";
 import Forum from "components/Main/Body/Forum";
 import New from "components/Main/Body/New";
+import Query from "components/Main/Body/Query";
 import Setting from "components/Main/Body/Setting";
 import { useEffect } from "react";
 import { shallowEqual, useSelector } from "react-redux";
@@ -40,6 +41,10 @@ const routeConfig = [
       {
         path: "/forum/new",
         element: <New />
+      },
+      {
+        path: "/forum/query",
+        element: <Query />
       },
       {
         path: "/forum/setting",

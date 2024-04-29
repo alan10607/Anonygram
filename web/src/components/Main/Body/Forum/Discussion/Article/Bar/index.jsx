@@ -1,24 +1,21 @@
 import { ICON_LIKE } from 'config/constant';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { setForum } from 'redux/actions/forums';
+import { useDispatch } from 'react-redux';
+import { setDiscussion } from 'redux/actions/discussions';
 import likeRequest from 'service/request/LikeRequest';
-import forumRequest from 'service/request/forumRequest';
+import discussionRequest from 'service/request/discussionRequest';
 import useThrottle from 'util/useThrottle';
 import './Bar.scss';
 import HeadIcon from './HeadIcon';
 
-export default function Bar({ id, no }) {
-  const { article: { authorName, authorHeadUrl, like, likeCount } } = useSelector(state => ({
-    article: state.forums[id].articles[no]
-  }), shallowEqual);
+export default function Bar({ article: { articleId: id, no, authorName, authorHeadUrl, like, likeCount } }) {
   const dispatch = useDispatch();
 
   const toggleLike = useThrottle(() => {
     const likeAction = like ? likeRequest.delete : likeRequest.create;
 
     likeAction(id, no)
-      .then(() => forumRequest.get(id, no))
-      .then(forum => dispatch(setForum(forum)))
+      .then(() => discussionRequest.get(id, no))
+      .then(discussion => dispatch(setDiscussion(discussion)))
       .catch(error => console.log(`Update content like to ${!like} failed`, error));
   })
 

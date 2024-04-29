@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
-import forums from './forums';
+import discussions from './discussions';
 import common from './common';
 import user from './user';
 
 export default combineReducers({
-  forums,
+  discussions,
   common,
   user
 });

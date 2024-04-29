@@ -1,16 +1,13 @@
 import { REPLY_BOX_ATTR } from 'config/constant';
 import { useTranslation } from 'react-i18next';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setReplyId } from 'redux/actions/common';
-import { setForum } from 'redux/actions/forums';
-import forumRequest from 'service/request/forumRequest';
+import { setDiscussion } from 'redux/actions/discussions';
+import discussionRequest from 'service/request/discussionRequest';
 import useThrottle from 'util/useThrottle';
 import './Move.scss';
 
-export default function Move({ id }) {
-  const { forums: { count, articles } } = useSelector(state => ({
-    forums: state.forums[id]
-  }), shallowEqual);
+export default function Move({ discussion: { articleId: id, count, articles } }) {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
@@ -25,8 +22,8 @@ export default function Move({ id }) {
 
   const httpGetContent = useThrottle(() => {
     const page = Math.floor(findFirstUnreadNo() / 10) + 1;
-    forumRequest.getByPage(id, page)
-      .then(forum => dispatch(setForum(forum)))
+    discussionRequest.getByPage(id, page)
+      .then(discussion => dispatch(setDiscussion(discussion)))
       .catch(e => console.log("Failed to get contents", e));
   })
 

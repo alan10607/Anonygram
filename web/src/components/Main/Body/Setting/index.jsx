@@ -3,14 +3,14 @@ import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setConsole } from 'redux/actions/common';
-import { deleteForums } from 'redux/actions/forums';
+import { deleteForums } from 'redux/actions/discussions';
 import { setUser } from 'redux/actions/user';
 import userRequest from 'service/request/userRequest';
 import { useUploadImage } from 'util/imageUtil';
 import { setLocalStorage } from 'util/localStorageUtil';
 import useFetchUserRedux from 'util/useFetchUserRedux';
 import useThrottle from 'util/useThrottle';
-import HeadIcon from '../Forum/Article/Content/Bar/HeadIcon';
+import HeadIcon from '../Forum/Discussion/Article/Bar/HeadIcon';
 import './Setting.scss';
 
 export default function Setting() {
@@ -116,7 +116,7 @@ export default function Setting() {
       <input className="logout"
         type="button"
         onClick={logout}
-        value={isAnonymous ? t("common.login") : t("common.logout")}
+        value={isAnonymous ? t("text.go.login") : t("common.logout")}
       ></input>
     </div>
   )

@@ -1,4 +1,4 @@
-import NewReply from '../Forum/Article/Reply/NewReply';
+import NewReply from '../Forum/Discussion/Reply/NewReply';
 import './New.scss';
 
 export default function New() {

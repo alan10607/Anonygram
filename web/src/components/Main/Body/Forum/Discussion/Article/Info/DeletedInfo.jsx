@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import './Info.scss';
 
-export default function DeletedInfo({ id, no }) {
+export default function DeletedInfo({ article: { no } }) {
   const { t } = useTranslation();
 
   return (

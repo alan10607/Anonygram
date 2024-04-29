@@ -1,11 +1,11 @@
 @import 'App.scss';
 
-.art {
+.discussion {
 	background-color: var(--bg-heavy);
 	font-size: 16px;
 
 	+ {
-		.art {
+		.discussion {
 			margin-top: 50px;
 		}
 	}

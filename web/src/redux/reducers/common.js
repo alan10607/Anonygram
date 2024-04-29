@@ -1,4 +1,4 @@
-import { DELETE_FORUMS } from "redux/actions/forums";
+import { DELETE_DISCUSSIONS } from "redux/actions/discussions";
 import {
   SET_REPLY_ID,
   SET_REPLY_HTML,
@@ -43,7 +43,7 @@ export default function commonReducer(preState = initState, action) {
     case SET_ARTICLE_IDS:
       return Object.assign({}, preState, { articleIds: data });
 
-    case DELETE_FORUMS:
+    case DELETE_DISCUSSIONS:
       return Object.assign({}, preState, { articleIds: [] });
 
     default:

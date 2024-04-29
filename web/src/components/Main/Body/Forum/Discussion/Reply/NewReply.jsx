@@ -1,28 +1,28 @@
-import { REPLY_BOX_ATTR } from 'config/constant';
+import { WELCOME_PAGE } from 'config/constant';
 import ValidationError from 'error/ValidationError';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { setConsole, setReplyHtml, setReplyId } from 'redux/actions/common';
-import { setForum } from 'redux/actions/forums';
+import { useNavigate } from "react-router-dom";
+import { setConsole, setReplyHtml } from 'redux/actions/common';
+import { deleteForums } from 'redux/actions/discussions';
 import articleRequest from 'service/request/articleRequest';
-import forumRequest from 'service/request/forumRequest';
-import { pasteAsPlain, wordFilter } from 'util/inputHtmlUtil';
+import { pasteAsPlain, titleFilter, wordFilter } from 'util/inputHtmlUtil';
 import useThrottle from 'util/useThrottle';
-import ReplyBar from '../Content/Bar/ReplyBar';
-import ReplyInfo from '../Content/Info/ReplyInfo';
+import ReplyBar from '../Article/Bar/ReplyBar';
+import NewInfo from '../Article/Info/NewInfo';
 import './Reply.scss';
 import UploadImageBtn from './UploadImgBtn';
 
-export default function Reply({ id }) {
+export default function NewReply({ id = "new" }) {
+  const [title, setTitle] = useState("");
   const inputRef = useRef();
-  const { replyId, replyHtml } = useSelector(state => ({
-    replyId: state.common.replyId,
+  const { replyHtml } = useSelector(state => ({
     replyHtml: state.common.replyHtml[id]
   }), shallowEqual);
-  const isOpen = replyId === id;
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   useEffect(() => {//init input html
     if (!replyHtml) {
@@ -30,9 +30,10 @@ export default function Reply({ id }) {
     }
   }, [replyHtml])
 
-  const createReplyArticle = useThrottle(() => {
-    let processedWord;
+  const createArticle = useThrottle(() => {
+    let processedTitle, processedWord;
     try {
+      processedTitle = titleFilter(title);
       processedWord = wordFilter(inputRef.current);
     } catch (e) {
       if (e instanceof ValidationError) {
@@ -43,22 +44,26 @@ export default function Reply({ id }) {
       return;
     }
 
-    articleRequest.createReply(id, processedWord)
-      .then(article => forumRequest.get(article.articleId, article.no))
-      .then(forum => {
-        dispatch(setForum(forum));
-        dispatch(setReplyId(""));
+    articleRequest.create(processedTitle, processedWord)
+      .then(article => {
+        dispatch(deleteForums());//reload forum page
         dispatch(setReplyHtml(id, "<div><br></div>"));
+        navigate(WELCOME_PAGE);
       })
-      .catch(e => console.log("Failed to reply article", e))
+      .catch(e => console.log("Failed to create article", e))
   });
 
   return (
-    <div id={`${id}_reply`} className="reply" disabled={!isOpen} {...REPLY_BOX_ATTR}>
+    <div className="reply">
       <ReplyBar />
-      <ReplyInfo id={id} />
+      <NewInfo />
+      <input value={title}
+        onChange={(event) => { setTitle(event.target.value) }}
+        className="new-title"
+        type="text"
+        placeholder={t("common.title")} />
       <div ref={inputRef}
-        className="input-box"
+        className="input-box input-box-full"
         onPaste={pasteAsPlain}
         onBlur={(event) => dispatch(setReplyHtml(id, event.target.innerHTML))}
         contentEditable="true"
@@ -67,7 +72,7 @@ export default function Reply({ id }) {
       <div className="reply-move">
         <UploadImageBtn id={id} />
         <div className="flex-empty"></div>
-        <div className="text-btn" onClick={createReplyArticle}>{t("common.submit")}</div>
+        <div className="text-btn" onClick={createArticle}>{t("common.submit")}</div>
       </div>
     </div>
   )

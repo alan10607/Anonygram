@@ -3,24 +3,24 @@ import { Fragment, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { setArticleIds, setConsole, setReplyId } from 'redux/actions/common';
-import { setForums } from 'redux/actions/forums';
-import forumRequest from 'service/request/forumRequest';
+import { setDiscussions } from 'redux/actions/discussions';
+import discussionRequest from 'service/request/discussionRequest';
 import queryRequest from 'service/request/queryRequest';
-import Article from './Article';
+import Discussion from './Discussion';
 import './Forum.scss';
 
 export default function Forum() {
-  const { idList, forums } = useSelector(state => ({
+  const { idList, discussions } = useSelector(state => ({
     idList: state.common.articleIds,
-    forums: state.forums
+    discussions: state.discussions
   }), shallowEqual);
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const querySize = 10;
-  const queryIdList = useMemo(() => idList.filter(id => !forums[id]).slice(0, querySize), [idList, forums]);
+  const queryIdList = useMemo(() => idList.filter(id => !discussions[id]).slice(0, querySize), [idList, discussions]);
   const queryLock = useRef(false);
 
-  /* --- Loading id & article --- */
+  /* --- Loading id --- */
   useEffect(() => {
     if (idList.length === 0) {//init idList
       queryRequest.getArticleIds()
@@ -33,8 +33,8 @@ export default function Forum() {
     queryLock.current = false;//redux state update means that query finished
   }, [queryIdList])
 
-  useEffect(() => {//dynamic loading article
-    queryArticle();
+  useEffect(() => {//dynamic loading discussions
+    queryDiscussion();
 
     window.addEventListener("scroll", scrollDownQuery);
     return () => {
@@ -44,34 +44,34 @@ export default function Forum() {
 
 
   const scrollDownQuery = (event) => {
-    queryArticle();
+    queryDiscussion();
   }
 
-  const queryArticle = () => {
-    if (!canQueryArticle()) return;
+  const queryDiscussion = () => {
+    if (!canQueryDiscussion()) return;
 
     queryLock.current = true;
 
-    forumRequest.getMulti(queryIdList)
-      .then(forums => dispatch(setForums(forums)))
+    discussionRequest.getMulti(queryIdList)
+      .then(discussions => dispatch(setDiscussions(discussions)))
       .catch(e => {
         dispatch(setConsole(t("tip.forum.article.get.error")));
         queryLock.current = false;
       })
   }
 
-  const canQueryArticle = () => {
+  const canQueryDiscussion = () => {
     if (!checkInBottom()) {
       return false;
     }
 
     if (queryIdList.length === 0) {
-      console.log("Already query all articles, skip query");
+      console.log("Already query all discussions, skip query");
       return false;
     }
 
     if (queryLock.current) {
-      console.log("Skip query articles because query locked");
+      console.log("Skip query discussions because query locked");
       return false;
     }
 
@@ -102,21 +102,21 @@ export default function Forum() {
 
 
   /* --- Create view --- */
-  const getArticleNode = () => {
-    console.log(`Article loaded: ${idList.filter(id => forums[id]).length} / ${idList.length}`);
-    const allArticle = [];
+  const getDiscussionNodes = () => {
+    console.log(`Discussion loaded: ${idList.filter(id => discussions[id]).length} / ${idList.length}`);
+    const nodes = [];
     for (const id of idList) {
-      if (!forums[id]) continue;//not load yet
-      if (forums[id].status !== STATUS_TYPE.NORMAL) continue;
+      if (!discussions[id]) continue;//not load yet
+      if (discussions[id].status !== STATUS_TYPE.NORMAL) continue;
 
-      allArticle.push(<Article key={id} id={id} />);
+      nodes.push(<Discussion key={id} discussion={discussions[id]} />);
     }
-    return allArticle;
+    return nodes;
   }
 
   return (
     <div id="forum">
-      <Fragment>{getArticleNode()}</Fragment>
+      <Fragment>{getDiscussionNodes()}</Fragment>
     </div>
   )
 }

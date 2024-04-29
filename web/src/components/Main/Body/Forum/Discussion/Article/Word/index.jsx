@@ -1,12 +1,8 @@
 import { useMemo } from 'react';
-import { shallowEqual, useSelector } from 'react-redux';
 import createWord from 'util/createWordUtil';
 import './Word.scss';
 
-export default function Word({ id, no }) {
-  const { word } = useSelector(state => ({
-    word: state.forums[id].articles[no].word
-  }), shallowEqual);
+export default function Word({ article: { id, word } }) {
   const wordMemo = useMemo(() => createWord(id, word), []);
 
   return (

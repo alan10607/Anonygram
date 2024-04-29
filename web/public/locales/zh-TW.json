@@ -1,6 +1,6 @@
 {
   "common.login": "登入",
-  "common.anonymousLogin": "以匿名登入",
+  "common.anonymousLogin": "以匿名訪問",
   "common.logout": "登出",
   "common.register": "註冊",
   "common.email": "Email",
@@ -31,6 +31,9 @@
   "text.time.mins.ago": "{{minutes}} 分鐘前",
   "text.time.secs.ago": "{{seconds}} 秒前",
   "text.time.now": "剛剛",
+  "text.query.keyword": "輸入關鍵字",
+  "text.query.matched.length": "查詢共 {{length}} 個結果",
+  "text.go.login": "回首頁登入",
   "tip.login.error": "登入失敗, Email或密碼不正確",
   "tip.register.error": "註冊失敗, Email已經註冊",
   "tip.register.email.error": "無效的電子郵件格式",

@@ -29,6 +29,7 @@ export const ICON_LIKE = `${PUBLIC_URL}/pic/like.svg`;
 export const ICON_UPLOAD_IMG = `${PUBLIC_URL}/pic/uploadImg.svg`;
 export const ICON_FORUM = `${PUBLIC_URL}/pic/forum.svg`;
 export const ICON_ADD = `${PUBLIC_URL}/pic/add.svg`;
+export const ICON_QUERY = `${PUBLIC_URL}/pic/query.svg`;
 export const ICON_SETTING = `${PUBLIC_URL}/pic/setting.svg`;
 export const ICON_CLOSE = `${PUBLIC_URL}/pic/close.svg`;
 

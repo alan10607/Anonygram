@@ -1,6 +1,6 @@
 {
   "common.login": "Login",
-  "common.anonymousLogin": "Anonymous Login",
+  "common.anonymousLogin": "Visit as Anonymous",
   "common.logout": "Logout",
   "common.register": "Register",
   "common.email": "Email",
@@ -31,6 +31,9 @@
   "text.time.mins.ago": "{{minutes}} minutes ago",
   "text.time.secs.ago": "{{seconds}} seconds ago",
   "text.time.now": "now",
+  "text.query.keyword": "Keyword for search...",
+  "text.query.matched.length": "Found total {{length}} results",
+  "text.go.login": "Go to Login",
   "tip.login.error": "Login failed. Email or password is not correct.",
   "tip.register.error": "Registration failed. Email already registered.",
   "tip.register.email.error": "Invalid email format.",

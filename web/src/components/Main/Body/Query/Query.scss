@@ -1,0 +1,38 @@
+@import 'App.scss';
+
+#query {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+  .query-keyword {
+    flex: 0 1 auto;
+    margin: 16px 8px 7px 8px;
+    padding: 2px 8px;
+    height: 35px;
+  }
+
+  .query-hint {
+    flex: 0 1 auto;
+    margin: 0 7px 8px 7px;
+    padding: 2px 8px;
+    font-size: 15px;
+    font-style: italic;
+    text-align: right;
+  }
+
+  .matched-articles {
+    flex: 1 1 auto;
+
+    .art {
+      background-color: var(--bg-heavy);
+      font-size: 16px;
+    
+      + {
+        .art {
+          margin-top: 50px;
+        }
+      }
+    }
+  }
+}
