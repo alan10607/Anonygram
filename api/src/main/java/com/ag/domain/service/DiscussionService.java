@@ -3,6 +3,7 @@ package com.ag.domain.service;
 import com.ag.domain.constant.ArticleStatus;
 import com.ag.domain.dto.ArticleDTO;
 import com.ag.domain.dto.DiscussionDTO;
+import com.ag.domain.exception.EntityNotFoundException;
 import com.ag.domain.model.Article;
 import com.ag.domain.model.ForumUser;
 import com.ag.domain.model.Like;
@@ -109,8 +110,9 @@ public class DiscussionService {
     }
 
     private void prepareAuthorInfo(ArticleDTO result) {
-        ForumUser author = userRepository.findById(result.getAuthorId())
-                .orElse(new ForumUser.AnonymousUserBuilder(result.getAuthorId()).build());
+        ForumUser author = ValidationUtil.isUuid(result.getAuthorId()) ?
+                userRepository.findById(result.getAuthorId()).orElseThrow(() -> new EntityNotFoundException(ForumUser.class)) :
+                new ForumUser.AnonymousUserBuilder(result.getAuthorId()).build();
         result.setAuthorName(author.getUsername());
         result.setAuthorHeadUrl(author.getHeadUrl());
     }

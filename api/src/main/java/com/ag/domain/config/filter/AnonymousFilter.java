@@ -1,7 +1,6 @@
 package com.ag.domain.config.filter;
 
 import com.ag.domain.model.ForumUser;
-import com.ag.domain.model.JwtToken;
 import com.ag.domain.util.CookieUtil;
 import com.ag.domain.util.ValidationUtil;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,7 +27,7 @@ public class AnonymousFilter extends BaseAuthenticationFilter<AnonymousAuthentic
     protected AnonymousAuthenticationToken extractAuthentication(HttpServletRequest request, HttpServletResponse response) {
         String token = getAnonymousIdTokenFromRequest(request);
         boolean havePreviousToken = havePreviousToken(token);
-        UUID uuid = havePreviousToken(token) ? UUID.fromString(token) : UUID.randomUUID();
+        UUID uuid = havePreviousToken ? UUID.fromString(token) : UUID.randomUUID();
 
         ForumUser user = new ForumUser.AnonymousUserBuilder(uuid).build();
         AnonymousAuthenticationToken anonymousToken = createAnonymousToken(user, request);
@@ -40,16 +39,7 @@ public class AnonymousFilter extends BaseAuthenticationFilter<AnonymousAuthentic
     }
 
     private boolean havePreviousToken(String token) {
-        if (StringUtils.isNotBlank(token)) {
-            try {
-                UUID.fromString(token);
-                return true;
-            } catch (Exception e) {
-                return false;
-            }
-        } else {
-            return false;
-        }
+        return ValidationUtil.isUuid(token);
     }
 
     private String getAnonymousIdTokenFromRequest(HttpServletRequest request) {
