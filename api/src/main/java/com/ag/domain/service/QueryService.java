@@ -6,15 +6,11 @@ import com.ag.domain.repository.esQuery.ArticleQueryHandler;
 import com.ag.domain.repository.esQuery.UserQueryHandler;
 import com.ag.domain.util.PojoFiledUtil;
 import com.ag.domain.util.ValidationUtil;
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,21 +21,7 @@ public class QueryService {
     private final UserQueryHandler userQueryHandler;
     private final DiscussionService discussionService;
 
-    private final Cache<String, List<String>> articleCache = CacheBuilder.newBuilder()
-            .expireAfterAccess(5, TimeUnit.SECONDS)
-            .maximumSize(1)
-            .build();
-
     public static final int MAX_KEYWORD_LENGTH = 100;
-
-    public List<String> queryArticleIds() {
-        try {
-            String cacheKey = "articleIds";
-            return articleCache.get(cacheKey, articleQueryHandler::searchLatestArticleId);
-        } catch (ExecutionException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     public List<ArticleDTO> queryArticle(String keyword) {
         validateKeyword(keyword);

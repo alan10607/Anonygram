@@ -2,6 +2,7 @@ package com.ag.domain.controller;
 
 import com.ag.domain.dto.ArticleDTO;
 import com.ag.domain.dto.UserDTO;
+import com.ag.domain.service.ArticleIdService;
 import com.ag.domain.service.QueryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -17,12 +18,13 @@ import java.util.List;
 @RequestMapping(path = "query")
 public class QueryController {
     private final QueryService queryService;
+    private final ArticleIdService articleIdService;
 
     @GetMapping("/articleIds")
     @Operation(summary = "Query latest article ids")
     @ResponseStatus(HttpStatus.OK)
     public List<String> queryArticleIds() {
-        return queryService.queryArticleIds();
+        return articleIdService.get();
     }
 
     @GetMapping("/article")

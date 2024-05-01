@@ -1,5 +1,6 @@
 package com.ag.domain.config.filter;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,6 +23,8 @@ public abstract class BaseAuthenticationFilter<T extends AbstractAuthenticationT
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
         try {
             setAuthentication(request, response);
+        } catch (ExpiredJwtException e) {
+            log.debug(e.getMessage());
         } catch (Exception e) {
             log.info("Authentication filter error", e);
         }

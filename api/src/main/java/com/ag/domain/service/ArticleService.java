@@ -21,6 +21,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Slf4j
 public class ArticleService extends CrudServiceImpl<Article> {
+    private final ArticleIdService articleIdService;
     private final ArticleRepository articleRepository;
     public static final int MAX_WORD_LENGTH = 5000;
     public static final int MAX_TITLE_LENGTH = 100;
@@ -79,7 +80,9 @@ public class ArticleService extends CrudServiceImpl<Article> {
                 .updatedTime(now)
                 .build();
 
-        return articleRepository.save(article);
+        article = articleRepository.save(article);
+        articleIdService.push(articleId);
+        return article;
     }
 
     @Override
