@@ -11,6 +11,7 @@ import './Query.scss';
 export default function Query() {
   const [keyword, setKeyword] = useState("");
   const [matchedArticles, setMatchedArticles] = useState([]);
+  const [hint, setHint] = useState("");
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const previousKeyword = usePrevious(keyword);
@@ -19,9 +20,13 @@ export default function Query() {
     if (keyword.trim() && keyword !== previousKeyword) {
       dispatch(setLoading(true));
       queryRequest.queryArticle(keyword.trim())
-        .then(articles => setMatchedArticles(articles))
+        .then(articles => {
+          setMatchedArticles(articles)
+          setHint(t("text.query.matched.length", { length: articles.length }));
+        })
         .catch(e => {
           setMatchedArticles([]);
+          setHint("");
           console.error("Query article failed", e)
         })
         .finally(() => dispatch(setLoading(false)));
@@ -38,20 +43,21 @@ export default function Query() {
     return nodes;
   }
 
-  const getMatchedArticleText = () => {
-    return !keyword.trim() ?
-      "" :
-      t("text.query.matched.length", { length: matchedArticles.length });
-  }
+
   return (
     <div id="query">
       <input value={keyword}
         onChange={(event) => { setKeyword(event.target.value) }}
         onBlur={queryArticle}
+        onKeyDown={(event) => {
+          if (event.key === "Enter") {
+            queryArticle();
+          }
+        }}
         className="query-keyword"
         type="text"
         placeholder={t("text.query.keyword")} />
-      <div className="query-hint">{getMatchedArticleText()}</div>
+      <div className="query-hint">{hint}</div>
       <div className="matched-articles">{getMatchedArticlesNodes()}</div>
     </div>
   )
