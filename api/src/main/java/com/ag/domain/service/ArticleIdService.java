@@ -1,5 +1,6 @@
 package com.ag.domain.service;
 
+import com.ag.domain.repository.ArticleRepository;
 import com.ag.domain.repository.esQuery.ArticleQueryHandler;
 import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,7 @@ import java.util.*;
 @AllArgsConstructor
 @Slf4j
 public class ArticleIdService {
+    private final ArticleRepository articleRepository;
     private final ArticleQueryHandler articleQueryHandler;
     private static final int CACHE_SIZE = 100;
     private final Map<String, String> lruCache = new LinkedHashMap<>(CACHE_SIZE, 0.75f, true) {
@@ -23,10 +25,13 @@ public class ArticleIdService {
 
     @PostConstruct
     public void init() {
-        List<String> articleIds = articleQueryHandler.searchLatestArticleId();
-        for (int i = articleIds.size() - 1; i >= 0; --i) {
-            lruCache.put(articleIds.get(i), articleIds.get(i));
+        if (articleRepository.count() > 0) {
+            List<String> articleIds = articleQueryHandler.searchLatestArticleId();
+            for (int i = articleIds.size() - 1; i >= 0; --i) {
+                lruCache.put(articleIds.get(i), articleIds.get(i));
+            }
         }
+
         log.info("Fetch total {} article ids to cache", lruCache.size());
     }
 

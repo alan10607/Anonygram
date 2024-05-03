@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.client.elc.ElasticsearchAggregations;
 import org.springframework.data.elasticsearch.client.elc.NativeQuery;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
@@ -82,5 +83,12 @@ public abstract class QueryHandler<T> {
                 .map(bucket -> bucket.key().stringValue())
                 .collect(Collectors.toList());
     }
+
+    public boolean exists() {
+        Document documentAnnotation = getDocumentClass().getAnnotation(Document.class);
+        String documentId = documentAnnotation.indexName();
+        return elasticsearchOperations.exists(documentId, getDocumentClass());
+    }
+
 
 }

@@ -12,6 +12,11 @@ import org.springframework.data.elasticsearch.client.elc.ElasticsearchConfigurat
 import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 
 import javax.net.ssl.SSLContext;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.UnknownHostException;
 
 @Configuration
 @Slf4j
@@ -27,11 +32,20 @@ public class ElasticsearchConfig extends ElasticsearchConfiguration {
 
     @Override
     public ClientConfiguration clientConfiguration() {
+        log.info("Elasticsearch url={}:{}, is port open={}", host, port, isPortOpen(host, Integer.parseInt(port)));
         return ClientConfiguration.builder()
                 .connectedTo(String.format("%s:%s", host, port))
-                .usingSsl(buildSslContext())
                 .withBasicAuth(username, password)
                 .build();
+    }
+
+    public boolean isPortOpen(String host, int port) {
+        try (Socket socket = new Socket()) {
+            socket.connect(new InetSocketAddress(host, port), 1000);
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
     }
 
     private SSLContext buildSslContext() {
