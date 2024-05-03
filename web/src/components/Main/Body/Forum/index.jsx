@@ -24,7 +24,13 @@ export default function Forum() {
   useEffect(() => {
     if (idList.length === 0) {//init idList
       queryRequest.getArticleIds()
-        .then(articleIds => dispatch(setArticleIds(articleIds)))
+        .then(articleIds => {
+          if (articleIds.length > 0) {
+            dispatch(setArticleIds(articleIds))
+          } else {
+            console.log("No article exist")
+          }
+        })
         .catch(e => dispatch(setConsole(t("tip.forum.id.error"))));
     }
   }, [idList])

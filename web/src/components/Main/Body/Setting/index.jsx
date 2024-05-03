@@ -74,6 +74,7 @@ export default function Setting() {
   const logout = () => {
     setLocalStorage(JWT_TOKEN, null);
     fetchUser();
+    dispatch(deleteForums());
     navigate("/login");
   }
 
