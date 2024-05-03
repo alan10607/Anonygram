@@ -11,7 +11,7 @@ imgur:
   albumId: hpyaPc6
 
 elasticsearch:
-  host: localhost
+  host: ${ES_HOST:localhost}
   port: 9200
   username: elastic
-  password: OGmrJovJi37nakTDF*zc
+  password: root

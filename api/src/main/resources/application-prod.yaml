@@ -1,17 +1,17 @@
 spring:
   cors:
-    frontend: https://alan10607.github.io/
+    frontend: http://localhost:3000
 
 logging:
   path: /log
 
 imgur:
-  clientId: eded92adbc0fab0
-  clientSecret: df9529b0b964bcede52760d688e4c57190a8842f
-  albumId: WcBFFA5
+  clientId: 290ef3ac4c1f094
+  clientSecret: 9892fb9143cb70aee0b1c1879de3cbb0d9742917
+  albumId: hpyaPc6
 
 elasticsearch:
-  host: localhost
+  host: ${ES_HOST:localhost}
   port: 9200
   username: elastic
-  password: OGmrJovJi37nakTDF*zc
+  password: root
