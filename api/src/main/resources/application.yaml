@@ -32,9 +32,11 @@ springdoc:
     path: /swagger
 
 # =================================
-# Https
+# Path & Protocol
 # =================================
-#server:
+server:
+  servlet:
+    contextPath: /api
 #  port: 443
 #  ssl:
 #    enabled: true
