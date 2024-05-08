@@ -13,9 +13,7 @@ export const VERSION = "v20230908";
 export const WELCOME_PAGE = "/forum/index";
 
 /* --- Backend url --- */
-const CLOUD_URL = "https://127.0.0.1";
-const TEST_URL = "https://localhost";
-export const BACKEND_API_URL = window.location.host.indexOf("localhost") === -1 ? CLOUD_URL : TEST_URL;
+export const BACKEND_API_URL = `${window.location.protocol}//${window.location.host}/api`;
 console.log("BACKEND_API_URL:", BACKEND_API_URL);
 
 /* --- LocalStorage --- */
