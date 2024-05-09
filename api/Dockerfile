@@ -3,6 +3,7 @@ EXPOSE 443
 
 WORKDIR /app
 
+# Add jar
 COPY target/anonygram.jar .
 
 # wait-for-it from https://github.com/vishnubob/wait-for-it

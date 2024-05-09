@@ -1,6 +1,6 @@
 spring:
   cors:
-    frontend: http://localhost:3000
+    frontend: ${CORS_URL:http://localhost:3000}
 
 logging:
   path: ./log

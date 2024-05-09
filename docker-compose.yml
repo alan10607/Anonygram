@@ -13,6 +13,7 @@ services:
     environment:
      - ACTIVE=prod
      - ES_HOST=ag-elasticsearch
+     - CORS_URL=https://localhost
     depends_on:
      - ag-elasticsearch
     networks:
@@ -31,7 +32,7 @@ services:
       - xpack.security.enabled=false
       - ELASTIC_PASSWORD=root
     volumes:
-      - "~/docker/volume/elasticsearch/data:/usr/share/elasticsearch/data"
+      # - "~/docker/volume/elasticsearch/data:/usr/share/elasticsearch/data"
       - "~/docker/volume/elasticsearch/logs:/usr/share/elasticsearch/logs"
     networks:
      - proxy
@@ -56,8 +57,10 @@ services:
     container_name: ag-nginx
     ports:
       - "80:80"
+      - "443:443"
     volumes:
-      - "./nginx/default.conf:/etc/nginx/conf.d/default.conf" 
+      - "./nginx/default.conf:/etc/nginx/conf.d/default.conf"
+      - "./nginx/ssl:/etc/nginx/ssl"
       - "~/docker/volume/nginx/log:/var/log/nginx"
     depends_on:
      - ag-springboot

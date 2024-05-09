@@ -32,7 +32,7 @@ public class ElasticsearchConfig extends ElasticsearchConfiguration {
 
     @Override
     public ClientConfiguration clientConfiguration() {
-        log.info("Elasticsearch url={}:{}, is port open={}", host, port, isPortOpen(host, Integer.parseInt(port)));
+        log.info("Elasticsearch url: {}:{}, is port open: {}", host, port, isPortOpen(host, Integer.parseInt(port)));
         return ClientConfiguration.builder()
                 .connectedTo(String.format("%s:%s", host, port))
                 .withBasicAuth(username, password)
