@@ -98,7 +98,8 @@ _Check other APIs in OpenAPI documentation: https://localhost/api/swagger_
 
 ### Example
 #### Get discussion by page
-- Request URL: GET:http://localhost/api/discussion/{{articleId}}?page=1
+- Request URL:
+GET:https://localhost/api/discussion/{{articleId}}?page=1
 - Response Body:
 ```
 {
