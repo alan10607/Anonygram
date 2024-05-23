@@ -32,7 +32,7 @@ services:
       - xpack.security.enabled=false
       - ELASTIC_PASSWORD=root
     volumes:
-      # - "~/docker/volume/elasticsearch/data:/usr/share/elasticsearch/data"
+      - "~/docker/volume/elasticsearch/data:/usr/share/elasticsearch/data"
       - "~/docker/volume/elasticsearch/logs:/usr/share/elasticsearch/logs"
     networks:
      - proxy
