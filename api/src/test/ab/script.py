@@ -5,7 +5,7 @@ from pathlib import Path
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
-base_url = "https://localhost"
+base_url = "https://localhost/api"
 body_file_path = Path(__file__).resolve().parent / "body"
 
 def get(path):
