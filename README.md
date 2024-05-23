@@ -56,7 +56,7 @@ The platform is designed to be displayed on a mobile phone.
   <tr>
     <td><img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/article-light.jpg" width="300"/></td>
     <td><img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/new-light.jpg" width="300"/></td>
-    <td><img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/setting-light.jpg" width="300"/>|</td>
+    <td><img src="https://raw.githubusercontent.com/alan10607/Anonygram/docs/setting-light.jpg" width="300"/></td>
     <td></td>
   </tr>
 </table>
@@ -149,7 +149,6 @@ _Check other APIs in OpenAPI documentation: https://localhost/api/swagger_
 
 ## Stress Test
 Use ApacheBench for stress testing
-### Quick Start
 ```
 cd api/src/test/ab
 python3 script.py
